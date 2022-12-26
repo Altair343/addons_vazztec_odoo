@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!-- main screen  -->
+        <record id="action_unlocks_type_vazz" model="ir.actions.act_window">
+            <field name="name">Tipos de desbloqueos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vazz.unlocks.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Tipos de desbloqueos</p>
+            </field>
+        </record>
+    </data>
+</odoo>

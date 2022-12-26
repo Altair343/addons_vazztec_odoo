@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Módulo VAZZ -->
+        <record model="res.groups" id="vazz.general_user">
+            <field name="name">VAZZ/Usuario de modulo Vazztec</field>
+            <field name="comment">vazz.general_user</field>
+        </record>
+
+        <!-- Administrador VAZZ -->
+        <record model="res.groups" id="vazz_admin">
+            <field name="name">VAZZ/Administrador Vazztec</field>
+            <field name="comment" >vazz_admin</field>
+        </record>
+
+    </data>
+</odoo>

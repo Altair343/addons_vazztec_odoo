@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_services_vazz" model="ir.sequence">
+            <field name="name">Servicios Vazz</field>
+            <field name="code">vazz.services.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+
+        <record id="seq_customers_vazz" model="ir.sequence">
+            <field name="name">Clientes Vazz</field>
+            <field name="code">vazz.customers.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+
+        <record id="seq_orders_vazz" model="ir.sequence">
+            <field name="name">Pedidos Vazz</field>
+            <field name="code">vazz.orders.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+
+        <record id="seq_warranty_vazz" model="ir.sequence">
+            <field name="name">Garantías Vazz</field>
+            <field name="code">vazz.warranty.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+        
+        <record id="seq_unlocks_vazz" model="ir.sequence">
+            <field name="name">Desbloqueos Vazz</field>
+            <field name="code">vazz.unlocks.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</odoo>

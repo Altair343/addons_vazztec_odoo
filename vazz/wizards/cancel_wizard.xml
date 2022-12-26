@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="cancel_request_vazz_view_form" model="ir.ui.view">
+        <field name="name">vazz.cancel.wizard.view.form</field>
+        <field name="model">vazz.cancel_wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="cancel_date" readonly="1"/>
+                    <field name="comment" required="1" />
+                </group>
+                <group>
+                    <footer>
+                        <button name="confirm_cancel" string="Aceptar" type="object" class="oe_highlight"/>
+                        <button string="Cancelar" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

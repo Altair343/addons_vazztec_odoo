@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú raíz -->
+    <menuitem 
+        id="menu_vazz_root" 
+        name="Vazztec" 
+        web_icon="vazz,static/description/icon.png" />
+
+    <!--Libros -->
+        <menuitem
+            id="request_menu_services"
+            name="Servicios"
+            parent="vazz.menu_vazz_root"
+            sequence="10"/>
+
+            <menuitem
+                id="action_servicios_vazz_menu_action"
+                name="Solicitud de servicios"
+                parent="vazz.request_menu_services"
+                sequence="10"
+                action="vazz.action_servicios_vazz"/>
+            
+            <menuitem
+                id="action_customers_vazz_menu_action"
+                name="Clientes"
+                parent="vazz.request_menu_services"
+                sequence="20"
+                action="vazz.action_customers_vazz"/>
+            
+            <menuitem
+                id="action_orders_vazz_menu_action"
+                name="Pedidos"
+                parent="vazz.request_menu_services"
+                sequence="30"
+                action="vazz.action_orders_vazz"/>
+            
+            <menuitem
+                id="action_warranty_vazz_menu_action"
+                name="Garantías"
+                parent="vazz.request_menu_services"
+                sequence="40"
+                action="vazz.action_warranty_vazz"/>
+            
+            <menuitem
+                id="action_unlocks_vazz_menu_action"
+                name="Desbloqueos"
+                parent="vazz.request_menu_services"
+                sequence="50"
+                action="vazz.action_unlocks_vazz"/>
+    
+    <!-- Configuraciones -->
+        <menuitem 
+            id="vazz_configurarion_menu" 
+            name="Configuraciones" 
+            parent="vazz.menu_vazz_root"
+            groups="vazz.vazz_admin"
+            sequence="20"/>
+
+            <menuitem 
+                id="action_notifications_type_vazz_menu_action" 
+                name="Tipos de notificaciones" 
+                parent="vazz.vazz_configurarion_menu" 
+                sequence="10" 
+                action="vazz.action_notifications_type_vazz"/>
+
+            <menuitem 
+                id="action_unlocks_type_vazz_menu_action" 
+                name="Tipos de desbloqueos" 
+                parent="vazz.vazz_configurarion_menu" 
+                sequence="20" 
+                action="vazz.action_unlocks_type_vazz"/>
+            
+            <menuitem 
+                id="action_equipment_type_vazz_menu_action" 
+                name="Tipos de equipos" 
+                parent="vazz.vazz_configurarion_menu" 
+                sequence="30" 
+                action="vazz.action_equipment_type_vazz"/>
+
+</odoo>

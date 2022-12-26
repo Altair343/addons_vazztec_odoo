@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="vazz.cancel_orders_view_form" model="ir.ui.view">
+        <field name="name">vazz.cancel.orders.view.form</field>
+        <field name="model">vazz.cancel.orders</field>
+        <field name="arch" type="xml">
+            <form string="Cancelaciones">
+                <sheet>
+                    <group>
+                        <field name="cancel_date" readonly="1" />
+                        <field name="comment" readonly="1" />
+                        <field name="write_uid" readonly="1" string ="Útima modificación por" options="{'no_open':True,'no_create': True, 'no_create_edit':True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vazz.cancel_services_view_form" model="ir.ui.view">
+        <field name="name">vazz.cancel.services.view.form</field>
+        <field name="model">vazz.cancel.services</field>
+        <field name="arch" type="xml">
+            <form string="Cancelaciones">
+                <sheet>
+                    <group>
+                        <field name="cancel_date" readonly="1" />
+                        <field name="comment" readonly="1" />
+                        <field name="write_uid" readonly="1" string ="Útima modificación por" options="{'no_open':True,'no_create': True, 'no_create_edit':True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vazz.cancel_warranty_view_form" model="ir.ui.view">
+        <field name="name">vazz.cancel.warranty.view.form</field>
+        <field name="model">vazz.cancel.warranty</field>
+        <field name="arch" type="xml">
+            <form string="Cancelaciones">
+                <sheet>
+                    <group>
+                        <field name="cancel_date" readonly="1" />
+                        <field name="comment" readonly="1" />
+                        <field name="write_uid" readonly="1" string ="Útima modificación por" options="{'no_open':True,'no_create': True, 'no_create_edit':True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view form -->
+        <record id="diagnostic_vazz_form" model="ir.ui.view">
+            <field name="name">vazz.diagnostic.vazz.form</field>
+            <field name="model">vazz.diagnostic</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="0" required ="1"/>
+                            <field name="service_id" readonly="1" invisible="1" force_save="1"/>
+                            <field name="is_main" readonly="1" invisible="1" force_save="1"/>
+                        </group>
+                    </sheet>
+                </form> 
+            </field>
+        </record>
+    </data>
+</odoo>

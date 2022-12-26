@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="equipment_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.equipment.vazz.tree</field>
+            <field name="model">vazz.equipment</field>        
+            <field name="arch" type="xml">
+                <tree string="Equipos">
+                    <field name="brand"/>
+                    <field name="model_e"/>
+                    <field name="imei"/>
+                    <field name="type_equipment"/>
+                    <field name="accessories"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- view form -->
+        <record id="equipment_vazz_form" model="ir.ui.view">
+            <field name="name">vazz.equipment.vazz.form</field>
+            <field name="model">vazz.equipment</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration" duplicate="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="brand" readonly="0" required ="1"/>
+                                <field name="model_e" readonly="0" required ="1"/>
+                                <field name="type_equipment" readonly="0" required ="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
+                                <field name="service_id" invisible="1" readonly="1" force_save="1" />
+                            </group>
+                            <group>
+                                <field name="imei" readonly="0"/>
+                                <field name="password" readonly="0"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="accessories" readonly="0"/>
+                        </group>
+                        <group>
+                            <field name="note" readonly="0"/>
+                        </group>
+                    </sheet>
+                </form> 
+            </field>
+        </record>
+    </data>
+</odoo>

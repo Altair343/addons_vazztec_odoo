@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="unlocks_vazz_tree_rol" model="ir.ui.view">
+            <field name="name">vazz.unlocks.vazz.tree.rol</field>
+            <field name="model">vazz.unlocks</field>        
+            <field name="arch" type="xml">
+                <tree string="Desbloqueos">
+                    <field name="name"/>
+                    <field name="service_id"/>
+                    <field name="customer_id"/>
+                    <field name="type_id"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- view form -->
+        <record id="unlocks_vazz_form_rol" model="ir.ui.view">
+            <field name="name">vazz.unlocks.vazz.form.rol</field>
+            <field name="model">vazz.unlocks</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration">
+                    <header>
+                        <!-- <field name="state" widget="statusbar" readonly="1" statusbar_visible="active"/> -->
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1" required ="1"/>
+                                <field name="service_id" readonly="0" attrs="{'invisible' : [('type_register', '=','service')]}" />
+                                <field name="customer_id" required="1" readonly="0"/>
+                            </group>
+                            <group>
+                                <field name="type_id" required="1" readonly="0" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
+                                <field name="type_register" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                        </group>
+                    </sheet>
+                </form> 
+            </field>
+        </record>
+    </data>
+</odoo>

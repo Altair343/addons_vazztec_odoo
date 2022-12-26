@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="user_groups_view_simple_modif_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.simple.view.modif.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.user_groups_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sel_groups_11']" position="after">
+                <field name="type_user_va" required ="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="orders_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.orders.vazz.tree</field>
+            <field name="model">vazz.orders</field>        
+            <field name="arch" type="xml">
+                <tree string="Pedidos">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="amount"/>
+                    <field name="description"/>
+                    <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="state"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- view form -->
+        <record id="orders_vazz_form" model="ir.ui.view">
+            <field name="name">vazz.orders.vazz.form</field>
+            <field name="model">vazz.orders</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration" duplicate="false">
+                    <header>
+
+                        <button string="Realizado" name="action_done" 
+                            states="pending" class="oe_highlight" type="object"/>
+                        
+                        <button string="En Bodega" name="action_warehouse" 
+                            states="done" class="oe_highlight" type="object"/>
+                        
+                        <button string="En local" name="action_local" 
+                            states="warehouse" class="oe_highlight" type="object"/>
+                        
+                        <button string="Entregar" name="action_delivered" 
+                            states="in_local" class="oe_highlight" type="object"/>
+                        
+                        <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
+                            attrs="{'invisible' : [('state', 'in', ('draft','delivered','cancel'))]}" />
+
+                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1" required ="1"/>
+                                <field name="service_id"  attrs="{'readonly' : [('state', 'not in', ('draft'))], 'invisible' : [('type_register', '=','service')]}" />
+                                <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}" />
+                                <field name="create_date" string = "Fecha de Registro" readonly="1"/>
+                                <br/>
+                                <field name="description" required ="1" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
+                                <field name="type_register" invisible="1"/>
+                                
+                            </group>
+                            <group>
+                                <field name="amount" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','in_local'))]}"/>
+                                <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','in_local'))]}"/>
+                                <field name="assets_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
+                                <field name="total_assets" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                                <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                                <field name="currency_id" invisible="1" readonly="1" force_save="1" />
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Entrega">
+                                <field name="date_approximate_delivery" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                                <field name="date_delivery" attrs="{'readonly' : [('state', 'not in', ('in_local'))]}" />
+                            </group>
+                            <group string="Paquete">
+                                <field name="tracking_number" attrs="{'readonly' : [('state', 'not in', ('pending'))]}"/>
+                                <field name="date_arrival" attrs="{'readonly' : [('state', 'not in', ('done'))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="notifications" string="Notificaciones">
+                                <field name="notifications_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}" />
+                            </page>
+                            <page name="cancel" string="Cancelación">
+                                <group>
+                                    <field name="cancel_request" nolabel="1" readonly="1">
+                                        <tree string="Cancelaciones" >
+                                            <field name="cancel_date"/>
+                                            <field name="comment" string="Comentario"/>
+                                            <field name="write_uid" string ="Útima modificación por"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form> 
+            </field>
+        </record>
+    
+    <!-- main screen  -->
+        <record id="action_orders_vazz" model="ir.actions.act_window">
+            <field name="name">Pedidos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vazz.orders</field>
+            <field name="view_mode">tree,form,activity</field>
+            <field name="context">{
+                'tree_view_ref':'vazz.orders_vazz_tree',
+                'form_view_ref':'vazz.orders_vazz_form',
+                }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Pedidos</p>
+            </field>
+        </record>
+    </data>
+</odoo>
