@@ -13,6 +13,8 @@ STATES = [
     ('diagnosed', 'Diagnosticado'),
     ('repaired', 'Reparado'),
     ('not_solution', 'Sin Solución'),
+
+    ('cancel', 'Cancelado'),
 ]
 
 TYPESERVICES = [
@@ -86,6 +88,8 @@ class Services(models.Model):
     date_reception = fields.Datetime(string="Fecha de recepción")
     date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
+    telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="teléfono",
+    domain = "[('customer_ids','=',customer_ids)]")
     type_service = fields.Selection(TYPESERVICES, string='Tipo de servicio', tracking=True)
     type_delivery = fields.Selection(TYPEDELIVERY, string='Tipo de entrega solicitada', tracking=True)
     addres =  fields.Text(string="Dirección de entrega")
@@ -120,6 +124,7 @@ class Services(models.Model):
     # Pestaña notificación
     notifications_ids = fields.One2many(comodel_name='vazz.notifications',inverse_name= 'service_id', 
         string="Notificaciones", ondelete='cascade')
+    type_notification_id = fields.Many2one(comodel_name="vazz.notifications.type", string="Medio de notificación preferido")
 
     # Pestaña de garantias
     question_warranty = fields.Selection(REQUEST, string='¿El servicio cuenta con garantía?', tracking=True)
@@ -135,6 +140,10 @@ class Services(models.Model):
     equipment_ids = fields.One2many(comodel_name='vazz.equipment',inverse_name= 'service_id', 
         string="Equipos", ondelete='cascade')
 
+    # Pestaña de historial de estados
+    state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'service_id', 
+        string="historial de estados")
+        
     @api.model
     def default_get(self, fields):
         res = super(Services, self).default_get(fields)
@@ -165,13 +174,22 @@ class Services(models.Model):
             vals['name'] = f"S/{name_seq}"
 
         vals['state'] = 'pending'
+        service_id = self.env['vazz.state.history'].create({
+            'state': vals['state'],
+            'service_id': self.id})
+        vals['state_history_ids'] =  [(4, service_id.id)]
         result = super(Services, self).create(vals)
         return result
 
     # States
     def _update_state(self, new_state):
         for rec in self:
+            rec.previous_state = rec.state
             rec.state = new_state
+            self.env['vazz.state.history'].create({
+                'state': new_state,
+                'service_id': rec.id})
+            # se crea registro
     
     def action_pending(self):
         # Pendiente
@@ -196,3 +214,11 @@ class Services(models.Model):
     def action_cancel(self, comment):
         # Cancelado
         self._update_state('cancel')
+
+    # Onchange
+    @api.onchange('customer_ids')
+    def _onchange_customer_ids(self):
+        if self.customer_ids:
+            self.telephone_cus = self.customer_ids.phone.id 
+        else:
+            self.telephone_cus = False

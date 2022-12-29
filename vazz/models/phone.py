@@ -16,6 +16,10 @@ class Phone(models.Model):
         request_id = self._context.get('request_id')
         if request_id:
             res['customer_ids'] = self._context.get('request_id')
+        else:
+            customer_id  = self._context.get('default_customer_ids')
+            if customer_id:
+                res['customer_ids'] = self._context.get('default_customer_ids')
         return res
 
     @api.model
@@ -37,3 +41,12 @@ class Phone(models.Model):
                     tel.is_main = True
                 else:
                     tel.is_main = False
+    
+    def name_get(self):
+        res = []
+        for record in self:
+            customers = record.env['vazz.customers.phone'].browse([record['id']])
+            name = f"{customers.name}"
+            
+            res.append((record['id'],'%s' % (name)))
+        return res

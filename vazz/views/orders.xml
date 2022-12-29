@@ -89,6 +89,13 @@
                                     </field>
                                 </group>
                             </page>
+                            <page name="history" string="Historial de Estados">
+                                <field name="state_history_ids" readonly="1" 
+                                    context="{  
+                                        'type_register': 'service', 
+                                        'tree_view_ref':'vazz.order_state_history_vazz_tree',
+                                        }" />
+                            </page>
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">

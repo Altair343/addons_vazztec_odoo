@@ -27,8 +27,8 @@
                         <group>
                             <group>
                                 <field name="name" readonly="0" required ="1"/>
-                                <field name="is_main" readonly="1"/>
                                 <field name="customer_ids"  readonly="1" invisible="1" force_save="1"/>
+                                <field name="is_main" readonly="1"/>
                             </group>
                             <group></group>
                         </group>

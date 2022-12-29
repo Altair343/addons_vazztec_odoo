@@ -12,6 +12,7 @@
                             <field name="name" readonly="0" required ="1"/>
                             <field name="service_id" readonly="1" invisible="1" force_save="1"/>
                             <field name="is_main" readonly="1" invisible="1" force_save="1"/>
+                            <field name="technical_id" readonly="0" required ="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
                         </group>
                     </sheet>
                 </form> 

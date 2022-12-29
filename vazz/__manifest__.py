@@ -42,6 +42,7 @@
         "views/equipment_type.xml",
         "views/diagnostic.xml",
         "views/equipment.xml",
+        "views/state_history.xml",
         # Views inherit other module
         "views/res_users.xml",
         # Report views

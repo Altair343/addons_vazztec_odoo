@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="service_state_history_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.state.history.vazz.tree</field>
+            <field name="model">vazz.state.history</field>        
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="service_id"/>
+                    <field name="state"/>
+                    <field name="create_date" string = "Fecha de Registro"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="order_state_history_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.state.history.vazz.tree</field>
+            <field name="model">vazz.state.history</field>        
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="order_id"/>
+                    <field name="state"/>
+                    <field name="create_date" string = "Fecha de Registro"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

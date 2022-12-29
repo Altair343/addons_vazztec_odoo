@@ -82,6 +82,10 @@ class Order(models.Model):
     cancel_request = fields.One2many(comodel_name='vazz.cancel.orders',
         inverse_name="cancel_request", string="Cancelaciones", ondelete = "cascade")
 
+    # Pestaña de historial de estados
+    state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'order_id', 
+        string="historial de estados")
+
     @api.model
     def default_get(self, fields):
         res = super(Order, self).default_get(fields)

@@ -14,7 +14,7 @@ class Customers(models.Model):
             if rec.phones_ids:
                 for tel in rec.phones_ids:
                     if tel.is_main == True:
-                        phoneAux = tel.name
+                        phoneAux = tel.id
                         break
             rec.phone = phoneAux
 
@@ -31,7 +31,8 @@ class Customers(models.Model):
     user_name = fields.Char(string="Nombre completo")
     email =  fields.Char(string="Correo")
     addres =  fields.Text(string="Dirreción")
-    phone =  fields.Char(string="Teléfono principal",compute="_compute_phone", store = False)
+    # phone =  fields.Char(string="Teléfono principal",compute="_compute_phone", store = False)
+    phone =  fields.Many2one(comodel_name='vazz.customers.phone', string="Teléfono principal",compute="_compute_phone", store = False)
     phones_ids = fields.One2many(comodel_name='vazz.customers.phone',inverse_name= 'customer_ids', 
         string="Teléfono", ondelete = "cascade")
     count_services = fields.Integer(string="Total de Servicios", compute="_compute_count_services", store = False) 

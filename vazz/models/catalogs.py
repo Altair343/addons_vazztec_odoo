@@ -2,6 +2,21 @@
 # odoo
 from odoo import models, fields,api, _
 
+STATES = [
+    ('draft', 'Borrador'),
+    ('pending', 'Pendiente'),
+    ('in_process', 'En proceso'),
+    ('diagnosed', 'Diagnosticado'),
+    ('repaired', 'Reparado'),
+    ('not_solution', 'Sin Solución'),
+
+    ('done', 'Realizado'),
+    ('warehouse', 'En Bodega'),
+    ('in_local', 'En local'),
+    ('delivered', 'Entregado'),
+    ('cancel', 'Cancelado'),
+]
+
 class Assets(models.Model):
     _name = 'vazz.orders.assets'
     _description = 'Anticipos'
@@ -47,6 +62,15 @@ class Notifications(models.Model):
     type_id = fields.Many2one(comodel_name="vazz.notifications.type", string="Medio de notificación")
     date_notification = fields.Datetime(string= "Fecha de notificación")
     note =  fields.Text(string="Nota")
+
+    order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
+    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
+
+class StateHistory(models.Model):
+    _name = 'vazz.state.history'
+    _description = 'Historial de estados'
+
+    state = fields.Selection(STATES, string='Estado del registro')
 
     order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
     service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
