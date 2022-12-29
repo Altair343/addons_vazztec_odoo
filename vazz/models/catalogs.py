@@ -54,7 +54,6 @@ class EquipmentType(models.Model):
 
     name = fields.Char(string="Equipo", required= True )
 
-
 class Notifications(models.Model):
     _name = 'vazz.notifications'
     _description = 'Notificaciones'
@@ -65,6 +64,13 @@ class Notifications(models.Model):
 
     order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
     service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
+
+    @api.model
+    def create(self, vals):
+
+
+        result = super(Notifications, self).create(vals)
+        return result
 
 class StateHistory(models.Model):
     _name = 'vazz.state.history'

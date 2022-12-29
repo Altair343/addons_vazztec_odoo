@@ -13,6 +13,8 @@
                     <field name="date_reception"/>
                     <field name="state"/>
 
+                    <field name="is_delivery"/>
+                    <field name="warning_notify"/>
                 </tree>
             </field>
         </record>
@@ -64,8 +66,10 @@
                             <group string="Entrega">
                                 <field name="technical_id" readonly="0" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
                                 <field name="date_approximate_delivery" readonly="0"  required="1" />
+                                <field name="date_approx_del_end" readonly="0"  required="1" />
                                 <field name="type_delivery" readonly="0" required="1"/>
                                 <field name="addres" readonly="0" attrs="{'invisible' : [('type_delivery', '!=','home')],'required' : [('type_delivery', '=','home')]}" />
+                                <field name="is_delivery" readonly="1" force_save="1" />
                             </group>
                         </group>
                         <group>

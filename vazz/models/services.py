@@ -35,6 +35,10 @@ REQUEST = [
     ('yes', 'Sí'),
     ('not', 'No')]
 
+DELIVERY = [
+    ('not', 'No entregado'),
+    ('yes', 'Entregado')]
+
 class Services(models.Model):
     _name = 'vazz.services'
     _description = 'Servicios'
@@ -79,6 +83,17 @@ class Services(models.Model):
             
             rec.total = priceAux + total_order
 
+    @api.depends('notifications_ids')
+    def _compute_warning_notify(self):
+        for rec in self:
+            if rec.notifications_ids:
+                if len(rec.notifications_ids) > 0:
+                    rec.warning_notify = 'yes'
+                else:
+                    rec.warning_notify = 'not'
+            else:
+                rec.warning_notify = 'not'
+        
 
     # Estado de la solicitud
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
@@ -86,7 +101,8 @@ class Services(models.Model):
     name = fields.Char(string="Folio", required=True, copy=False, index=True, 
         default=lambda self: _('Nuevo'))
     date_reception = fields.Datetime(string="Fecha de recepción")
-    date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada")
+    date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada de inicio")
+    date_approx_del_end = fields.Date(string="Fecha de entrega aproximada fin")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
     telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="teléfono",
     domain = "[('customer_ids','=',customer_ids)]")
@@ -102,6 +118,8 @@ class Services(models.Model):
     diagnostic_ids = fields.One2many(comodel_name='vazz.diagnostic',inverse_name= 'service_id', 
         string="Diagnósticos", ondelete='cascade')
     technical_id = fields.Many2one( 'res.users', string='Técnico', domain = "[('type_user_va','=','technical')]")
+
+    is_delivery = fields.Selection(DELIVERY, default=DELIVERY[0][0], string='Entregado')
 
     # Costos
     estimated_cost = fields.Float(string="Costo estimado",tracking=True )
@@ -122,6 +140,7 @@ class Services(models.Model):
         inverse_name="cancel_request", string="Cancelaciones", ondelete = "cascade")
     
     # Pestaña notificación
+    warning_notify = fields.Selection(REQUEST, string='Aviso',compute="_compute_warning_notify", store = False )
     notifications_ids = fields.One2many(comodel_name='vazz.notifications',inverse_name= 'service_id', 
         string="Notificaciones", ondelete='cascade')
     type_notification_id = fields.Many2one(comodel_name="vazz.notifications.type", string="Medio de notificación preferido")
@@ -178,6 +197,7 @@ class Services(models.Model):
             'state': vals['state'],
             'service_id': self.id})
         vals['state_history_ids'] =  [(4, service_id.id)]
+
         result = super(Services, self).create(vals)
         return result
 
@@ -214,6 +234,14 @@ class Services(models.Model):
     def action_cancel(self, comment):
         # Cancelado
         self._update_state('cancel')
+    
+    def action_delivery_not(self):
+        # Entregado
+        self.is_delivery = 'not'
+    
+    def action_delivery_yes(self):
+        # No entregado
+        self.is_delivery = 'yes'
 
     # Onchange
     @api.onchange('customer_ids')

@@ -67,6 +67,7 @@
                         <group>
                             <group string="Entrega">
                                 <field name="date_approximate_delivery" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                                <field name="date_approx_del_end" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
                                 <field name="date_delivery" attrs="{'readonly' : [('state', 'not in', ('in_local'))]}" />
                             </group>
                             <group string="Paquete">
