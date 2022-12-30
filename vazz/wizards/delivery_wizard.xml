@@ -13,7 +13,7 @@
                     
                     <field name="total" readonly="0" required="1"/>
 
-                    <field name="is_total" invisible="0" readonly="1" force_save="1" />
+                    <field name="is_total" invisible="1" readonly="1" force_save="1" />
                     <field name="currency_id" invisible="1" readonly="1" force_save="1" />
                 </group>
                 <group>
