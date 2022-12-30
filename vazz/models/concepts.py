@@ -7,7 +7,7 @@ class Concepts(models.Model):
     _description = 'Conceptos'
 
     name = fields.Char(string="Concepto")
-    description = fields.Text(string="Descripción")
+    description = fields.Text(string="Descripción (opcional)")
     currency_id = fields.Many2one( 'res.currency', string='Currency')
     public_price = fields.Float(string="Precio")
     service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio", tracking=True)

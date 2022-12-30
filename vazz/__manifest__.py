@@ -26,6 +26,7 @@
         "data/ir_cron_server.xml",
         # Wizard Files
         "wizards/cancel_wizard.xml",
+        "wizards/delivery_wizard.xml",
         # Views
         "views/services.xml",
         "views/services_rol.xml",

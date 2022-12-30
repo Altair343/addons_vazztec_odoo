@@ -112,8 +112,7 @@
                                 <br/>
                                 <field name="technical_id"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
                                     attrs="{'readonly' : [('state', 'not in', ('in_process'))]}"/>
-                                <field name="date_delibery" 
-                                    attrs="{'readonly' : [('state', 'not in', ('diagnosed','repaired','not_solution'))]}"/>
+                                <field name="date_delibery" readonly="1" force_save="1" />
                                     <!-- ('is_delivery', 'not in', ('not')) -->
                                 <field name="is_delivery" readonly="1" force_save="1" />
                             </group>

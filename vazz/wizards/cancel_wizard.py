@@ -6,7 +6,7 @@ from datetime import date
 import logging
 _logger = logging.getLogger(__name__)
 
-class CancelWizardLIB(models.TransientModel):
+class CancelWizard(models.TransientModel):
     _name = "vazz.cancel_wizard"
     _description ="Cancelación"
 
@@ -15,7 +15,7 @@ class CancelWizardLIB(models.TransientModel):
 
     @api.model
     def default_get(self,fields_list):
-        cancel_wizard = super(CancelWizardLIB,self).default_get(fields_list)
+        cancel_wizard = super(CancelWizard,self).default_get(fields_list)
         # definir la zona horaria 
         cancel_wizard['cancel_date'] = fields.datetime.now()
         return cancel_wizard

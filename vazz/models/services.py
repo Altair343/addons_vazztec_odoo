@@ -339,16 +339,6 @@ class Services(models.Model):
         # Entregado
         is_required = False
         text_required = ""
-
-
-        if self.total_assets < self.total:
-            is_required = True
-            text_required = text_required + "- El servicio no ha sido pagado en su totalidad \n"
-
-        if not self.date_delibery:
-            is_required = True
-            text_required = text_required + "- Agregue la fecha de entrega \n"
-
         if not self.question_warranty:
             is_required = True
             text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
@@ -356,11 +346,24 @@ class Services(models.Model):
         if is_required == True:
             raise ValidationError(f"{text_required}")
 
-        self.is_delivery = 'yes'
-    
+        return self.delivery_wizard()
+
     def action_archive(self):
         # Desarchivar
         self.is_archive = 'not'
+
+    def action_delivery(self,total,date_delibery,is_total):
+        
+        if is_total == False:
+            self.env['vazz.orders.assets'].create({
+                'name': total,
+                'note': 'Pago generado al entregar',
+                'service_id': self.id})
+
+
+        self.date_delibery = date_delibery
+        self.is_delivery = 'yes'
+
 
     # Onchange
     @api.onchange('customer_ids')
@@ -388,6 +391,36 @@ class Services(models.Model):
             'view_id' : self.env.ref('vazz.cancel_request_vazz_view_form').id,
             'target' : 'new',
             'context' : {
+                'uid' : self._context.get('uid'),
+                'default_id' : product_ids,
+                'params' : {
+                    'id' : self.id,
+                    'model' : 'vazz.services',
+                },
+            }
+        }
+    
+    def delivery_wizard(self):
+        product_ids = self.env['vazz.services'].browse(self._context.get('active_ids'))
+
+        if self.total_assets >= self.total:
+            is_total = True
+        else:
+            is_total = False
+            
+        return {
+            'name' : 'Entrega',
+            'type' : 'ir.actions.act_window',
+            'res_model' : 'vazz.delivery.wizard',
+            'view_mode' : 'form',
+            'view_type' : 'form',
+            'views' : [(False,'form')],
+            'view_id' : self.env.ref('vazz.delivery_wizard_vazz_view_form').id,
+            'target' : 'new',
+            'context' : {
+                'default_total_pay': self.total,
+                'default_is_total': is_total,
+                'default_total_pending': self.total_pending,
                 'uid' : self._context.get('uid'),
                 'default_id' : product_ids,
                 'params' : {
