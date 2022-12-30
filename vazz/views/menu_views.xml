@@ -60,6 +60,13 @@
                 parent="vazz.request_menu_services"
                 sequence="50"
                 action="vazz.action_unlocks_vazz"/>
+            
+            <menuitem
+                id="action_schedule_vazz_menu_action"
+                name="Agenda"
+                parent="vazz.request_menu_services"
+                sequence="50"
+                action="vazz.action_schedule_vazz"/>
     
     <!-- Configuraciones -->
         <menuitem 
@@ -89,5 +96,12 @@
                 parent="vazz.vazz_configurarion_menu" 
                 sequence="30" 
                 action="vazz.action_equipment_type_vazz"/>
+            
+            <menuitem 
+                id="action_schedule_type_vazz_menu_action" 
+                name="Tipos de agenda" 
+                parent="vazz.vazz_configurarion_menu" 
+                sequence="30" 
+                action="vazz.action_schedule_type_vazz"/>
 
 </odoo>

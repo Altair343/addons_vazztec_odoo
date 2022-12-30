@@ -31,4 +31,14 @@ class CancelWarranty(models.Model):
     cancel_request = fields.Many2one(comodel_name="vazz.warranty",
         string="Solicitud")
 
+class CancelSchedule(models.Model):
+    _name = "vazz.cancel.schedule"
+    _description = "Cancelación de Agenda"
+
+    cancel_date = fields.Date(string="Fecha de cancelación", readonly=True)
+    comment = fields.Text(string="Motivo de cancelación")
+
+    cancel_request = fields.Many2one(comodel_name="vazz.schedule",
+        string="Solicitud")
+
 

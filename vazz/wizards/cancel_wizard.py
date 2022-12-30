@@ -36,6 +36,10 @@ class CancelWizardLIB(models.TransientModel):
             model_cancel = 'vazz.cancel.warranty'
             field_refense = 'cancel_request'
             self._state_change(model,product_model)
+        elif model == 'vazz.schedule':
+            model_cancel = 'vazz.cancel.schedule'
+            field_refense = 'cancel_request'
+            self._state_change(model,product_model)
         else:
             raise UserError('No se encontro el modelo')
 
@@ -52,6 +56,8 @@ class CancelWizardLIB(models.TransientModel):
             product_model.action_cancel(self.comment)
         elif model == 'vazz.warranty':
             product_model.action_lost(self.comment)
+        elif model == 'vazz.schedule':
+            product_model.action_cancel(self.comment)
         else:
             raise UserError('No Se encontro el modelo : %s |||| %s ||||'%(model,product_model.state))
 

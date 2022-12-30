@@ -79,3 +79,10 @@ class StateHistory(models.Model):
 
     order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
     service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
+
+class ScheduleType(models.Model):
+    _name = 'vazz.schedule.type'
+    _description = 'Tipos de Agenda'
+
+    name = fields.Char(string="Tipo de agenda", required= True )
+    code = fields.Char(string="Code", required= True )

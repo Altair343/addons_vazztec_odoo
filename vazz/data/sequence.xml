@@ -41,5 +41,13 @@
             <field name="padding">6</field>
         </record>
 
+        <record id="seq_unlocks_vazz" model="ir.sequence">
+            <field name="name">Agenda Vazz</field>
+            <field name="code">vazz.schedule.sequence</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="padding">6</field>
+        </record>
+
     </data>
 </odoo>

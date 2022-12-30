@@ -2,35 +2,40 @@ id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 vazz_services_general,Solicitud de Servicio general,model_vazz_services,vazz.general_user,1,0,0,0
 vazz_services_admin,Solicitud de Servicio Admin,model_vazz_services,vazz.vazz_admin,1,1,1,1
 vazz_customers_general,Clientes general,model_vazz_customers,vazz.general_user,1,0,0,0
-vazz_customers_admin,Clientes de Servicio Admin,model_vazz_customers,vazz.vazz_admin,1,1,1,1
+vazz_customers_admin,Clientes Admin,model_vazz_customers,vazz.vazz_admin,1,1,1,1
 vazz_customers_phone_general,Teléfono general,model_vazz_customers_phone,vazz.general_user,1,0,0,0
 vazz_customers_phone_admin,Teléfono Admin,model_vazz_customers_phone,vazz.vazz_admin,1,1,1,1
-vazz_orders_general,Clientes general,model_vazz_orders,vazz.general_user,1,0,0,0
-vazz_orders_admin,Clientes de Servicio Admin,model_vazz_orders,vazz.vazz_admin,1,1,1,1
-vazz_orders_assets_general,Acticipos general,model_vazz_orders_assets,vazz.general_user,1,0,0,0
-vazz_orders_assets_admin,Acticipos de Servicio Admin,model_vazz_orders_assets,vazz.vazz_admin,1,1,1,1
+vazz_orders_general,Pedidos general,model_vazz_orders,vazz.general_user,1,0,0,0
+vazz_orders_admin,Pedido Admin,model_vazz_orders,vazz.vazz_admin,1,1,1,1
+vazz_orders_assets_general,Anticipos general,model_vazz_orders_assets,vazz.general_user,1,0,0,0
+vazz_orders_assets_admin,Anticipos de Servicio Admin,model_vazz_orders_assets,vazz.vazz_admin,1,1,1,1
 vazz_cancel_orders_general,Cancelar pedido general,model_vazz_cancel_orders,vazz.general_user,1,0,0,0
 vazz_cancel_orders_admin,Cancelar pedido de Servicio Admin,model_vazz_cancel_orders,vazz.vazz_admin,1,1,1,1
 vazz_cancel_services_general,Cancelar servicio general,model_vazz_cancel_services,vazz.general_user,1,0,0,0
-vazz_cancel_services_admin,Cancelar servicio de Servicio Admin,model_vazz_cancel_services,vazz.vazz_admin,1,1,1,1
+vazz_cancel_services_admin,Cancelar servicio Admin,model_vazz_cancel_services,vazz.vazz_admin,1,1,1,1
 vazz_cancel_warranty_general,Cancelar servicio general,model_vazz_cancel_warranty,vazz.general_user,1,0,0,0
-vazz_cancel_warranty_admin,Cancelar servicio de Servicio Admin,model_vazz_cancel_warranty,vazz.vazz_admin,1,1,1,1
+vazz_cancel_warranty_admin,Cancelar servici Admin,model_vazz_cancel_warranty,vazz.vazz_admin,1,1,1,1
 vazz_notifications_general,Notificaciones servicio general,model_vazz_notifications,vazz.general_user,1,0,0,0
-vazz_notifications_admin,Notificaciones servicio de Servicio Admin,model_vazz_notifications,vazz.vazz_admin,1,1,1,1
+vazz_notifications_admin,Notificaciones servicio Admin,model_vazz_notifications,vazz.vazz_admin,1,1,1,1
 vazz_notifications_type_general,Tipos de notificaciones servicio general,model_vazz_notifications_type,vazz.general_user,1,0,0,0
-vazz_notifications_type_admin,Tipos de notificaciones de Servicio Admin,model_vazz_notifications_type,vazz.vazz_admin,1,1,1,1
+vazz_notifications_type_admin,Tipos de notificaciones Admin,model_vazz_notifications_type,vazz.vazz_admin,1,1,1,1
 vazz_warranty_general,Garantias servicio general,model_vazz_warranty,vazz.general_user,1,0,0,0
-vazz_warranty_admin,Garantias servicio de Servicio Admin,model_vazz_warranty,vazz.vazz_admin,1,1,1,1
+vazz_warranty_admin,Garantias servicio Admin,model_vazz_warranty,vazz.vazz_admin,1,1,1,1
 vazz_unlocks_general,Desbloqueos general,model_vazz_unlocks,vazz.general_user,1,0,0,0
 vazz_unlocks_admin,Desbloqueos Admin,model_vazz_unlocks,vazz.vazz_admin,1,1,1,1
 vazz_unlocks_type_general,Tipos de desbloqueos general,model_vazz_unlocks_type,vazz.general_user,1,0,0,0
 vazz_unlocks_type_admin,Tipos de desbloqueos Admin,model_vazz_unlocks_type,vazz.vazz_admin,1,1,1,1
-vazz_equipment_type_general,Tipos de desbloqueos general,model_vazz_equipment_type,vazz.general_user,1,0,0,0
-vazz_equipment_type_admin,Tipos de desbloqueos Admin,model_vazz_equipment_type,vazz.vazz_admin,1,1,1,1
-vazz_diagnostic_general,Tipos de desbloqueos general,model_vazz_diagnostic,vazz.general_user,1,0,0,0
-vazz_diagnostic_admin,Tipos de desbloqueos Admin,model_vazz_diagnostic,vazz.vazz_admin,1,1,1,1
-vazz_state_history_general,Tipos de desbloqueos general,model_vazz_state_history,vazz.general_user,1,0,0,0
-vazz_state_history_admin,Tipos de desbloqueos Admin,model_vazz_state_history,vazz.vazz_admin,1,1,1,1
-vazz_concepts_general,Tipos de desbloqueos general,model_vazz_concepts,vazz.general_user,1,0,0,0
-vazz_concepts_admin,Tipos de desbloqueos Admin,model_vazz_concepts,vazz.vazz_admin,1,1,1,1
-
+vazz_equipment_type_general,Tipos de equipos general,model_vazz_equipment_type,vazz.general_user,1,0,0,0
+vazz_equipment_type_admin,Tipos de equipos Admin,model_vazz_equipment_type,vazz.vazz_admin,1,1,1,1
+vazz_diagnostic_general,Diagnostico general,model_vazz_diagnostic,vazz.general_user,1,0,0,0
+vazz_diagnostic_admin,Diagnostico Admin,model_vazz_diagnostic,vazz.vazz_admin,1,1,1,1
+vazz_state_history_general,Historial de estados general,model_vazz_state_history,vazz.general_user,1,0,0,0
+vazz_state_history_admin,Historial de estados Admin,model_vazz_state_history,vazz.vazz_admin,1,1,1,1
+vazz_concepts_general,Conceptos general,model_vazz_concepts,vazz.general_user,1,0,0,0
+vazz_concepts_admin,Conceptos Admin,model_vazz_concepts,vazz.vazz_admin,1,1,1,1
+vazz_schedule_general,Agenda general,model_vazz_schedule,vazz.general_user,1,0,0,0
+vazz_schedule_admin,Agenda Admin,model_vazz_schedule,vazz.vazz_admin,1,1,1,1
+vazz_schedule_type_general,Tipos de Agenda general,model_vazz_schedule_type,vazz.general_user,1,0,0,0
+vazz_schedule_type_admin,Tipos de Agenda Admin,model_vazz_schedule_type,vazz.vazz_admin,1,1,1,1
+vazz_cancel_schedule_general,Cancelar Agenda general,model_vazz_cancel_schedule,vazz.general_user,1,0,0,0
+vazz_cancel_schedule_admin,Cancelar Agenda Admin,model_vazz_cancel_schedule,vazz.vazz_admin,1,1,1,1
