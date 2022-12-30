@@ -125,7 +125,7 @@
                                     'type_register': 'service',
                                     'default_state':state,
                                 }"/>
-                        
+                        <field name="total_concepts"/>
                         <notebook>
                             <page name="pedidos" string="Pedidos" >
                                 <group>
