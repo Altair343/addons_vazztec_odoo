@@ -41,7 +41,7 @@
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
                             attrs="{'invisible' : [('state', 'in', ('draft','delivered','cancel'))]}" />
 
-                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft"/>
+                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
                     <sheet>
                         <group>

@@ -14,6 +14,8 @@ STATES = [
     ('in_local', 'En local'),
     ('delivered', 'Entregado'),
     ('cancel', 'Cancelado'),
+
+    ('aux', ''),
 ]
 
 class Order(models.Model):
