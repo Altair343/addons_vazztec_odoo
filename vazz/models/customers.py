@@ -10,7 +10,7 @@ class Customers(models.Model):
     def _compute_phone(self):
         # buscar el teléfono principal
         for rec in self:
-            phoneAux = ' '
+            phoneAux = False
             if rec.phones_ids:
                 for tel in rec.phones_ids:
                     if tel.is_main == True:
