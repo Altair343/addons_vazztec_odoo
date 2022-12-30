@@ -49,11 +49,7 @@
                             attrs="{'invisible' : ['|',('state', 'not in', ('diagnosed','repaired','not_solution','cancel')),('is_delivery', 'not in', ('not'))]}"/>
 
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
-                            attrs="{'invisible' : [
-                                '|',
-                                ('state', 'not in', ('pending','in_process','diagnosed','repaired','not_solution')),
-                                ('is_delivery', 'not in', ('yes'))
-                            ]}"/>
+                            attrs="{'invisible' : [('state', 'in', ('draft','diagnosed','repaired','not_solution','cancel'))]}"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
