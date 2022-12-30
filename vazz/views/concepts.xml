@@ -7,7 +7,7 @@
             <field name="model">vazz.concepts</field>        
             <field name="arch" type="xml">
                 <tree string="">
-                    <!-- <field name="name"/> -->
+                    <field name="name"/>
                     <field name="description"/>
                     <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="currency_id" invisible="1"/>
@@ -26,7 +26,7 @@
                     <sheet>
                         <group>
                             <group>
-                                <!-- <field name="name" readonly="0" required ="1"/> -->
+                                <field name="name" readonly="0" required ="1"/>
                                 <field name="description" readonly="0" required ="1"/>
                                 <field name="public_price" readonly="0" required ="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
 

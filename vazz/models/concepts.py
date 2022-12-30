@@ -6,7 +6,7 @@ class Concepts(models.Model):
     _name = 'vazz.concepts'
     _description = 'Conceptos'
 
-    # name = fields.Text(string="Concepto")
+    name = fields.Char(string="Concepto")
     description = fields.Text(string="Descripción")
     currency_id = fields.Many2one( 'res.currency', string='Currency')
     public_price = fields.Float(string="Precio")

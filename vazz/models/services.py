@@ -149,7 +149,7 @@ class Services(models.Model):
     is_archive = fields.Selection(REQUEST,default=DELIVERY[0][0], string='Archivado',tracking=True)
 
     # Costos
-    estimated_cost = fields.Float(string="Costo estimado",tracking=True )
+    estimated_cost = fields.Float(string="Costo estimado del servicio",tracking=True )
     assets_ids = fields.One2many(comodel_name='vazz.orders.assets',inverse_name= 'service_id', 
         string="Anticipos", ondelete='cascade')
     total_assets_ser = fields.Float(string="Total de anticipos del servicio",compute="_compute_total_assets_ser", store = False)
