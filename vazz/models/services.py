@@ -76,25 +76,22 @@ class Services(models.Model):
         # Calculando el total de los anticipos
         self.total_assets = self.total_assets_ser + self.total_assets_order
 
-    @api.depends('estimated_cost','total_pay_order','total_concepts')
+    @api.depends('total_pay_order','total_concepts')
     def _compute_total(self):
         # Calculando el total a pagar
         for rec in self:
             total_order = 0
-            priceAux = 0
-            total_aux_order = 0
+            total_aux_concepts = 0
 
             total_pay_order = rec.total_pay_order
             if total_pay_order:
                 total_order =  total_pay_order
-            if rec.estimated_cost:
-                priceAux = rec.estimated_cost
             
             total_concepts = rec.total_concepts
             if total_concepts:
-                total_aux_order =  total_concepts
+                total_aux_concepts =  total_concepts
 
-            rec.total = priceAux + total_order + total_aux_order
+            rec.total = total_order + total_aux_concepts
 
     @api.depends('total','total_assets')
     def _compute_total_pending(self):
@@ -236,6 +233,8 @@ class Services(models.Model):
             if data:
                 for ser in data:
                     aux = aux + f"{ser.name},"
+                # no se crea el mensaje
+                _logger.info(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
                 self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
 
         vals['state'] = 'pending'
@@ -339,6 +338,12 @@ class Services(models.Model):
         # Entregado
         is_required = False
         text_required = ""
+        
+        if self.state != 'cancel':
+            if len(self.concepts_ids) <= 0:
+                is_required = True
+                text_required = text_required + "- Agregué un concepto \n"
+        
         if not self.question_warranty:
             is_required = True
             text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
@@ -353,14 +358,11 @@ class Services(models.Model):
         self.is_archive = 'not'
 
     def action_delivery(self,total,date_delibery,is_total):
-        
         if is_total == False:
             self.env['vazz.orders.assets'].create({
                 'name': total,
                 'note': 'Pago generado al entregar',
                 'service_id': self.id})
-
-
         self.date_delibery = date_delibery
         self.is_delivery = 'yes'
 
@@ -421,6 +423,7 @@ class Services(models.Model):
                 'default_total_pay': self.total,
                 'default_is_total': is_total,
                 'default_total_pending': self.total_pending,
+                'default_total_assets': self.total_assets,
                 'uid' : self._context.get('uid'),
                 'default_id' : product_ids,
                 'params' : {

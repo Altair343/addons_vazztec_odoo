@@ -73,7 +73,7 @@ class Customers(models.Model):
         
         nombre = ""
         apellidop = ""
-        apellidom = ""
+        apellidom = False
         if 'user_name' in vals or 'surname' in vals or 'second_surname' in vals:
             if 'user_name' in vals:
                 nombre = vals['user_name']
@@ -93,17 +93,38 @@ class Customers(models.Model):
                 if self.second_surname:
                     apellidom = self.second_surname
             
-            vals['name'] = f"{nombre} {apellidop} {apellidom}"
-
+            if apellidom == False:
+                vals['name'] = f"{nombre} {apellidop}"
+            else:
+                vals['name'] = f"{nombre} {apellidop} {apellidom}"
+        
         res = super(Customers,self).write(vals)
         return res
 
+    # Onchange
+    @api.onchange('user_name','surname','second_surname')
+    def _onchange_user_name(self):
+        nombre = ""
+        apellidop = ""
+        apellidom = False
+        if self.user_name:
+            nombre = self.user_name
+        if self.surname:
+            apellidop = self.surname
+        if self.second_surname:
+            apellidom = self.second_surname
+        
+        if apellidom == False:
+            self.name= f"{nombre} {apellidop}"
+        else:
+            self.name= f"{nombre} {apellidop} {apellidom}"
+    
 
     def name_get(self):
         res = []
         for record in self:
             customers = record.env['vazz.customers'].browse([record['id']])
-            name = f"{customers.user_name}"
+            name = f"{customers.name}"
             
             res.append((record['id'],'%s' % (name)))
         return res

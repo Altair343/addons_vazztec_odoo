@@ -9,10 +9,10 @@
                 <group>
                     <field name="date_delibery" readonly="0" required="1"/>
                     <field name="total_pay" readonly="1" force_save="1"  widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="total_pending" readonly="1" force_save="1"  widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="total_assets" readonly="1" force_save="1"  widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     
+                    <field name="total_pending" readonly="1" force_save="1"  widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="total" readonly="0" required="1"/>
-
                     <field name="is_total" invisible="1" readonly="1" force_save="1" />
                     <field name="currency_id" invisible="1" readonly="1" force_save="1" />
                 </group>

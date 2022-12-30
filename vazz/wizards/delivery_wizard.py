@@ -10,9 +10,12 @@ class DeliveryWizard(models.TransientModel):
     date_delibery = fields.Date(string="Fecha de entrega")
     total_pay = fields.Float(string="Total a pagar")
     total_pending = fields.Float(string="Pendiente por pagar")
+    total_assets = fields.Float(string="Total de anticipos")
     currency_id = fields.Many2one('res.currency', string='Currency')
     total = fields.Float(string="Pago")
     is_total = fields.Boolean( string="ya esta pagado")
+
+
 
     @api.model
     def default_get(self,fields_list):
@@ -30,6 +33,10 @@ class DeliveryWizard(models.TransientModel):
         total_pending = self._context.get('default_total_pending')
         if total_pending:
             res['total_pending'] = total_pending
+        
+        total_assets = self._context.get('default_total_assets')
+        if total_assets:
+            res['total_assets'] = total_assets
 
         is_total = self._context.get('default_is_total')
         if is_total:
