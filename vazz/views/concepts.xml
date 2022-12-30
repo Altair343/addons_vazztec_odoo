@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="concepts_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.concepts.vazz.tree</field>
+            <field name="model">vazz.concepts</field>        
+            <field name="arch" type="xml">
+                <tree string="">
+                    <!-- <field name="name"/> -->
+                    <field name="description"/>
+                    <field name="public_price"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- view form -->
+        <record id="concepts_vazz_form" model="ir.ui.view">
+            <field name="name">vazz.concepts.vazz.form</field>
+            <field name="model">vazz.concepts</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration" duplicate="false">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <!-- <field name="name" readonly="0" required ="1"/> -->
+                                <field name="description" readonly="0"/>
+                                <field name="public_price" readonly="0" required ="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
+                                <field name="currency_id" invisible="1" readonly="1" force_save="1" />
+                                <field name="service_id" invisible="1" readonly="1" force_save="1" />
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+
+                </form> 
+            </field>
+        </record>
+    </data>
+</odoo>

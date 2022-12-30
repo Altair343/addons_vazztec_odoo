@@ -137,14 +137,12 @@ class Order(models.Model):
         result = super(Order, self).create(vals)
         return result
 
-
     # Onchange
     @api.onchange('service_id')
     def _onchange_service_id(self):
         if self.service_id:
             self.customer_id = self.service_id.customer_ids.id
             self.date_approximate_delivery = self.service_id.date_approximate_delivery
-
 
     # States
     def _update_state(self, new_state):

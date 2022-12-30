@@ -89,6 +89,12 @@
                         <label for="diagnostic_ids" string="Diagnósticos"/>
                         <field name="diagnostic_ids" readonly="1"
                             context="{ 'type_register': 'service', 'default_state':state,}"/>
+                        
+                        <br/>
+                        <label for="concepts_ids" string="Conceptos"/>
+                        <field name="concepts_ids" readonly="1"
+                            context="{'type_register': 'service','default_state':state,}"/>
+
                         <notebook>
                             <page name="pedidos" string="Pedidos" >
                                 <group>

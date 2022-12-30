@@ -68,8 +68,6 @@ class Notifications(models.Model):
 
     @api.model
     def create(self, vals):
-
-
         result = super(Notifications, self).create(vals)
         return result
 

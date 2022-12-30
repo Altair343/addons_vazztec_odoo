@@ -76,12 +76,13 @@ class Services(models.Model):
         # Calculando el total de los anticipos
         self.total_assets = self.total_assets_ser + self.total_assets_order
 
-    @api.depends('estimated_cost','total_pay_order')
+    @api.depends('estimated_cost','total_pay_order','total_concepts')
     def _compute_total(self):
         # Calculando el total a pagar
         for rec in self:
             total_order = 0
             priceAux = 0
+            total_aux_order = 0
 
             total_pay_order = rec.total_pay_order
             if total_pay_order:
@@ -89,13 +90,17 @@ class Services(models.Model):
             if rec.estimated_cost:
                 priceAux = rec.estimated_cost
             
-            rec.total = priceAux + total_order
+            total_concepts = rec.total_concepts
+            if total_concepts:
+                total_aux_order =  total_concepts
+
+            rec.total = priceAux + total_order + total_aux_order
 
     @api.depends('total','total_assets')
     def _compute_total_pending(self):
+        # pendiente por pagar
         self.total_pending = self.total - self.total_assets
     
-
     @api.depends('notifications_ids')
     def _compute_warning_notify(self):
         for rec in self:
@@ -107,6 +112,14 @@ class Services(models.Model):
             else:
                 rec.warning_notify = 'not'
     
+    @api.depends('concepts_ids')
+    def _compute_total_concepts(self):
+        totalAux = 0
+        for con in self.concepts_ids:
+            totalAux = totalAux + con.public_price
+        self.total_concepts = totalAux
+
+
     # Estado de la solicitud
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
     state_aux = fields.Selection(STATES, string='Estado del registro',related="state", store= False)
@@ -182,7 +195,12 @@ class Services(models.Model):
     # Pestaña de historial de estados
     state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'service_id', 
         string="historial de estados")
-        
+    
+    # Conceptos
+    total_concepts = fields.Float(string="Total de los conceptos",compute="_compute_total_concepts", store = False)
+    concepts_ids = fields.One2many(comodel_name='vazz.concepts',inverse_name= 'service_id', 
+        string="Conceptos")
+
     @api.model
     def default_get(self, fields):
         res = super(Services, self).default_get(fields)

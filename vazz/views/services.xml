@@ -49,7 +49,11 @@
                             attrs="{'invisible' : ['|',('state', 'not in', ('diagnosed','repaired','not_solution','cancel')),('is_delivery', 'not in', ('not'))]}"/>
 
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
-                            attrs="{'invisible' : ['|',('state', 'not in', ('pending','in_process','diagnosed','repaired','not_solution')),('is_delivery', 'not in', ('yes'))]}"/>
+                            attrs="{'invisible' : [
+                                '|',
+                                ('state', 'not in', ('pending','in_process','diagnosed','repaired','not_solution')),
+                                ('is_delivery', 'not in', ('yes'))
+                            ]}"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
@@ -114,6 +118,14 @@
                                     'type_register': 'service',
                                     'default_state':state,
                                 }"/>
+                        <br/>
+                        <label for="concepts_ids" string="Conceptos"/>
+                        <field name="concepts_ids" readonly="0"
+                            context="{ 
+                                    'type_register': 'service',
+                                    'default_state':state,
+                                }"/>
+                        
                         <notebook>
                             <page name="pedidos" string="Pedidos" >
                                 <group>

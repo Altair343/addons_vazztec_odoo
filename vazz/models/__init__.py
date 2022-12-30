@@ -9,3 +9,4 @@ from . import warranty
 from . import unlocks
 from . import diagnostic
 from . import res_users
+from . import concepts
