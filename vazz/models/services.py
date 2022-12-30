@@ -234,8 +234,16 @@ class Services(models.Model):
                 for ser in data:
                     aux = aux + f"{ser.name},"
                 # no se crea el mensaje
-                _logger.info(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
-                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+                mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
+                _logger.info()
+                if 'observations' in vals:
+                    if vals['observations']:
+                        vals['observations'] = f"{vals['observations']}, {mensaje}"
+                    else:
+                        vals['observations'] = f"{mensaje}"
+                else:
+                    vals['observations'] = f"{mensaje}"
+                self._notify_chatter(mensaje)
 
         vals['state'] = 'pending'
         service_id = self.env['vazz.state.history'].create({
@@ -291,6 +299,13 @@ class Services(models.Model):
     
     def action_process(self):
         # En proceso
+        if self.imei:
+            aux =''
+            data = self.env['vazz.services'].search([('imei','=',self.imei)])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                self._notify_chatter(f"El No. de serie/IMEI: {self.imei} existe en los siguientes servicios: {aux}")
         self._update_state('in_process')
     
     def action_diagnosed(self):
