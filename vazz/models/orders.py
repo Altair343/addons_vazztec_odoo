@@ -57,7 +57,7 @@ class Order(models.Model):
 
 
     # Estado de la solicitud
-    state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
+    state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro B', tracking=True)
     state_aux = fields.Selection(STATES, string='Estado del registro',related="state", store= False)
     previous_state = fields.Selection(STATES,string='Estado anterior del registro' )
 

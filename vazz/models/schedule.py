@@ -15,7 +15,7 @@ class Schedule(models.Model):
     _description = 'Agenda'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     
-    state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
+    state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro B', tracking=True)
     state_aux = fields.Selection(STATES, string='Estado del registro',related="state", store= False)
     name = fields.Char(string="Folio", required=True, copy=False, index=True, default=lambda self: _('Nuevo'))
     service_ids = fields.Many2many(comodel_name="vazz.services", string="Servicios")

@@ -85,4 +85,4 @@ class ScheduleType(models.Model):
     _description = 'Tipos de Agenda'
 
     name = fields.Char(string="Tipo de agenda", required= True )
-    code = fields.Char(string="Code", required= True )
+    code = fields.Char(string="Code" )
