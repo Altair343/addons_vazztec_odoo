@@ -9,7 +9,8 @@
                 <tree string="">
                     <!-- <field name="name"/> -->
                     <field name="description"/>
-                    <field name="public_price"/>
+                    <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="currency_id" invisible="1"/>
                 </tree>
             </field>
         </record>
