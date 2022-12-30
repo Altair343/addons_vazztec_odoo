@@ -5,7 +5,7 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.user_groups_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='sel_groups_11']" position="after">
+            <xpath expr="//field[@name='companies_count']" position="after">
                 <field name="type_user_va" required ="1"/>
             </xpath>
         </field>

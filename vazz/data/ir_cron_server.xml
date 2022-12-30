@@ -11,4 +11,16 @@
         <field name="code">model._warranty_expired()</field>
         <field name="state">code</field>
     </record>
+
+    <record id="ir_cron_service_archive" model="ir.cron">
+        <field name="name">Cron Archivar Servicios</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="DateTime.now()" />
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_vazz_services"/>
+        <field name="code">model._archive_data()</field>
+        <field name="state">code</field>
+    </record>
 </odoo>

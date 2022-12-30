@@ -61,6 +61,7 @@
                                 <field name="assets_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
                                 <field name="total_assets" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
                                 <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                                <field name="total_pending" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <field name="currency_id" invisible="1" readonly="1" force_save="1" />
                             </group>
                         </group>

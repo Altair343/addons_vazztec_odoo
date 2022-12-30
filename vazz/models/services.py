@@ -3,6 +3,8 @@
 from odoo import models, fields,api, _
 from odoo.exceptions import ValidationError,UserError
 
+from odoo.addons.vazz_utils.tools import utils
+
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -15,6 +17,7 @@ STATES = [
     ('not_solution', 'Sin Solución'),
 
     ('cancel', 'Cancelado'),
+    ('aux', ''),
 ]
 
 TYPESERVICES = [
@@ -32,8 +35,8 @@ TYPEENTRY= [
     ('remote', 'Remoto (a distancia)')]
 
 REQUEST = [
-    ('yes', 'Sí'),
-    ('not', 'No')]
+    ('not', 'No'),
+    ('yes', 'Sí')]
 
 DELIVERY = [
     ('not', 'No entregado'),
@@ -60,13 +63,18 @@ class Services(models.Model):
         self.total_assets_order = totalAux
     
     @api.depends('assets_ids')
-    def _compute_total_assets(self):
+    def _compute_total_assets_ser(self):
         # Calculando el total de los anticipos
         totalAux = 0
         if self.assets_ids:
             for ass in self.assets_ids:
                 totalAux = totalAux + ass.name
-        self.total_assets = totalAux
+        self.total_assets_ser = totalAux
+    
+    @api.depends('assets_ids','total_assets_ser','total_assets_order')
+    def _compute_total_assets(self):
+        # Calculando el total de los anticipos
+        self.total_assets = self.total_assets_ser + self.total_assets_order
 
     @api.depends('estimated_cost','total_pay_order')
     def _compute_total(self):
@@ -83,6 +91,11 @@ class Services(models.Model):
             
             rec.total = priceAux + total_order
 
+    @api.depends('total','total_assets')
+    def _compute_total_pending(self):
+        self.total_pending = self.total - self.total_assets
+    
+
     @api.depends('notifications_ids')
     def _compute_warning_notify(self):
         for rec in self:
@@ -93,18 +106,18 @@ class Services(models.Model):
                     rec.warning_notify = 'not'
             else:
                 rec.warning_notify = 'not'
-        
-
+    
     # Estado de la solicitud
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
+    state_aux = fields.Selection(STATES, string='Estado del registro',related="state", store= False)
     previous_state = fields.Selection(STATES,string='Estado anterior del registro' )
     name = fields.Char(string="Folio", required=True, copy=False, index=True, 
         default=lambda self: _('Nuevo'))
-    date_reception = fields.Datetime(string="Fecha de recepción")
-    date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada de inicio")
-    date_approx_del_end = fields.Date(string="Fecha de entrega aproximada fin")
+    date_reception = fields.Datetime(string="Fecha de recepción", default=lambda self: fields.datetime.now())
+    date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada")
+    date_delibery = fields.Date(string="Fecha de entrega")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
-    telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="teléfono",
+    telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="Teléfono",
     domain = "[('customer_ids','=',customer_ids)]")
     type_service = fields.Selection(TYPESERVICES, string='Tipo de servicio', tracking=True)
     type_delivery = fields.Selection(TYPEDELIVERY, string='Tipo de entrega solicitada', tracking=True)
@@ -118,16 +131,19 @@ class Services(models.Model):
     diagnostic_ids = fields.One2many(comodel_name='vazz.diagnostic',inverse_name= 'service_id', 
         string="Diagnósticos", ondelete='cascade')
     technical_id = fields.Many2one( 'res.users', string='Técnico', domain = "[('type_user_va','=','technical')]")
-
-    is_delivery = fields.Selection(DELIVERY, default=DELIVERY[0][0], string='Entregado')
+    is_delivery = fields.Selection(DELIVERY, default=DELIVERY[0][0], string='Entrega')
+    date_archive = fields.Date()
+    is_archive = fields.Selection(REQUEST,default=DELIVERY[0][0], string='Archivado',tracking=True)
 
     # Costos
     estimated_cost = fields.Float(string="Costo estimado",tracking=True )
     assets_ids = fields.One2many(comodel_name='vazz.orders.assets',inverse_name= 'service_id', 
         string="Anticipos", ondelete='cascade')
-    total_assets = fields.Float(string="Total de anticipos del servicio",compute="_compute_total_assets", store = False)
+    total_assets_ser = fields.Float(string="Total de anticipos del servicio",compute="_compute_total_assets_ser", store = False)
     total = fields.Float(string="Total a pagar",compute="_compute_total", store = False)
-
+    total_pending = fields.Float(string="Pendiente por pagar",compute="_compute_total_pending", store = False)
+    total_assets = fields.Float(string="Total de anticipos",compute="_compute_total_assets", store = False)
+    
     # Pestaña de pedidos
     currency_id = fields.Many2one( 'res.currency', string='Currency')
     total_pay_order = fields.Float(string="Total a pagar de pedidos",compute="_compute_total_pay_order", store = False)
@@ -156,8 +172,12 @@ class Services(models.Model):
         string="Desbloqueos", ondelete='cascade')
 
     # Pestaña de Equipo
-    equipment_ids = fields.One2many(comodel_name='vazz.equipment',inverse_name= 'service_id', 
-        string="Equipos", ondelete='cascade')
+    brand = fields.Char(string="Marca")
+    model_e = fields.Char(string="Modelo" )
+    imei = fields.Char(string="No. de serie / IMEI")
+    type_equipment = fields.Many2one(comodel_name="vazz.equipment.type", string="Tipo de equipo")
+    password = fields.Char(string="Contraseña del equipo" )
+    accessories =  fields.Text(string="Accesorios")
 
     # Pestaña de historial de estados
     state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'service_id', 
@@ -192,6 +212,14 @@ class Services(models.Model):
         if name_seq != False:
             vals['name'] = f"S/{name_seq}"
 
+        if 'imei' in vals:
+            aux =''
+            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+
         vals['state'] = 'pending'
         service_id = self.env['vazz.state.history'].create({
             'state': vals['state'],
@@ -201,6 +229,18 @@ class Services(models.Model):
         result = super(Services, self).create(vals)
         return result
 
+    def write(self,vals):
+        if 'imei' in vals:
+            aux =''
+            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+        
+        res = super(Services,self).write(vals)
+        return res
+
     # States
     def _update_state(self, new_state):
         for rec in self:
@@ -209,7 +249,6 @@ class Services(models.Model):
             self.env['vazz.state.history'].create({
                 'state': new_state,
                 'service_id': rec.id})
-            # se crea registro
     
     def action_pending(self):
         # Pendiente
@@ -221,27 +260,44 @@ class Services(models.Model):
     
     def action_diagnosed(self):
         # Diagnosticado
+        count = len(self.diagnostic_ids)
+        if count <= 0:
+            raise UserError("Agregue por lo menos un Diagnóstico")
+        self.date_archive = fields.date.today()
         self._update_state('diagnosed')
     
     def action_repaired(self):
         # Reparado
+        count = len(self.diagnostic_ids)
+        if count <= 0:
+            raise UserError("Agregue por lo menos un Diagnóstico")
+        self.date_archive = fields.date.today()
         self._update_state('repaired')
     
     def action_not_solution(self):
         # Sin Solución
+        count = len(self.diagnostic_ids)
+        if count <= 0:
+            raise UserError("Agregue por lo menos un Diagnóstico")
+        self.date_archive = fields.date.today()
         self._update_state('not_solution')
 
     def action_cancel(self, comment):
         # Cancelado
+        self.date_archive = fields.date.today()
         self._update_state('cancel')
     
-    def action_delivery_not(self):
-        # Entregado
-        self.is_delivery = 'not'
-    
     def action_delivery_yes(self):
-        # No entregado
+        # Entregado
+        if self.total_assets < self.total:
+            raise UserError("El servicio no ha sido pagado en su totalidad")
+        if not self.date_delibery:
+            raise UserError("Agregue la fecha de entrega")
         self.is_delivery = 'yes'
+    
+    def action_archive(self):
+        # Desarchivar
+        self.is_archive = 'not'
 
     # Onchange
     @api.onchange('customer_ids')
@@ -250,3 +306,44 @@ class Services(models.Model):
             self.telephone_cus = self.customer_ids.phone.id 
         else:
             self.telephone_cus = False
+
+    # Notify
+    def _notify_chatter(self, body):
+        if self.id:
+            utils.create_chatter(self,self.id,body,'vazz.services')
+
+    # Wizards
+    def cancel_wizard(self):
+        product_ids = self.env['vazz.services'].browse(self._context.get('active_ids'))
+        return {
+            'name' : 'Solicitud de Cancelación',
+            'type' : 'ir.actions.act_window',
+            'res_model' : 'vazz.cancel_wizard',
+            'view_mode' : 'form',
+            'view_type' : 'form',
+            'views' : [(False,'form')],
+            'view_id' : self.env.ref('vazz.cancel_request_vazz_view_form').id,
+            'target' : 'new',
+            'context' : {
+                'uid' : self._context.get('uid'),
+                'default_id' : product_ids,
+                'params' : {
+                    'id' : self.id,
+                    'model' : 'vazz.services',
+                },
+            }
+        }
+    
+    # Crons
+    def _archive_data(self):
+        """
+        Archivar registros
+        """
+        model = "vazz.services"
+        current_date = fields.date.today()
+        services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
+        for ser in services_ids:
+            if ser.date_archive:
+                amountAux = abs(current_date - ser.date_archive).days + 1
+                if amountAux >= 40:
+                    ser.is_archive = 'yes'

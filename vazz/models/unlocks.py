@@ -2,12 +2,6 @@
 # odoo
 from odoo import models, fields,api, _
 
-# pendiente
-# ingresado
-# en proceso
-# finalizado
-# error
-
 class Unlocks(models.Model):
     _name = 'vazz.unlocks'
     _description = 'Desbloqueos'

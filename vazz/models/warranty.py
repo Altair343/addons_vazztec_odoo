@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
 # python
-from datetime import date
-
 # odoo
 from odoo import models, fields,api, _
 from odoo.exceptions import UserError
@@ -113,9 +111,9 @@ class Customers(models.Model):
         """
         Caducar garantías  activas que ya pasó su fecha de cobertura
         """
-        _logger.info("Cron Caducar garantías  activas que ya pasó su fecha de cobertura")
+        # _logger.info("Cron Caducar garantías  activas que ya pasó su fecha de cobertura")
         model = "vazz.warranty"
-        current_date = date.today()
+        current_date = fields.date.today()
         warranties = self.env[model].search([('state','=','active')])
 
         for war in warranties:

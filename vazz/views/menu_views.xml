@@ -15,10 +15,23 @@
 
             <menuitem
                 id="action_servicios_vazz_menu_action"
-                name="Solicitud de servicios"
+                name="Servicios"
                 parent="vazz.request_menu_services"
-                sequence="10"
-                action="vazz.action_servicios_vazz"/>
+                sequence="10"/>
+
+                <menuitem
+                    id="action_servicios_not_vazz_menu_action"
+                    name="Solicitud de servicios"
+                    parent="vazz.action_servicios_vazz_menu_action"
+                    sequence="10"
+                    action="vazz.action_servicios_vazz"/>
+                
+                <menuitem
+                    id="action_action_servicios_archive_vazz"
+                    name="Archivados"
+                    parent="vazz.action_servicios_vazz_menu_action"
+                    sequence="10"
+                    action="vazz.action_servicios_archive_vazz"/>
             
             <menuitem
                 id="action_customers_vazz_menu_action"

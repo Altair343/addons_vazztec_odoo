@@ -28,6 +28,7 @@
         "wizards/cancel_wizard.xml",
         # Views
         "views/services.xml",
+        "views/services_rol.xml",
         "views/customers.xml",
         "views/phone.xml",
         "views/orders.xml",
@@ -41,7 +42,6 @@
         "views/unlocks_rol.xml",
         "views/equipment_type.xml",
         "views/diagnostic.xml",
-        "views/equipment.xml",
         "views/state_history.xml",
         # Views inherit other module
         "views/res_users.xml",

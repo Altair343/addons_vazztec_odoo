@@ -29,8 +29,6 @@ vazz_equipment_type_general,Tipos de desbloqueos general,model_vazz_equipment_ty
 vazz_equipment_type_admin,Tipos de desbloqueos Admin,model_vazz_equipment_type,vazz.vazz_admin,1,1,1,1
 vazz_diagnostic_general,Tipos de desbloqueos general,model_vazz_diagnostic,vazz.general_user,1,0,0,0
 vazz_diagnostic_admin,Tipos de desbloqueos Admin,model_vazz_diagnostic,vazz.vazz_admin,1,1,1,1
-vazz_equipment_general,Tipos de desbloqueos general,model_vazz_equipment,vazz.general_user,1,0,0,0
-vazz_equipment_admin,Tipos de desbloqueos Admin,model_vazz_equipment,vazz.vazz_admin,1,1,1,1
 vazz_state_history_general,Tipos de desbloqueos general,model_vazz_state_history,vazz.general_user,1,0,0,0
 vazz_state_history_admin,Tipos de desbloqueos Admin,model_vazz_state_history,vazz.vazz_admin,1,1,1,1
 

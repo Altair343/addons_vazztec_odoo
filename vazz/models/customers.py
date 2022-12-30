@@ -10,7 +10,7 @@ class Customers(models.Model):
     def _compute_phone(self):
         # buscar el teléfono principal
         for rec in self:
-            phoneAux = ''
+            phoneAux = ' '
             if rec.phones_ids:
                 for tel in rec.phones_ids:
                     if tel.is_main == True:
@@ -27,10 +27,13 @@ class Customers(models.Model):
             countAux = len(services)
         self.count_services = countAux
     
-    name = fields.Char(string="Folio", default=lambda self: _('Nuevo'))
-    user_name = fields.Char(string="Nombre completo")
+    folio = fields.Char(string="Folio", default=lambda self: _('Nuevo'))
+    name = fields.Char(string="Nombre completo")
+    user_name = fields.Char(string="Nombre", tracking=True)
+    surname = fields.Char(string="Primer apellido", tracking=True)
+    second_surname = fields.Char(string="Segundo apellido", tracking=True)
     email =  fields.Char(string="Correo")
-    addres =  fields.Text(string="Dirreción")
+    addres =  fields.Text(string="Dirreción", tracking=True)
     # phone =  fields.Char(string="Teléfono principal",compute="_compute_phone", store = False)
     phone =  fields.Many2one(comodel_name='vazz.customers.phone', string="Teléfono principal",compute="_compute_phone", store = False)
     phones_ids = fields.One2many(comodel_name='vazz.customers.phone',inverse_name= 'customer_ids', 
@@ -41,13 +44,59 @@ class Customers(models.Model):
     @api.model
     def create(self, vals):
         
-        # Generar nombre
+        # Armando nombre completo
+        nombre = ""
+        apellidop = ""
+        apellidom = ""
+        if 'user_name' in vals:
+            nombre = vals['user_name']
+        
+        if 'surname' in vals:
+            apellidop = vals['surname']
+        
+        if 'second_surname' in vals:
+            apellidom = vals['second_surname']
+        vals['name'] = f"{nombre} {apellidop} {apellidom}"
+
+        # Buscar que no se repita el nombre
+
+
+        # Generar folio
         name_seq = self.env['ir.sequence'].next_by_code('vazz.customers.sequence')
         if name_seq != False:
-            vals['name'] = f"C/{name_seq}"
+            vals['folio'] = f"C/{name_seq}"
 
         result = super(Customers, self).create(vals)
         return result
+
+    def write(self,vals):
+        
+        nombre = ""
+        apellidop = ""
+        apellidom = ""
+        if 'user_name' in vals or 'surname' in vals or 'second_surname' in vals:
+            if 'user_name' in vals:
+                nombre = vals['user_name']
+            else:
+                if self.user_name:
+                    nombre = self.user_name
+            
+            if 'surname' in vals:
+                apellidop = vals['surname']
+            else:
+                if self.surname:
+                    apellidop = self.surname
+            
+            if 'second_surname' in vals:
+                apellidom = vals['second_surname']
+            else:
+                if self.second_surname:
+                    apellidom = self.second_surname
+            
+            vals['name'] = f"{nombre} {apellidop} {apellidom}"
+
+        res = super(Customers,self).write(vals)
+        return res
 
 
     def name_get(self):

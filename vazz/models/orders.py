@@ -49,6 +49,11 @@ class Order(models.Model):
             totalAux = amountAux * priceAux
             rec.total = totalAux
 
+    @api.depends('total','total_assets')
+    def _compute_total_pending(self):
+        self.total_pending = self.total - self.total_assets
+
+
     # Estado de la solicitud
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
     previous_state = fields.Selection(STATES,string='Estado anterior del registro' )
@@ -64,7 +69,8 @@ class Order(models.Model):
         string="Anticipos", ondelete='cascade')
     total_assets = fields.Float(string="Total de anticipos",compute="_compute_total_assets", store = False)
     total = fields.Float(string="Total a pagar",compute="_compute_total", store = False)
-    
+    total_pending = fields.Float(string="Pendiente por pagar",compute="_compute_total_pending", store = False)
+
     date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada de inicio")
     date_approx_del_end = fields.Date(string="Fecha de entrega aproximada fin")
     date_arrival = fields.Date(string="Fecha de llegada", tracking=True)
@@ -136,7 +142,6 @@ class Order(models.Model):
         if self.service_id:
             self.customer_id = self.service_id.customer_ids.id
             self.date_approximate_delivery = self.service_id.date_approximate_delivery
-            self.date_approx_del_end = self.service_id.date_approx_del_end
 
 
     # States

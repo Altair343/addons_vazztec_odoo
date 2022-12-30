@@ -17,7 +17,7 @@ class CancelWizardLIB(models.TransientModel):
     def default_get(self,fields_list):
         cancel_wizard = super(CancelWizardLIB,self).default_get(fields_list)
         # definir la zona horaria 
-        cancel_wizard['cancel_date'] = date.today()
+        cancel_wizard['cancel_date'] = fields.datetime.now()
         return cancel_wizard
 
     def confirm_cancel(self):

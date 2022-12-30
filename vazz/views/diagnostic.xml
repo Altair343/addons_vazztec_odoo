@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+    <!-- view tree -->
+        <record id="diagnostic_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.diagnostic.vazz.tree</field>
+            <field name="model">vazz.diagnostic</field>        
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="technical_id"/>
+                    <field name="create_date" string = "Fecha de Registro"/>
+                </tree>
+            </field>
+        </record>
+
     <!-- view form -->
         <record id="diagnostic_vazz_form" model="ir.ui.view">
             <field name="name">vazz.diagnostic.vazz.form</field>
@@ -10,9 +23,11 @@
                     <sheet>
                         <group>
                             <field name="name" readonly="0" required ="1"/>
+                            <field name="technical_id" readonly="0" required ="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
+                            <field name="state" force_save="1" attrs="{'readonly' : ['|',('state', 'in', ('draft','pending','in_process')),('is_edit', '=',False)]}"/>
                             <field name="service_id" readonly="1" invisible="1" force_save="1"/>
                             <field name="is_main" readonly="1" invisible="1" force_save="1"/>
-                            <field name="technical_id" readonly="0" required ="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
+                            <field name="is_edit" readonly="1" invisible="1" force_save="1"/>
                         </group>
                     </sheet>
                 </form> 
