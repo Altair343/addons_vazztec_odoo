@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="user_groups_view_simple_modif_inherit" model="ir.ui.view">
+    <record id="view_users_form_simple_modif_inherit" model="ir.ui.view">
         <field name="name">res.users.form.simple.view.modif.inherit</field>
         <field name="model">res.users</field>
-        <field name="inherit_id" ref="base.user_groups_view"/>
+        <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='companies_count']" position="after">
-                <field name="type_user_va" required ="1"/>
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Configuración Vazztec" name="Vazz">
+                    <group>
+                        <group>
+                            <field name="type_user_va" required ="1"/>
+                        </group>
+                        <group></group>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>

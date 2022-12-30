@@ -13,5 +13,10 @@
             <field name="comment" >vazz_admin</field>
         </record>
 
+        <record model="res.groups" id="Rol001">
+            <field name="name">VAZZ/Crear registros VAZZ</field>
+            <field name="comment" >Rol001</field>
+        </record>
+
     </data>
 </odoo>
