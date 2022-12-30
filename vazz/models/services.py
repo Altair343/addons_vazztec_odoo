@@ -248,6 +248,24 @@ class Services(models.Model):
         return result
 
     def write(self,vals):
+
+        if 'question_warranty' in vals:
+            if vals['question_warranty'] == 'yes':
+                is_warranty = False
+                if len(self.warranty_ids) <= 0:
+                    if 'warranty_ids' in vals:
+                        if vals['warranty_ids']:
+                            is_warranty = True
+                        else:
+                            is_book = False
+                    else:
+                        is_warranty = False
+                else:
+                    is_warranty = True
+
+                if is_warranty == False:
+                    raise UserError("Agregue por lo menos una Garantía")
+
         if 'imei' in vals:
             aux =''
             data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
@@ -281,6 +299,10 @@ class Services(models.Model):
         count = len(self.diagnostic_ids)
         if count <= 0:
             raise UserError("Agregue por lo menos un Diagnóstico")
+        
+        if not self.technical_id:
+            raise UserError("Falta definir el técnico")
+            
         self.date_archive = fields.date.today()
         self._update_state('diagnosed')
     
@@ -289,6 +311,10 @@ class Services(models.Model):
         count = len(self.diagnostic_ids)
         if count <= 0:
             raise UserError("Agregue por lo menos un Diagnóstico")
+        
+        if not self.technical_id:
+            raise UserError("Falta definir el técnico")
+
         self.date_archive = fields.date.today()
         self._update_state('repaired')
     
@@ -297,6 +323,10 @@ class Services(models.Model):
         count = len(self.diagnostic_ids)
         if count <= 0:
             raise UserError("Agregue por lo menos un Diagnóstico")
+        
+        if not self.technical_id:
+            raise UserError("Falta definir el técnico")
+
         self.date_archive = fields.date.today()
         self._update_state('not_solution')
 
@@ -307,10 +337,25 @@ class Services(models.Model):
     
     def action_delivery_yes(self):
         # Entregado
+        is_required = False
+        text_required = ""
+
+
         if self.total_assets < self.total:
-            raise UserError("El servicio no ha sido pagado en su totalidad")
+            is_required = True
+            text_required = text_required + "- El servicio no ha sido pagado en su totalidad \n"
+
         if not self.date_delibery:
-            raise UserError("Agregue la fecha de entrega")
+            is_required = True
+            text_required = text_required + "- Agregue la fecha de entrega \n"
+
+        if not self.question_warranty:
+            is_required = True
+            text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
+        
+        if is_required == True:
+            raise ValidationError(f"{text_required}")
+
         self.is_delivery = 'yes'
     
     def action_archive(self):
