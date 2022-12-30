@@ -151,6 +151,9 @@ class Order(models.Model):
         for rec in self:
             rec.previous_state = rec.state
             rec.state = new_state
+            self.env['vazz.state.history'].create({
+                'state': new_state,
+                'order_id': rec.id})
 
     def action_done(self):
         # Realizado
