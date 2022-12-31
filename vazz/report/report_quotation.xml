@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_quotation_temple">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .oe_address{
+                            padding: 0;
+                            font-size:1rem;
+                            font-weight: 400;
+                        }
+                        .oe_title{
+                            margin-bottom: 0;
+                        }
+                    </style>
+                    <div class="header">
+                        <div class="container mw-100 mb-2 text-center">
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="page">
+                        <div class="container mw-100 mb-2 text-center">
+                            <p style="text-align:center;" class="oe_title"><strong>Cotización</strong></p>
+                        </div>
+                        <p style="font-size:0.8rem;" class="oe_title" ><strong>Cotización *</strong></p>
+                        <br />
+                        <div class="text-left" >
+                            <span>Fecha: <span t-esc="context_timestamp(datetime.datetime.now() - datetime.timedelta(hours=6)).strftime('%d/%m/%Y')"></span> </span>
+                            <br />
+                            <span>Cliente: <span t-field="doc.customer_id.folio"/>.<span t-field="doc.customer_id.name"/> </span>
+                            <br />
+                        </div>
+                        <div class="container mw-100 mb-2 text-center">
+                            <table class="table-bordered" style="border:1px solid black !important; width:100%" border="1px">
+                                <thead>
+                                    <tr>
+                                        <th name="th_cantidad">Cantidad</th>
+                                        <th name="th_descripcion">Descripción</th>
+                                        <th name="th_unidad">Precio unitario</th>
+                                        <th name="th_precio">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="doc.product_ids">
+                                    <t t-foreach="doc.product_ids" t-as="mp">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="mp.quantity" style="font-size:11px;" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="mp.description" style="font-size:11px;" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="mp.unit_price" style="font-size:11px;" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="mp.amount" style="font-size:11px;" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        
+                        
+                        
+                    </div>
+                    <div class="footer d-flex justify-content-center" style="position:absolute; margin:0px; padding:0px; width: 100%;">
+                        <hr />
+                        Página <span class="page"/> de <span class="topage"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

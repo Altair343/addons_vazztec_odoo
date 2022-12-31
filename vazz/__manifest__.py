@@ -53,6 +53,7 @@
         "views/res_users.xml",
         # Report views
         'report/reports.xml',
+        'report/report_quotation.xml',
         # Main Menu file
         "views/menu_views.xml",
     ],
