@@ -68,3 +68,9 @@ vazz_schedule_type_admin,Tipos de Agenda Admin,model_vazz_schedule_type,vazz.vaz
 
 vazz_cancel_schedule_general,Cancelar Agenda general,model_vazz_cancel_schedule,vazz.general_user,1,0,0,0
 vazz_cancel_schedule_admin,Cancelar Agenda Admin,model_vazz_cancel_schedule,vazz.vazz_admin,1,1,1,1
+
+vazz_quotation_general,Cotización general,model_vazz_quotation,vazz.general_user,1,0,0,0
+vazz_quotation_admin,Cotización Admin,model_vazz_quotation,vazz.vazz_admin,1,1,1,1
+
+vazz_product_general,Producto general,model_vazz_product,vazz.general_user,1,0,0,0
+vazz_product_admin,Producto Admin,model_vazz_product,vazz.vazz_admin,1,1,1,1

@@ -264,7 +264,7 @@ class Services(models.Model):
                         if vals['warranty_ids']:
                             is_warranty = True
                         else:
-                            is_book = False
+                            is_warranty = False
                     else:
                         is_warranty = False
                 else:

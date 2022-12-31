@@ -47,9 +47,12 @@
         "views/concepts.xml",
         "views/schedule_type.xml",
         "views/schedule.xml",
+        "views/product.xml",
+        "views/quotation.xml",
         # Views inherit other module
         "views/res_users.xml",
         # Report views
+        'report/reports.xml',
         # Main Menu file
         "views/menu_views.xml",
     ],

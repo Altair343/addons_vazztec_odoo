@@ -34,13 +34,6 @@
                     action="vazz.action_servicios_archive_vazz"/>
             
             <menuitem
-                id="action_customers_vazz_menu_action"
-                name="Clientes"
-                parent="vazz.request_menu_services"
-                sequence="20"
-                action="vazz.action_customers_vazz"/>
-            
-            <menuitem
                 id="action_orders_vazz_menu_action"
                 name="Pedidos"
                 parent="vazz.request_menu_services"
@@ -60,21 +53,41 @@
                 parent="vazz.request_menu_services"
                 sequence="50"
                 action="vazz.action_unlocks_vazz"/>
-            
+        
+        <menuitem
+            id="request_menu_others"
+            name="Otros"
+            parent="vazz.menu_vazz_root"
+            sequence="20"/>
+
+            <menuitem
+                id="action_customers_vazz_menu_action"
+                name="Clientes"
+                parent="vazz.request_menu_others"
+                sequence="10"
+                action="vazz.action_customers_vazz"/>
+
             <menuitem
                 id="action_schedule_vazz_menu_action"
                 name="Agenda"
-                parent="vazz.request_menu_services"
-                sequence="50"
+                parent="vazz.request_menu_others"
+                sequence="20"
                 action="vazz.action_schedule_vazz"/>
-    
+            
+            <menuitem
+                id="action_quotation_vazz_menu_action"
+                name="Cotización"
+                parent="vazz.request_menu_others"
+                sequence="20"
+                action="vazz.action_quotation_vazz"/>
+
     <!-- Configuraciones -->
         <menuitem 
             id="vazz_configurarion_menu" 
             name="Configuraciones" 
             parent="vazz.menu_vazz_root"
             groups="vazz.vazz_admin"
-            sequence="20"/>
+            sequence="30"/>
 
             <menuitem 
                 id="action_notifications_type_vazz_menu_action" 

@@ -86,3 +86,39 @@ class ScheduleType(models.Model):
 
     name = fields.Char(string="Tipo de agenda", required= True )
     code = fields.Char(string="Code" )
+
+class Product(models.Model):
+    _name = 'vazz.product'
+    _description = 'Producto'
+
+    @api.depends('quantity','unit_price')
+    def _compute_amount(self):
+        # Calculando el Importe
+        for rec in self:
+            quantityAux = 0
+            unit_priceAux = 0
+
+            if rec.quantity:
+                quantityAux = rec.quantity
+            
+            if rec.unit_price:
+                unit_priceAux = rec.unit_price
+
+            self.amount = unit_priceAux * quantityAux
+
+    quantity = fields.Integer(string="Cantidad", default=1, tracking=True)
+    description = fields.Text(string="Descripción")
+
+    unit_price = fields.Float(string="Precio unitario")
+    amount = fields.Float(string="Importe",compute="_compute_amount", store = False)
+
+    currency_id = fields.Many2one( 'res.currency', string='Currency')
+    quotation_id = fields.Many2one(comodel_name="vazz.quotation", string="Cotización", tracking=True)
+
+    @api.model
+    def default_get(self, fields):
+        res = super(Product, self).default_get(fields)
+        currency = self.env['res.currency'].search([('name','=','MXN')])
+        if currency:
+            res['currency_id'] = currency.id
+        return res

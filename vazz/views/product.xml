@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- view tree -->
+        <record id="product_vazz_tree" model="ir.ui.view">
+            <field name="name">vazz.product.vazz.tree</field>
+            <field name="model">vazz.product</field>        
+            <field name="arch" type="xml">
+                <tree string="Producto">
+                    <field name="quantity"/>
+                    <field name="description"/>
+                    <field name="unit_price"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+    
+    <!-- view form -->
+        <record id="product_vazz_form" model="ir.ui.view">
+            <field name="name">vazz.product.vazz.form</field>
+            <field name="model">vazz.product</field> 
+            <field name="arch" type="xml">
+                <form string="Loan Registration" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="description" readonly="0" required ="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="quantity" readonly="0" required ="1"/>
+                                <field name="unit_price" readonly="0" required ="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group>
+                                <field name="quotation_id" invisible="1" readonly="1" force_save="1" />
+                                <field name="currency_id" invisible="1" readonly="1" force_save="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form> 
+            </field>
+        </record>
+
+    </data>
+</odoo>
