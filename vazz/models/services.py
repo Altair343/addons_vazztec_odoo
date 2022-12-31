@@ -235,7 +235,7 @@ class Services(models.Model):
                     aux = aux + f"{ser.name},"
                 # no se crea el mensaje
                 mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
-                _logger.info()
+                # _logger.info(mensaje)
                 if 'observations' in vals:
                     if vals['observations']:
                         vals['observations'] = f"{vals['observations']}, {mensaje}"
@@ -304,7 +304,8 @@ class Services(models.Model):
             data = self.env['vazz.services'].search([('imei','=',self.imei)])
             if data:
                 for ser in data:
-                    aux = aux + f"{ser.name},"
+                    if ser.id != self.id:
+                        aux = aux + f"{ser.name},"
                 self._notify_chatter(f"El No. de serie/IMEI: {self.imei} existe en los siguientes servicios: {aux}")
         self._update_state('in_process')
     
