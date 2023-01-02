@@ -35,10 +35,6 @@ class Quotation(models.Model):
     
     @api.model
     def create(self, vals):
-        # Generar folio
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.quotation.sequence')
-        if name_seq != False:
-            vals['name'] = f"CO/{name_seq}"
         
         is_product = False
         if len(self.product_ids) <= 0:
@@ -55,5 +51,10 @@ class Quotation(models.Model):
         if is_product == False:
             raise UserError("Agregue por lo menos un producto")
 
+        # Generar folio
+        name_seq = self.env['ir.sequence'].next_by_code('vazz.quotation.sequence')
+        if name_seq != False:
+            vals['name'] = f"CO/{name_seq}"
+        
         result = super(Quotation, self).create(vals)
         return result

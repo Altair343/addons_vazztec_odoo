@@ -2,29 +2,21 @@ id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 vazz_services_general,Solicitud de Servicio general,model_vazz_services,vazz.general_user,1,0,0,0
 vazz_services_admin,Solicitud de Servicio Admin,model_vazz_services,vazz.vazz_admin,1,1,1,1
 vazz_services_rol001,Solicitud de Servicio Rol001,model_vazz_services,vazz.Rol001,1,1,1,0
-
 vazz_cancel_services_general,Cancelar servicio general,model_vazz_cancel_services,vazz.general_user,1,0,0,0
 vazz_cancel_services_admin,Cancelar servicio Admin,model_vazz_cancel_services,vazz.vazz_admin,1,1,1,1
 vazz_cancel_services_Rol001,Cancelar servicio Rol001,model_vazz_cancel_services,vazz.Rol001,1,1,1,0
-
-
 vazz_customers_general,Clientes general,model_vazz_customers,vazz.general_user,1,0,0,0
 vazz_customers_admin,Clientes Admin,model_vazz_customers,vazz.vazz_admin,1,1,1,1
 vazz_customers_Rol001,Clientes Rol001,model_vazz_customers,vazz.Rol001,1,1,1,0
-
 vazz_customers_phone_general,Teléfono general,model_vazz_customers_phone,vazz.general_user,1,0,0,0
 vazz_customers_phone_admin,Teléfono Admin,model_vazz_customers_phone,vazz.vazz_admin,1,1,1,1
 vazz_customers_phone_rol001,Teléfono Rol001,model_vazz_customers_phone,vazz.Rol001,1,1,1,0
-
-
 vazz_orders_general,Pedidos general,model_vazz_orders,vazz.general_user,1,0,0,0
 vazz_orders_admin,Pedido Admin,model_vazz_orders,vazz.vazz_admin,1,1,1,1
 vazz_orders_rol001,Pedido Rol001,model_vazz_orders,vazz.Rol001,1,1,1,0
-
 vazz_orders_assets_general,Anticipos general,model_vazz_orders_assets,vazz.general_user,1,0,0,0
 vazz_orders_assets_admin,Anticipos de Servicio Admin,model_vazz_orders_assets,vazz.vazz_admin,1,1,1,1
 vazz_orders_assets_Rol001,Anticipos de Servicio Rol001,model_vazz_orders_assets,vazz.Rol001,1,1,1,1
-
 vazz_cancel_orders_general,Cancelar pedido general,model_vazz_cancel_orders,vazz.general_user,1,0,0,0
 vazz_cancel_orders_admin,Cancelar pedido de Servicio Admin,model_vazz_cancel_orders,vazz.vazz_admin,1,1,1,1
 vazz_cancel_orders_Rol001,Cancelar pedido de Servicio Rol001,model_vazz_cancel_orders,vazz.Rol001,1,1,1,0
