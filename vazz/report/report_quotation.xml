@@ -5,22 +5,25 @@
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
                     <style>
-                        .oe_address{
-                            padding: 0;
-                            font-size:1rem;
-                            font-weight: 400;
-                        }
                         .oe_title{
                             margin-bottom: 0;
+                        }
+
+                        .oe_initial{
+                            color: #249e6b;
                         }
                     </style>
                     <div class="header">
                         <div class="container mw-100 mb-2 text-center">
                             <div class="row">
+                            FFF
                             </div>
                         </div>
                     </div>
                     <hr />
+                    <div class ="oe_content-logo" >
+                        <img src="/vazz/static/src/img/Logo_Web.png" width="220px" height = "auto"/>
+                    </div>
                     <div class="page">
                         <div class="container mw-100 mb-2 text-center">
                             <p style="text-align:center;" class="oe_title"><strong>Cotización</strong></p>
@@ -28,19 +31,20 @@
                         <p style="font-size:0.8rem;" class="oe_title" ><strong>Cotización *</strong></p>
                         <br />
                         <div class="text-left" >
-                            <span>Fecha: <span t-esc="context_timestamp(datetime.datetime.now() - datetime.timedelta(hours=6)).strftime('%d/%m/%Y')"></span> </span>
+                            <span> <span class="oe_initial">F</span>echa: <span t-esc="context_timestamp(datetime.datetime.now() - datetime.timedelta(hours=6)).strftime('%d/%m/%Y')"></span> </span>
                             <br />
-                            <span>Cliente: <span t-field="doc.customer_id.folio"/>.<span t-field="doc.customer_id.name"/> </span>
+                            <span><span class="oe_initial">C</span>liente: <span t-field="doc.customer_id.folio"/>.<span t-field="doc.customer_id.name"/> </span>
                             <br />
                         </div>
+                        <br/>
                         <div class="container mw-100 mb-2 text-center">
                             <table class="table-bordered" style="border:1px solid black !important; width:100%" border="1px">
                                 <thead>
                                     <tr>
-                                        <th name="th_cantidad">Cantidad</th>
-                                        <th name="th_descripcion">Descripción</th>
-                                        <th name="th_unidad">Precio unitario</th>
-                                        <th name="th_precio">Importe</th>
+                                        <th name="th_cantidad"><span class="oe_initial">C</span>antidad</th>
+                                        <th name="th_descripcion"><span class="oe_initial">D</span>escripción</th>
+                                        <th name="th_unidad"><span class="oe_initial">P</span>recio unitario</th>
+                                        <th name="th_precio"><span class="oe_initial">I</span>mporte</th>
                                     </tr>
                                 </thead>
                                 <tbody>

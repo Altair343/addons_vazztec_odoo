@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- report_type="qweb-html"
+        report_type="qweb-pdf" -->
 
     <report id="report_quotation" 
         model="vazz.quotation" 
         string="Cotización" 
         name="vazz.report_quotation_temple" 
         file="vazz.report_quotation"
-        report_type="qweb-pdf"
+        report_type="qweb-html"
         print_report_name="object.name"/>
 
 
@@ -38,7 +40,7 @@
         <field name="default" eval="True" />
         <field name="format">Letter</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">20</field>
+        <field name="margin_top">10</field>
         <field name="margin_bottom">20</field>
         <field name="margin_left">18</field>
         <field name="margin_right">18</field>
