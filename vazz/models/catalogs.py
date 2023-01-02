@@ -104,7 +104,7 @@ class Product(models.Model):
             if rec.unit_price:
                 unit_priceAux = rec.unit_price
 
-            self.amount = unit_priceAux * quantityAux
+            rec.amount = unit_priceAux * quantityAux
 
     quantity = fields.Integer(string="Cantidad", default=1, tracking=True)
     description = fields.Text(string="Descripción")

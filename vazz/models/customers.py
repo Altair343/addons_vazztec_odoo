@@ -89,7 +89,8 @@ class Customers(models.Model):
                     apellidop = self.surname
             
             if 'second_surname' in vals:
-                apellidom = vals['second_surname']
+                if vals['second_surname']: 
+                    apellidom = vals['second_surname']
             else:
                 if self.second_surname:
                     apellidom = self.second_surname
