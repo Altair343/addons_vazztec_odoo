@@ -6,7 +6,7 @@
             <field name="name">vazz.orders.vazz.tree</field>
             <field name="model">vazz.orders</field>        
             <field name="arch" type="xml">
-                <tree string="Pedidos">
+                <tree string="Pedidos" decoration-muted="state == 'cancel'">
                     <field name="name"/>
                     <field name="customer_id"/>
                     <field name="amount"/>
