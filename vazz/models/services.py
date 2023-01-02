@@ -232,22 +232,23 @@ class Services(models.Model):
             vals['name'] = f"S/{name_seq}"
 
         if 'imei' in vals:
-            aux =''
-            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-            if data:
-                for ser in data:
-                    aux = aux + f"{ser.name},"
-                # no se crea el mensaje
-                mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
-                # _logger.info(mensaje)
-                if 'observations' in vals:
-                    if vals['observations']:
-                        vals['observations'] = f"{vals['observations']}, {mensaje}"
+            if vals['imei']:
+                aux =''
+                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                if data:
+                    for ser in data:
+                        aux = aux + f"{ser.name},"
+                    # no se crea el mensaje
+                    mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
+                    # _logger.info(mensaje)
+                    if 'observations' in vals:
+                        if vals['observations']:
+                            vals['observations'] = f"{vals['observations']}, {mensaje}"
+                        else:
+                            vals['observations'] = f"{mensaje}"
                     else:
                         vals['observations'] = f"{mensaje}"
-                else:
-                    vals['observations'] = f"{mensaje}"
-                self._notify_chatter(mensaje)
+                    self._notify_chatter(mensaje)
 
         vals['state'] = 'pending'
         service_id = self.env['vazz.state.history'].create({
@@ -278,12 +279,13 @@ class Services(models.Model):
                     raise UserError("Agregue por lo menos una Garantía")
 
         if 'imei' in vals:
-            aux =''
-            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-            if data:
-                for ser in data:
-                    aux = aux + f"{ser.name},"
-                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+            if vals['imei']:
+                aux =''
+                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                if data:
+                    for ser in data:
+                        aux = aux + f"{ser.name},"
+                    self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
         
         res = super(Services,self).write(vals)
         return res
