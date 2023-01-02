@@ -204,6 +204,10 @@ class Services(models.Model):
         currency = self.env['res.currency'].search([('name','=','MXN')])
         if currency:
             res['currency_id'] = currency.id
+        
+        # type_register = self._context.get('type_register')
+        # if type_register and type_register == 'order_service':
+        #     res['customer_ids'] = type_register
         return res
 
     @api.model
@@ -388,8 +392,35 @@ class Services(models.Model):
     def _onchange_customer_ids(self):
         if self.customer_ids:
             self.telephone_cus = self.customer_ids.phone.id 
+            if self.type_entry == 'harvest':
+                if not self.addres_entry:
+                    self.addres_entry = self.customer_ids.addres
         else:
             self.telephone_cus = False
+
+    @api.onchange('type_entry')
+    def _onchange_type_entry(self):
+        if self.type_entry == 'harvest':
+            if self.addres_entry:
+                self.addres_entry = self.customer_ids.addres
+        else:
+            self.addres_entry = False
+    
+    @api.onchange('addres_entry')
+    def _onchange_addres_entry(self):
+        if self.addres_entry:
+            if self.type_delivery == 'home':
+                self.addres = self.addres_entry
+            else:
+                self.addres = False
+
+    @api.onchange('type_delivery')
+    def _onchange_type_delivery(self):
+        if self.type_delivery:
+            if self.type_delivery == 'home':
+                self.addres = self.addres_entry
+            else:
+                self.addres = False
 
     # Notify
     def _notify_chatter(self, body):

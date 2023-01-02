@@ -47,7 +47,12 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" required ="1"/>
-                                <field name="service_id"  attrs="{'readonly' : [('state', 'not in', ('draft'))], 'invisible' : [('type_register', '=','service')]}" />
+                                <field name="service_id"  attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_local'))], 'invisible' : [('type_register', '=','service')]}" 
+                                    context="{
+                                        'type_register': 'order_service',
+                                        'default_customer_ids': customer_id,
+                                        'default_date_approximate_delivery': date_approximate_delivery
+                                        }"/>
                                 <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}" />
                                 <field name="create_date" string = "Fecha de Registro" readonly="1"/>
                                 <br/>
