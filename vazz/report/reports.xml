@@ -10,6 +10,14 @@
         file="vazz.report_quotation"
         report_type="qweb-html"
         print_report_name="object.name"/>
+    
+    <report id="service_ticket" 
+        model="vazz.services" 
+        string="Ticket" 
+        name="vazz.service_ticket_temple" 
+        file="vazz.service_ticket"
+        report_type="qweb-html"
+        print_report_name="object.name"/>
 
 
     <!-- <record id="report_request_books_wizard_alter"  model = "ir.actions.report">
@@ -35,7 +43,7 @@
         <field name="margin_right">18</field>
     </record>
 
-    <record id = "paperformat_books_report" model="report.paperformat">
+    <record id = "paperformat_report" model="report.paperformat">
         <field name="name">Portrait Orientation</field>
         <field name="default" eval="True" />
         <field name="format">A4</field>
@@ -47,6 +55,10 @@
     </record>
 
     <record id ="report_quotation" model="ir.actions.report">
-        <field name="paperformat_id" ref="paperformat_books_report"/>
+        <field name="paperformat_id" ref="paperformat_report"/>
+    </record>
+
+    <record id ="service_ticket" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_ticket"/>
     </record>
 </odoo>

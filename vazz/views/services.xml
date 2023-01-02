@@ -30,22 +30,22 @@
                         <!-- <button string="Pendiente" name="action_pending" 
                             class="oe_highlight" type="object"/> -->
                         
-                        <button string="En proceso" name="action_process" 
+                        <button string="Procesar equipo" name="action_process" 
                             states="pending" class="oe_highlight" type="object"/>
                         
-                        <button string="Diagnosticado" name="action_diagnosed" 
+                        <button string="Equipo diagnostico" name="action_diagnosed" 
                             states="in_process" class="oe_highlight" type="object"
                             confirm="El servicio solo será diagnosticado, ¿desea continuar?"/>
                         
-                        <button string="Reparado" name="action_repaired" 
+                        <button string="Confirmar Reparación" name="action_repaired" 
                             states="in_process" class="oe_highlight" type="object"
                             confirm="El servicio fue reparado, ¿desea continuar?"/>
                         
-                        <button string="Sin Solución" name="action_not_solution" 
+                        <button string="Equipo sin Solución" name="action_not_solution" 
                             states="in_process" class="oe_highlight" type="object"
                             confirm="El servicio no fue reparado, ¿desea continuar?"/>
                         
-                        <button string="Entregar" name="action_delivery_yes" class="oe_highlight" type="object"
+                        <button string="Entregar equipo" name="action_delivery_yes" class="oe_highlight" type="object"
                             attrs="{'invisible' : ['|',('state', 'not in', ('diagnosed','repaired','not_solution','cancel')),('is_delivery', 'not in', ('not'))]}"/>
 
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"

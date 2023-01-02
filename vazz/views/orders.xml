@@ -26,16 +26,16 @@
                 <form string="Loan Registration" duplicate="false">
                     <header>
 
-                        <button string="Realizado" name="action_done" 
+                        <button string="Pedido realizado" name="action_done" 
                             states="pending" class="oe_highlight" type="object"/>
                         
-                        <button string="En Bodega" name="action_warehouse" 
+                        <button string="Pedido en bodega" name="action_warehouse" 
                             states="done" class="oe_highlight" type="object"/>
                         
-                        <button string="En local" name="action_local" 
+                        <button string="Pedido en local" name="action_local" 
                             states="warehouse" class="oe_highlight" type="object"/>
                         
-                        <button string="Entregar" name="action_delivered" 
+                        <button string="Entregar pedido" name="action_delivered" 
                             states="in_local" class="oe_highlight" type="object"/>
                         
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"

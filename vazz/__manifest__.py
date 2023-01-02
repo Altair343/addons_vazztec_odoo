@@ -54,6 +54,7 @@
         # Report views
         'report/reports.xml',
         'report/report_quotation.xml',
+        'report/service_ticket.xml',
         # Main Menu file
         "views/menu_views.xml",
     ],
