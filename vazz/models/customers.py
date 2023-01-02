@@ -55,7 +55,8 @@ class Customers(models.Model):
             apellidop = vals['surname']
         
         if 'second_surname' in vals:
-            apellidom = vals['second_surname']
+            if vals['second_surname']: 
+                apellidom = vals['second_surname']
         vals['name'] = f"{nombre} {apellidop} {apellidom}"
 
         # Buscar que no se repita el nombre
