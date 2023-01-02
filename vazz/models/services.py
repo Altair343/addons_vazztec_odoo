@@ -187,6 +187,8 @@ class Services(models.Model):
     imei = fields.Char(string="No. de serie / IMEI")
     type_equipment = fields.Many2one(comodel_name="vazz.equipment.type", string="Tipo de equipo")
     password = fields.Char(string="Contraseña del equipo" )
+
+    question_acce = fields.Selection(REQUEST, string='¿Tiene accesorios?')
     accessories =  fields.Text(string="Accesorios")
 
     # Pestaña de historial de estados

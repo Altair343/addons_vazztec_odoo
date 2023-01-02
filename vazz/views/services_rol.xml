@@ -63,7 +63,9 @@
                                 <field name="imei" readonly="1"/>
                                 <field name="type_equipment" readonly="1"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
                                 <field name="password" readonly="1"/>
-                                <field name="accessories" readonly="1"/>
+                                <field name="question_acce" readonly="1"/>
+                                <field name="accessories" readonly="1" attrs="{ 'invisible' : [('question_acce', '!=','yes')]}"/>
+
                             </group>
                             <group string="Entrega">
                                 <field name="date_approximate_delivery" readonly="1"   />

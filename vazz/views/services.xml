@@ -96,8 +96,12 @@
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
                                 <field name="password"
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                <field name="question_acce"
+                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}" required="1"/>
+                                
                                 <field name="accessories"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))],
+                                        'invisible' : [('question_acce', '!=','yes')],'required' : [('question_acce', '=','yes')]}"/>
                             </group>
                             <group string="Entrega">
                                 <field name="date_approximate_delivery" required="1" 
