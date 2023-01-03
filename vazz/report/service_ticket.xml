@@ -20,7 +20,7 @@
                                     <img src="/vazz/static/src/img/Logo_Web.png" width="220px" height = "auto"/>
                                 </th>
                                 <th name="th_barra" colspan="4" style="width:100%;">
-                                    <img src="/vazz/static/src/img/line.jpg"  width="100%" height = "9px"/>
+                                
                                 </th>
                             </tr>
                         </thead>
@@ -31,6 +31,18 @@
                             <p style="text-align:center;" class="oe_title"><strong>Ticket</strong></p>
                         </div>
                         <br/>
+
+
+                        <!-- folio servicio
+                        cliente
+                        tipo de ingreso
+                        descripcion de la falla
+                        fecha de impresion del Ticket
+                        numero y medio de notificacion del cliente
+
+
+                        numero de establecimiento
+                        rfc del establecimiento -->
 
 
                     </div>

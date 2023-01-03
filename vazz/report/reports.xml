@@ -11,13 +11,13 @@
         report_type="qweb-html"
         print_report_name="object.name"/>
     
-    <report id="service_ticket" 
+    <!-- <report id="service_ticket" 
         model="vazz.services" 
         string="Ticket" 
         name="vazz.service_ticket_temple" 
         file="vazz.service_ticket"
         report_type="qweb-html"
-        print_report_name="object.name"/>
+        print_report_name="object.name"/> -->
 
 
     <!-- <record id="report_request_books_wizard_alter"  model = "ir.actions.report">

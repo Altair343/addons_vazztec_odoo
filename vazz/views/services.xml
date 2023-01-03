@@ -6,7 +6,7 @@
             <field name="name">vazz.services.vazz.tree</field>
             <field name="model">vazz.services</field>        
             <field name="arch" type="xml">
-                <tree string="Servicios" decoration-success="is_delivery == 'yes'" decoration-muted="state == 'cancel'">
+                <tree string="Servicios" decoration-success="is_delivery == 'yes' and state == 'repaired'" decoration-danger="state == 'cancel'" decoration-muted="state == 'not_solution'">
                     <field name="name"/>
                     <field name="customer_ids"/>
                     <field name="brand"/>
