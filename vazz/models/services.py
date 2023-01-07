@@ -376,9 +376,9 @@ class Services(models.Model):
                 is_required = True
                 text_required = text_required + "- Agregué un concepto \n"
         
-        if not self.question_warranty:
-            is_required = True
-            text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
+        # if not self.question_warranty:
+        #     is_required = True
+        #     text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
         
         if is_required == True:
             raise ValidationError(f"{text_required}")
