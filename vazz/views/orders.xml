@@ -57,8 +57,9 @@
                                         'default_date_approximate_delivery': date_approximate_delivery
                                         }"/>
                                 <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}" />
-                                <field name="telephone_cus" required="1" options="{'no_open':True}" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"
+                                <field name="telephone_cus" options="{'no_open':True}" 
+                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))],
+                                    'required' : [('state', 'in', ('draft','pending'))]}"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_id }"/>
                                 <field name="create_date" string = "Fecha de Registro" readonly="1"/>
                                 <br/>
