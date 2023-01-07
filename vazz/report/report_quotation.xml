@@ -121,13 +121,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr>
+                                <tr>
                                     <td colspan="3">
                                         <br/>
-                                      
+                                            <span style="font-size: 13px;">*Cotización válida por 3 días hábiles de la fecha de cotización, producto sujeto a disponibilidad.</span>
+                                        <br/>
                                         <br/>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
                                     <td colspan="3">
                                         Página <span class="page"/> de <span class="topage"/>

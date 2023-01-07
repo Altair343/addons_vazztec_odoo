@@ -6,7 +6,10 @@
             <field name="name">vazz.orders.vazz.tree</field>
             <field name="model">vazz.orders</field>        
             <field name="arch" type="xml">
-                <tree string="Pedidos" decoration-muted="state == 'cancel'">
+                <tree string="Pedidos"
+                    decoration-success="state == 'delivered'" 
+                    decoration-danger="state == 'pending'" 
+                    decoration-muted="state == 'cancel'">
                     <field name="name"/>
                     <field name="customer_id"/>
                     <field name="amount"/>
@@ -65,6 +68,9 @@
                                 <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','in_local'))]}"/>
                                 <field name="assets_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
                                 <field name="total_assets" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                                <field name="total_assets_ser" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"
+                                    attrs="{'invisible' : [('service_id', '=',False)]}" />
+
                                 <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
                                 <field name="total_pending" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <field name="currency_id" invisible="1" readonly="1" force_save="1" />

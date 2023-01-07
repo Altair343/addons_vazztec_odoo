@@ -26,13 +26,21 @@ class Order(models.Model):
     
     @api.depends('assets_ids')
     def _compute_total_assets(self):
-        # Calculando el total de los anticipos
+        # Calculando el total de los anticipos del pedido
         totalAux = 0
         if self.assets_ids:
             for ass in self.assets_ids:
                 totalAux = totalAux + ass.name
         self.total_assets = totalAux
 
+    @api.depends('service_id')
+    def _compute_total_assets_ser(self):
+        # Calculando el total de los anticipos del servicio
+        totalAux = 0
+        if self.service_id:
+            totalAux = self.service_id.total_assets_ser
+        self.total_assets_ser = totalAux
+    
     @api.depends('amount','public_price')
     def _compute_total(self):
         # Calculando el total a pagar
@@ -70,7 +78,9 @@ class Order(models.Model):
     public_price = fields.Float(string="Precio público por unidad",tracking=True )
     assets_ids = fields.One2many(comodel_name='vazz.orders.assets',inverse_name= 'order_id', 
         string="Anticipos", ondelete='cascade')
-    total_assets = fields.Float(string="Total de anticipos",compute="_compute_total_assets", store = False)
+    total_assets = fields.Float(string="Total de anticipos del pedido",compute="_compute_total_assets", store = False)
+    total_assets_ser = fields.Float(string="Total de anticipos del servicio", compute="_compute_total_assets_ser", store = False )
+
     total = fields.Float(string="Total a pagar",compute="_compute_total", store = False)
     total_pending = fields.Float(string="Pendiente por pagar",compute="_compute_total_pending", store = False)
 
@@ -79,7 +89,7 @@ class Order(models.Model):
     date_arrival = fields.Date(string="Fecha de llegada", tracking=True)
 
     date_delivery = fields.Datetime(string= "Fecha de entrega al cliente",tracking=True)
-    description =  fields.Text(string="Descripción", tracking=True)
+    description = fields.Text(string="Descripción", tracking=True)
 
     currency_id = fields.Many2one( 'res.currency', string='Currency')
     type_register = fields.Char(string="tipo de registro", store= False)
@@ -180,9 +190,13 @@ class Order(models.Model):
         if not self.date_delivery:
             raise UserError("Agregue la fecha de entrega al cliente")
 
-        if self.total_assets < self.total:
-            raise UserError("El pedido no ha sido pagado en su totalidad")
-
+        if not self.service_id:
+            if self.total_assets < self.total:
+                raise UserError("El pedido no ha sido pagado en su totalidad")
+        else:
+            if self.service_id.total_pending > 0:
+                raise UserError("El servicio al que pertenece el pedido no ha sido pagado en su totalidad")
+        
         self._update_state('delivered')
 
     def action_cancel(self, comment):

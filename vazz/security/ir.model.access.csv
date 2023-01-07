@@ -24,45 +24,59 @@ vazz_cancel_orders_Rol001,Cancelar pedido de Servicio Rol001,model_vazz_cancel_o
 
 vazz_cancel_warranty_general,Cancelar servicio general,model_vazz_cancel_warranty,vazz.general_user,1,0,0,0
 vazz_cancel_warranty_admin,Cancelar servici Admin,model_vazz_cancel_warranty,vazz.vazz_admin,1,1,1,1
+vazz_cancel_warranty_Rol001,Cancelar servici Rol001,model_vazz_cancel_warranty,vazz.Rol001,1,1,1,0
 
 vazz_notifications_general,Notificaciones servicio general,model_vazz_notifications,vazz.general_user,1,0,0,0
 vazz_notifications_admin,Notificaciones servicio Admin,model_vazz_notifications,vazz.vazz_admin,1,1,1,1
+vazz_notifications_Rol001,Notificaciones servicio Rol001,model_vazz_notifications,vazz.Rol001,1,1,1,0
 
 vazz_notifications_type_general,Tipos de notificaciones servicio general,model_vazz_notifications_type,vazz.general_user,1,0,0,0
 vazz_notifications_type_admin,Tipos de notificaciones Admin,model_vazz_notifications_type,vazz.vazz_admin,1,1,1,1
+vazz_notifications_type_Rol001,Tipos de notificaciones Rol001,model_vazz_notifications_type,vazz.Rol001,1,1,1,0
 
 vazz_warranty_general,Garantias servicio general,model_vazz_warranty,vazz.general_user,1,0,0,0
 vazz_warranty_admin,Garantias servicio Admin,model_vazz_warranty,vazz.vazz_admin,1,1,1,1
+vazz_warranty_Rol001,Garantias servicio Rol001,model_vazz_warranty,vazz.Rol001,1,1,1,0
 
 vazz_unlocks_general,Desbloqueos general,model_vazz_unlocks,vazz.general_user,1,0,0,0
 vazz_unlocks_admin,Desbloqueos Admin,model_vazz_unlocks,vazz.vazz_admin,1,1,1,1
+vazz_unlocks_Rol001,Desbloqueos Rol001,model_vazz_unlocks,vazz.Rol001,1,1,1,0
 
 vazz_unlocks_type_general,Tipos de desbloqueos general,model_vazz_unlocks_type,vazz.general_user,1,0,0,0
 vazz_unlocks_type_admin,Tipos de desbloqueos Admin,model_vazz_unlocks_type,vazz.vazz_admin,1,1,1,1
+vazz_unlocks_type_Rol001,Tipos de desbloqueos Rol001,model_vazz_unlocks_type,vazz.Rol001,1,1,1,0
 
 vazz_equipment_type_general,Tipos de equipos general,model_vazz_equipment_type,vazz.general_user,1,0,0,0
 vazz_equipment_type_admin,Tipos de equipos Admin,model_vazz_equipment_type,vazz.vazz_admin,1,1,1,1
+vazz_equipment_type_Rol001,Tipos de equipos Rol001,model_vazz_equipment_type,vazz.Rol001,1,1,1,0
 
 vazz_diagnostic_general,Diagnostico general,model_vazz_diagnostic,vazz.general_user,1,0,0,0
 vazz_diagnostic_admin,Diagnostico Admin,model_vazz_diagnostic,vazz.vazz_admin,1,1,1,1
+vazz_diagnostic_Rol001,Diagnostico Rol001,model_vazz_diagnostic,vazz.Rol001,1,1,1,0
 
 vazz_state_history_general,Historial de estados general,model_vazz_state_history,vazz.general_user,1,0,0,0
 vazz_state_history_admin,Historial de estados Admin,model_vazz_state_history,vazz.vazz_admin,1,1,1,1
+vazz_state_history_Rol001,Historial de estados Rol001,model_vazz_state_history,vazz.Rol001,1,1,1,0
 
 vazz_concepts_general,Conceptos general,model_vazz_concepts,vazz.general_user,1,0,0,0
 vazz_concepts_admin,Conceptos Admin,model_vazz_concepts,vazz.vazz_admin,1,1,1,1
+vazz_concepts_Rol001,Conceptos Rol001,model_vazz_concepts,vazz.Rol001,1,1,1,1
 
 vazz_schedule_general,Agenda general,model_vazz_schedule,vazz.general_user,1,0,0,0
 vazz_schedule_admin,Agenda Admin,model_vazz_schedule,vazz.vazz_admin,1,1,1,1
+vazz_schedule_Rol001,Agenda Rol001,model_vazz_schedule,vazz.Rol001,1,1,1,0
 
 vazz_schedule_type_general,Tipos de Agenda general,model_vazz_schedule_type,vazz.general_user,1,0,0,0
 vazz_schedule_type_admin,Tipos de Agenda Admin,model_vazz_schedule_type,vazz.vazz_admin,1,1,1,1
 
 vazz_cancel_schedule_general,Cancelar Agenda general,model_vazz_cancel_schedule,vazz.general_user,1,0,0,0
 vazz_cancel_schedule_admin,Cancelar Agenda Admin,model_vazz_cancel_schedule,vazz.vazz_admin,1,1,1,1
+vazz_cancel_schedule_Rol001,Cancelar Agenda Rol001,model_vazz_cancel_schedule,vazz.Rol001,1,1,1,0
 
 vazz_quotation_general,Cotización general,model_vazz_quotation,vazz.general_user,1,0,0,0
 vazz_quotation_admin,Cotización Admin,model_vazz_quotation,vazz.vazz_admin,1,1,1,1
+vazz_quotation_Rol001,Cotización Rol001,model_vazz_quotation,vazz.Rol001,1,1,1,0
 
 vazz_product_general,Producto general,model_vazz_product,vazz.general_user,1,0,0,0
 vazz_product_admin,Producto Admin,model_vazz_product,vazz.vazz_admin,1,1,1,1
+vazz_product_Rol001,Producto Rol001,model_vazz_product,vazz.Rol001,1,1,1,0
