@@ -72,6 +72,8 @@ class Order(models.Model):
     name = fields.Char(string="Folio", required=True, copy=False, index=True, default=lambda self: _('Nuevo'))
     service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio", tracking=True)
     customer_id = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
+    telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="Teléfono",tracking=True,
+    domain = "[('customer_ids','=',customer_id)]")
     tracking_number = fields.Char(string="No. de rastreo")
     
     amount = fields.Integer(string="Cantidad", default=1, tracking=True) 
@@ -154,7 +156,15 @@ class Order(models.Model):
         if self.service_id:
             self.customer_id = self.service_id.customer_ids.id
             self.date_approximate_delivery = self.service_id.date_approximate_delivery
+            self.telephone_cus = self.service_id.customer_ids.phone.id
 
+    @api.onchange('customer_id')
+    def _onchange_customer_id(self):
+        if self.customer_id:
+            self.telephone_cus = self.customer_id.phone.id 
+        else:
+            self.telephone_cus = False
+            
     # States
     def _update_state(self, new_state):
         for rec in self:
