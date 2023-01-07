@@ -156,8 +156,13 @@ class Order(models.Model):
 
     def action_done(self):
         # Realizado
-        if not self.tracking_number:
-            raise UserError("Agregue el número de rastreo")
+        # if not self.tracking_number:
+        #     raise UserError("Agregue el número de rastreo")
+        if not self.date_approximate_delivery:
+            raise UserError("Agregue la fecha de entrega aproximada de inicio")
+        
+        if not self.date_approx_del_end:
+            raise UserError("Agregue la fecha de entrega aproximada fin")
         self._update_state('done')
 
     def action_warehouse(self):

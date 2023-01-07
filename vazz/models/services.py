@@ -263,22 +263,22 @@ class Services(models.Model):
 
     def write(self,vals):
 
-        if 'question_warranty' in vals:
-            if vals['question_warranty'] == 'yes':
-                is_warranty = False
-                if len(self.warranty_ids) <= 0:
-                    if 'warranty_ids' in vals:
-                        if vals['warranty_ids']:
-                            is_warranty = True
-                        else:
-                            is_warranty = False
-                    else:
-                        is_warranty = False
-                else:
-                    is_warranty = True
+        # if 'question_warranty' in vals:
+        #     if vals['question_warranty'] == 'yes':
+        #         is_warranty = False
+        #         if len(self.warranty_ids) <= 0:
+        #             if 'warranty_ids' in vals:
+        #                 if vals['warranty_ids']:
+        #                     is_warranty = True
+        #                 else:
+        #                     is_warranty = False
+        #             else:
+        #                 is_warranty = False
+        #         else:
+        #             is_warranty = True
 
-                if is_warranty == False:
-                    raise UserError("Agregue por lo menos una Garantía")
+        #         if is_warranty == False:
+        #             raise UserError("Agregue por lo menos una Garantía")
 
         if 'imei' in vals:
             if vals['imei']:
@@ -330,6 +330,14 @@ class Services(models.Model):
         self._update_state('diagnosed')
     
     def action_repaired(self):
+
+        if not self.question_warranty:
+            raise UserError("Responda la pregunta ¿El servicio cuenta con garantía? en la pestaña de garantías")
+
+        if self.question_warranty and self.question_warranty =='yes':
+            if len(self.warranty_ids) <= 0:
+                raise UserError("Agregue por lo menos una Garantía")
+
         # Reparado
         count = len(self.diagnostic_ids)
         if count <= 0:
@@ -389,6 +397,9 @@ class Services(models.Model):
                 'service_id': self.id})
         self.date_delibery = date_delibery
         self.is_delivery = 'yes'
+
+        for order in self.orders_ids:
+            order._update_state('delivered')
 
 
     # Onchange

@@ -53,7 +53,7 @@
                                         'default_customer_ids': customer_id,
                                         'default_date_approximate_delivery': date_approximate_delivery
                                         }"/>
-                                <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}" />
+                                <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}" />
                                 <field name="create_date" string = "Fecha de Registro" readonly="1"/>
                                 <br/>
                                 <field name="description" required ="1" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
@@ -72,8 +72,8 @@
                         </group>
                         <group>
                             <group string="Entrega">
-                                <field name="date_approximate_delivery" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
-                                <field name="date_approx_del_end" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                                <field name="date_approximate_delivery" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                <field name="date_approx_del_end" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
                                 <field name="date_delivery" attrs="{'readonly' : [('state', 'not in', ('in_local'))]}" />
                             </group>
                             <group string="Paquete">

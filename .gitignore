@@ -1,4 +1,5 @@
-
 # compiled python files
+
+odoo.log
 *.py[co]
 __pycache__/

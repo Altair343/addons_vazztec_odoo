@@ -168,14 +168,14 @@
                                 <group>
                                     <group>
                                         <field name="question_warranty" 
-                                            attrs="{'readonly' : [('state', 'not in', ('diagnosed','repaired','not_solution'))]}"/>
+                                            attrs="{'readonly' : [('state', 'not in', ('in_process'))]}"/>
                                         <field name="question_whats"
-                                            attrs="{'readonly' : [('state', 'not in', ('diagnosed','repaired','not_solution'))],'invisible' : [('question_warranty', '!=','not')],'required' : [('question_warranty', '=','not')]}"/>
+                                            attrs="{'readonly' : [('state', 'not in', ('in_process'))],'invisible' : [('question_warranty', '!=','not')],'required' : [('question_warranty', '=','not')]}"/>
                                     </group>
                                 </group>
                                 <label for="warranty_ids" string="Garantías"/>
                                 <field name="warranty_ids" 
-                                    attrs="{'readonly' : [('state', 'not in', ('diagnosed','repaired','not_solution'))]}"
+                                    attrs="{'readonly' : [('state', 'not in', ('in_process','diagnosed','repaired','not_solution'))]}"
                                     context="{  'type_register': 'service' }" />
                             </page>
                             <page name="notifications" string="Notificaciones">
