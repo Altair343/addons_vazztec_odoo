@@ -13,7 +13,7 @@
                     <field name="date_end"/>
                     <field name="service_id"/>
                     <field name="customer_id"/>
-                    <field name="state"/>
+                    <field name="state"  widget="statusbar" statusbar_visible="0"/>
                     <field name="validity"/>
                 </tree>
             </field>

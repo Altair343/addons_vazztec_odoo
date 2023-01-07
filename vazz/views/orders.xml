@@ -15,7 +15,7 @@
                     <field name="amount"/>
                     <field name="description"/>
                     <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="state"/>
+                    <field name="state"  widget="statusbar" statusbar_visible="0"/>
                     <field name="currency_id" invisible="1"/>
                 </tree>
             </field>
@@ -41,7 +41,7 @@
                         <button string="Entregar pedido" name="action_delivered" 
                             states="in_local" class="oe_highlight" type="object"/>
                         
-                        <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
+                        <button string="Cancelar" name="cancel_wizard" class="oe_highlight btn-danger" type="object"
                             attrs="{'invisible' : [('state', 'in', ('draft','delivered','cancel'))]}" />
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>

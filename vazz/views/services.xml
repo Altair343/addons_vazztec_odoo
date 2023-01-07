@@ -8,15 +8,18 @@
             <field name="arch" type="xml">
                 <tree string="Servicios" 
                     decoration-success="is_delivery == 'yes' and state == 'repaired'" 
+                    decoration-warning="is_delivery == 'not' and state == 'repaired'"
                     decoration-danger="state == 'pending'" 
-                    decoration-muted="state == 'cancel'">
+                    decoration-muted="state == 'cancel'"
+                    decoration-primary="state == 'diagnosed'"
+                    >
                     <field name="name"/>
                     <field name="customer_ids"/>
                     <field name="brand"/>
                     <field name="model_e"/>
 
                     <field name="date_reception"/>
-                    <field name="state"/>
+                    <field name="state" widget="statusbar" statusbar_visible="0" />
                     <field name="is_delivery"/>
                     <field name="warning_notify"/>
                 </tree>
@@ -51,7 +54,7 @@
                         <button string="Entregar equipo" name="action_delivery_yes" class="oe_highlight" type="object"
                             attrs="{'invisible' : ['|',('state', 'not in', ('diagnosed','repaired','not_solution','cancel')),('is_delivery', 'not in', ('not'))]}"/>
 
-                        <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
+                        <button string="Cancelar" name="cancel_wizard" class="oe_highlight btn-danger" type="object"
                             attrs="{'invisible' : [('state', 'in', ('draft','diagnosed','repaired','not_solution','cancel'))]}"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
