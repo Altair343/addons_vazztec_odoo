@@ -66,8 +66,10 @@
                                 <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
                                 <field name="customer_ids" required="1" 
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="telephone_cus" required="1" options="{'no_open':True}" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"
+                                <field name="telephone_cus" options="{'no_open':True}" 
+                                    attrs="{
+                                        'readonly' : [('state', 'not in', ('draft','pending'))],
+                                        'required' : [('code_type_notification', '=','A')]}"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="date_reception" required="1" 
                                     attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
@@ -75,6 +77,8 @@
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
                                 <field name="type_notification_id" required="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                <field name="code_type_notification" readonly="1" invisible="1"/>
+                                
                             </group>
                             <group string="Ingreso">
                                 <field name="type_entry" required="1"

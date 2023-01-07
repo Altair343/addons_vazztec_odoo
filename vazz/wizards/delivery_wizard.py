@@ -7,7 +7,7 @@ class DeliveryWizard(models.TransientModel):
     _name = "vazz.delivery.wizard"
     _description ="Cancelación"
 
-    date_delibery = fields.Date(string="Fecha de entrega")
+    date_delibery = fields.Datetime(string="Fecha de entrega")
     total_pay = fields.Float(string="Total a pagar")
     total_pending = fields.Float(string="Pendiente por pagar")
     total_assets = fields.Float(string="Total de anticipos")

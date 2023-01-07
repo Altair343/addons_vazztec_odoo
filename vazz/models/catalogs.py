@@ -42,6 +42,7 @@ class NotificationsType(models.Model):
     _description = 'Tipos de notificaciones'
 
     name = fields.Char(string="Nnotificación", required= True )
+    code = fields.Char(string="Code" )
 
 class UnlocksType(models.Model):
     _name = 'vazz.unlocks.type'

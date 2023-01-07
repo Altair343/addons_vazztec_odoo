@@ -125,7 +125,7 @@ class Services(models.Model):
         default=lambda self: _('Nuevo'))
     date_reception = fields.Datetime(string="Fecha de recepción", default=lambda self: fields.datetime.now())
     date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada")
-    date_delibery = fields.Date(string="Fecha de entrega")
+    date_delibery = fields.Datetime(string="Fecha de entrega")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
     telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="Teléfono",
     domain = "[('customer_ids','=',customer_ids)]")
@@ -170,7 +170,8 @@ class Services(models.Model):
     notifications_ids = fields.One2many(comodel_name='vazz.notifications',inverse_name= 'service_id', 
         string="Notificaciones", ondelete='cascade')
     type_notification_id = fields.Many2one(comodel_name="vazz.notifications.type", string="Medio de notificación preferido")
-
+    code_type_notification = fields.Char(related="type_notification_id.code")
+    
     # Pestaña de garantias
     question_warranty = fields.Selection(REQUEST, string='¿El servicio cuenta con garantía?', tracking=True)
     question_whats =  fields.Text(string="¿Por qué?")
