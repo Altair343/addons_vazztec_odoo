@@ -47,7 +47,10 @@ class DeliveryWizard(models.TransientModel):
         model = self._context.get('active_model')
         product_model = self.env[model].browse(self._context.get('active_id'))
 
-        if self.total >= product_model.total_pending:
-            product_model.action_delivery(self.total,self.date_delibery,self.is_total)
+        if product_model.state =='cancel':
+            product_model.action_delivery_cancel(self.date_delibery)
         else:
-            raise UserError('El pago no cubre lo pendiente')
+            if self.total >= product_model.total_pending:
+                product_model.action_delivery(self.total,self.date_delibery,self.is_total)
+            else:
+                raise UserError('El pago no cubre lo pendiente')

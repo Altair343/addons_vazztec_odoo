@@ -401,6 +401,10 @@ class Services(models.Model):
 
         for order in self.orders_ids:
             order._update_state('delivered')
+    
+    def action_delivery_cancel(self,date_delibery):
+        self.date_delibery = date_delibery
+        self.is_delivery = 'yes'
 
 
     # Onchange
