@@ -33,7 +33,7 @@
     </record> -->
 
     <record id = "paperformat_ticket" model="report.paperformat">
-        <field name="name">Portrait Orientation</field>
+        <field name="name">Reporte Vazztec</field>
         <field name="default" eval="True" />
         <field name="format">Letter</field>
         <field name="orientation">Portrait</field>
@@ -44,14 +44,14 @@
     </record>
 
     <record id = "paperformat_report" model="report.paperformat">
-        <field name="name">Portrait Orientation</field>
+        <field name="name">Ticket Vazztec</field>
         <field name="default" eval="True" />
-        <field name="format">A4</field>
+        <field name="format">custom</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">10</field>
-        <field name="margin_bottom">43</field>
-        <field name="margin_left">18</field>
-        <field name="margin_right">18</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
     </record>
 
     <record id ="report_quotation" model="ir.actions.report">

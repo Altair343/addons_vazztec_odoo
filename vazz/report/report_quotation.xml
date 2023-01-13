@@ -93,11 +93,11 @@
                     <div class="footer d-flex justify-content-center" style="position:absolute; margin:0px; padding:0px; width: 100%; flex-direction: column;">
                         <table class="container mw-100 mb-2 text-center" style="width:100%;">
                             <thead>
-                            <tr style="width:100%;">
-                                <th class="oe_th" colspan="3">
-                                    <hr/>
-                                </th>
-                            </tr>
+                                <tr style="width:100%;">
+                                    <th class="oe_th" colspan="3">
+                                        <hr/>
+                                    </th>
+                                </tr>
                                 <tr style="width:100%;">
                                     <th class="oe_th">
                                         <img src="/vazz/static/src/img/email.svg" width="20px" height = "auto"/>
