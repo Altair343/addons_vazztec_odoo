@@ -50,18 +50,32 @@ class Services(models.Model):
 
     @api.depends('orders_ids')
     def _compute_total_pay_order(self):
+        # total a pagar de pedidos
         totalAux = 0
         for order in self.orders_ids:
-            totalAux = totalAux + order.total
+            if order.state != 'cancel':
+                totalAux = totalAux + order.total
         self.total_pay_order = totalAux
+    
+    # @api.depends('orders_ids')
+    # def _compute_total_assets_order(self):
+    #     for rec in self:
+    #         totalAux = 0
+    #         for order in rec.orders_ids:
+    #             totalAux = totalAux + order.total_assets
+    #         rec.total_assets_order = totalAux
     
     @api.depends('orders_ids')
     def _compute_total_assets_order(self):
-        totalAux = 0
-        for order in self.orders_ids:
-            totalAux = totalAux + order.total_assets
-        self.total_assets_order = totalAux
-    
+        for rec in self:
+            totalAux = 0
+            for order in rec.orders_ids:
+                # if order.state != 'cancel':
+                for ass in order.assets_ids:
+                    totalAux = totalAux + ass.name
+            rec.total_assets_order = totalAux
+
+
     @api.depends('assets_ids')
     def _compute_total_assets_ser(self):
         # Calculando el total de los anticipos
