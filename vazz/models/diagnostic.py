@@ -44,6 +44,7 @@ class Assets(models.Model):
             if service:
                 service.diagnostic_ids.is_main = False
                 service._update_state(vals['state'])
+                service.is_delivery = 'not'
         vals['is_main'] = True
         vals['is_edit'] = False
 

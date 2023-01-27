@@ -157,7 +157,7 @@ class Services(models.Model):
     technical_id = fields.Many2one( 'res.users', string='Técnico', domain = "[('type_user_va','=','technical')]")
     is_delivery = fields.Selection(DELIVERY, default=DELIVERY[0][0], string='Entrega')
     date_archive = fields.Date()
-    is_archive = fields.Selection(REQUEST,default=DELIVERY[0][0], string='Archivado',tracking=True)
+    is_archive = fields.Selection(REQUEST,default=REQUEST[0][0], string='Archivado',tracking=True)
 
     # Costos
     estimated_cost = fields.Float(string="Costo estimado del servicio",tracking=True )

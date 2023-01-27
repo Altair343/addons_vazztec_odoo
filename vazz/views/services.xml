@@ -65,7 +65,7 @@
                             <group>
                                 <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
                                 <field name="customer_ids" required="1" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    attrs="{'readonly' : [('is_delivery', '=', 'yes')]}"/>
                                 <field name="telephone_cus" options="{'no_open':True}" 
                                     attrs="{
                                         'readonly' : [('state', 'not in', ('draft','pending'))],
