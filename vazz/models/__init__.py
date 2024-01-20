@@ -12,3 +12,4 @@ from . import res_users
 from . import concepts
 from . import schedule
 from . import quotation
+from . import check_status
