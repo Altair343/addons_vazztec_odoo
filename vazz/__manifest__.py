@@ -49,6 +49,7 @@
         "views/schedule.xml",
         "views/product.xml",
         "views/quotation.xml",
+        "views/check_status.xml",
         # Views inherit other module
         "views/res_users.xml",
         # Report views
