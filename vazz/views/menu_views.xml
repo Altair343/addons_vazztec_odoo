@@ -53,6 +53,13 @@
                 parent="vazz.request_menu_services"
                 sequence="50"
                 action="vazz.action_unlocks_vazz"/>
+
+            <menuitem
+                id="action_check_status_vazz_menu_action"
+                name="Check status express"
+                parent="vazz.request_menu_services"
+                sequence="60"
+                action="vazz.action_check_status_vazz"/>
         
         <menuitem
             id="request_menu_others"
