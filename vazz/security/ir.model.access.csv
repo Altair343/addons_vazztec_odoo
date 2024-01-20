@@ -80,3 +80,7 @@ vazz_quotation_Rol001,Cotización Rol001,model_vazz_quotation,vazz.Rol001,1,1,1,
 vazz_product_general,Producto general,model_vazz_product,vazz.general_user,1,0,0,0
 vazz_product_admin,Producto Admin,model_vazz_product,vazz.vazz_admin,1,1,1,1
 vazz_product_Rol001,Producto Rol001,model_vazz_product,vazz.Rol001,1,1,1,0
+
+vazz_product_general,Check status express general,model_vazz_check_status,vazz.general_user,1,0,0,0
+vazz_product_admin,Check status express Admin,model_vazz_check_status,vazz.vazz_admin,1,1,1,1
+vazz_product_Rol001,Check status express Rol001,model_vazz_check_status,vazz.Rol001,1,1,1,0
