@@ -265,13 +265,8 @@ class Services(models.Model):
             # Validando que tenga un desbloqueo
             is_unlocks = False
             if len(self.unlocks_ids) <= 0:
-                if 'unlocks_ids' in vals:
-                    if vals['unlocks_ids']:
-                        is_unlocks = True
-                    else:
-                        is_unlocks = False
-                else:
-                    is_unlocks = False
+                if 'unlocks_ids' in vals and vals['unlocks_ids']:
+                    is_unlocks = True
                 if is_unlocks == False:
                     raise UserError("Agregue por lo menos un desbloqueo")
 
@@ -280,24 +275,20 @@ class Services(models.Model):
         if name_seq != False:
             vals['name'] = f"S/{name_seq}"
 
-        if 'imei' in vals:
-            if vals['imei']:
-                aux =''
-                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-                if data:
-                    for ser in data:
-                        aux = aux + f"{ser.name},"
-                    # no se crea el mensaje
-                    mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
-                    # _logger.info(mensaje)
-                    if 'observations' in vals:
-                        if vals['observations']:
-                            vals['observations'] = f"{vals['observations']}, {mensaje}"
-                        else:
-                            vals['observations'] = f"{mensaje}"
-                    else:
-                        vals['observations'] = f"{mensaje}"
-                    self._notify_chatter(mensaje)
+        if 'imei' in vals and vals['imei']:
+            aux =''
+            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                # no se crea el mensaje
+                mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
+                # _logger.info(mensaje)
+                if 'observations' in vals and vals['observations']:
+                    vals['observations'] = f"{vals['observations']}, {mensaje}"
+                else:
+                    vals['observations'] = f"{mensaje}"
+                self._notify_chatter(mensaje)
 
         vals['state'] = 'pending'
         service_id = self.env['vazz.state.history'].create({
@@ -324,7 +315,7 @@ class Services(models.Model):
 
     def write(self,vals):
 
-        # if 'question_warranty' in vals:
+        # ==> if 'question_warranty' in vals:
         #     if vals['question_warranty'] == 'yes':
         #         is_warranty = False
         #         if len(self.warranty_ids) <= 0:
@@ -341,15 +332,13 @@ class Services(models.Model):
         #         if is_warranty == False:
         #             raise UserError("Agregue por lo menos una Garantía")
 
-        if 'imei' in vals:
-            if vals['imei']:
-                aux =''
-                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-                if data:
-                    for ser in data:
-                        aux = aux + f"{ser.name},"
-                    self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
-        
+        if 'imei' in vals and vals['imei']:
+            aux =''
+            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
         res = super(Services,self).write(vals)
         return res
 
@@ -565,7 +554,7 @@ class Services(models.Model):
         """
         Archivar registros
         """
-        # services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
+        # => services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
         
         model = "vazz.services"
         # Día actual
@@ -575,12 +564,12 @@ class Services(models.Model):
         services_ids = self.env[model].search([('is_delivery','=','not'),('is_archive','=','not')])
         for ser in services_ids:
             if ser.date_archive:
-                amountAux = abs(current_date - ser.date_archive).days + 1
+                amount_aux = abs(current_date - ser.date_archive).days + 1
                 if ser.state in ('repaired','diagnosed','not_solution'):
-                    if amountAux >= 30:
+                    if amount_aux >= 30:
                         ser.is_archive = 'yes'
                 else:
-                    if amountAux >= 90:
+                    if amount_aux >= 90:
                         ser.is_archive = 'yes'
 
     def reset_date_archive(self):

@@ -27,13 +27,13 @@ class Customers(models.Model):
     @api.depends('date_start','date_end')
     def _compute_amount_days(self):
         # Calculando el total a pagar
-        amountAux = 0
+        amount_aux = 0
         date_start = self.date_start
         date_end = self.date_end
         if date_start and date_end:
-            amountAux = abs(date_start - date_end).days + 1
+            amount_aux = abs(date_start - date_end).days + 1
 
-        self.amount_days = amountAux
+        self.amount_days = amount_aux
 
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro', tracking=True)
     name = fields.Char(string="Folio", required=True, copy=False, index=True, default=lambda self: _('Nuevo'))

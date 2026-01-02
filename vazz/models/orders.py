@@ -19,6 +19,9 @@ STATES = [
     ('aux', ''),
 ]
 
+MODEL_VAZZ_ORDERS = 'vazz.orders'
+
+
 class Order(models.Model):
     _name = 'vazz.orders'
     _description = 'Pedidos'
@@ -28,37 +31,37 @@ class Order(models.Model):
     @api.depends('assets_ids')
     def _compute_total_assets(self):
         # Calculando el total de los anticipos del pedido
-        totalAux = 0
+        total_aux = 0
         if self.assets_ids:
             for ass in self.assets_ids:
-                totalAux = totalAux + ass.name
-        self.total_assets = totalAux
+                total_aux = total_aux + ass.name
+        self.total_assets = total_aux
 
     @api.depends('service_id')
     def _compute_total_assets_ser(self):
         # Calculando el total de los anticipos del servicio
-        totalAux = 0
+        total_aux = 0
         if self.service_id:
-            totalAux = self.service_id.total_assets_ser
-        self.total_assets_ser = totalAux
+            total_aux = self.service_id.total_assets_ser
+        self.total_assets_ser = total_aux
     
     @api.depends('amount','public_price')
     def _compute_total(self):
         # Calculando el total a pagar
         for rec in self:
-            amountAux = 1
-            priceAux = 0
+            amount_aux = 1
+            price_aux = 0
 
             public_price= rec.public_price
             amount = rec.amount 
 
             if amount:
-                amountAux = amount
+                amount_aux = amount
             if public_price:
-                priceAux = public_price
+                price_aux = public_price
 
-            totalAux = amountAux * priceAux
-            rec.total = totalAux
+            total_aux = amount_aux * price_aux
+            rec.total = total_aux
 
     @api.depends('total','total_assets')
     def _compute_total_pending(self):
@@ -141,7 +144,7 @@ class Order(models.Model):
     def create(self, vals):
         """Método que sobrescribe el create del objeto."""
 
-        # if 'service_id' not in vals:
+        # ==> if 'service_id' not in vals:
         #     # Validando que tenga un anticipo
         #     is_assets = False
         #     if len(self.assets_ids) <= 0:
@@ -190,7 +193,7 @@ class Order(models.Model):
                 'order_id': rec.id})
 
     def action_done(self):
-        # Realizado
+        # ==> Realizado
         # if not self.tracking_number:
         #     raise UserError("Agregue el número de rastreo")
         if not self.date_approximate_delivery:
@@ -231,7 +234,7 @@ class Order(models.Model):
 
     # Wizards
     def cancel_wizard(self):
-        product_ids = self.env['vazz.orders'].browse(self._context.get('active_ids'))
+        product_ids = self.env[MODEL_VAZZ_ORDERS].browse(self._context.get('active_ids'))
         return {
             'name' : 'Solicitud de Cancelación',
             'type' : 'ir.actions.act_window',
@@ -246,7 +249,7 @@ class Order(models.Model):
                 'default_id' : product_ids,
                 'params' : {
                     'id' : self.id,
-                    'model' : 'vazz.orders',
+                    'model' : MODEL_VAZZ_ORDERS,
                 },
             }
         }

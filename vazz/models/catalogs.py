@@ -18,6 +18,10 @@ STATES = [
     ('aux', ''),
 ]
 
+MODEL_VAZZ_ORDERS = 'vazz.orders'
+MODEL_VAZZ_SERVICES = 'vazz.services'
+MODEL_RES_CURRENCY = 'res.currency'
+
 class Assets(models.Model):
     _name = 'vazz.orders.assets'
     _description = 'Anticipos'
@@ -25,14 +29,14 @@ class Assets(models.Model):
     name = fields.Float(string="Anticipo")
     date_delivery = fields.Datetime(string= "Fecha del Anticipo", default=lambda self: fields.datetime.now())
     note =  fields.Text(string="Nota")
-    order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio", ondelete='cascade')
-    currency_id = fields.Many2one( 'res.currency', string='Currency')
+    order_id = fields.Many2one(comodel_name=MODEL_VAZZ_ORDERS, string="Pedido", ondelete='cascade')
+    service_id = fields.Many2one(comodel_name=MODEL_VAZZ_SERVICES, string="Servicio", ondelete='cascade')
+    currency_id = fields.Many2one( MODEL_RES_CURRENCY, string='Currency')
 
     @api.model
     def default_get(self, fields):
         res = super(Assets, self).default_get(fields)
-        currency = self.env['res.currency'].search([('name','=','MXN')])
+        currency = self.env[MODEL_RES_CURRENCY].search([('name','=','MXN')])
         if currency:
             res['currency_id'] = currency.id
         return res
@@ -64,8 +68,8 @@ class Notifications(models.Model):
     date_notification = fields.Datetime(string= "Fecha de notificación")
     note =  fields.Text(string="Nota")
 
-    order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
+    order_id = fields.Many2one(comodel_name=MODEL_VAZZ_ORDERS, string="Pedido", ondelete='cascade')
+    service_id = fields.Many2one(comodel_name=MODEL_VAZZ_SERVICES, string="Servicio",  ondelete='cascade')
 
     @api.model
     def create(self, vals):
@@ -78,8 +82,8 @@ class StateHistory(models.Model):
 
     state = fields.Selection(STATES, string='Estado del registro')
 
-    order_id = fields.Many2one(comodel_name="vazz.orders", string="Pedido", ondelete='cascade')
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio",  ondelete='cascade')
+    order_id = fields.Many2one(comodel_name=MODEL_VAZZ_ORDERS, string="Pedido", ondelete='cascade')
+    service_id = fields.Many2one(comodel_name=MODEL_VAZZ_SERVICES, string="Servicio",  ondelete='cascade')
 
 class ScheduleType(models.Model):
     _name = 'vazz.schedule.type'
@@ -96,16 +100,15 @@ class Product(models.Model):
     def _compute_amount(self):
         # Calculando el Importe
         for rec in self:
-            quantityAux = 0
-            unit_priceAux = 0
+            quantity_aux = 0
+            unit_price_aux = 0
 
             if rec.quantity:
-                quantityAux = rec.quantity
-            
+                quantity_aux = rec.quantity
             if rec.unit_price:
-                unit_priceAux = rec.unit_price
+                unit_price_aux = rec.unit_price
 
-            rec.amount = unit_priceAux * quantityAux
+            rec.amount = unit_price_aux * quantity_aux
 
     quantity = fields.Integer(string="Cantidad", default=1, tracking=True)
     description = fields.Text(string="Descripción")
@@ -113,13 +116,13 @@ class Product(models.Model):
     unit_price = fields.Float(string="Precio unitario")
     amount = fields.Float(string="Importe",compute="_compute_amount", store = False)
 
-    currency_id = fields.Many2one( 'res.currency', string='Currency')
+    currency_id = fields.Many2one( MODEL_RES_CURRENCY, string='Currency')
     quotation_id = fields.Many2one(comodel_name="vazz.quotation", string="Cotización", tracking=True)
 
     @api.model
     def default_get(self, fields):
         res = super(Product, self).default_get(fields)
-        currency = self.env['res.currency'].search([('name','=','MXN')])
+        currency = self.env[MODEL_RES_CURRENCY].search([('name','=','MXN')])
         if currency:
             res['currency_id'] = currency.id
         return res

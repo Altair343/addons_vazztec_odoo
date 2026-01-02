@@ -11,11 +11,11 @@ class Quotation(models.Model):
     def _compute_total(self):
         # Calculando el total
         for rec in self:
-            totalAux = 0
+            total_aux = 0
             if rec.product_ids:
                 for pro in rec.product_ids:
-                    totalAux = totalAux + pro.amount
-            rec.total = totalAux
+                    total_aux = total_aux + pro.amount
+            rec.total = total_aux
 
     name = fields.Char(string="Folio", required=True, copy=False, index=True, default=lambda self: _('Nuevo'))
     date = fields.Date(string="Fecha", default=lambda self: fields.datetime.now())

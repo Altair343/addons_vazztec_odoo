@@ -11,22 +11,22 @@ class Customers(models.Model):
     def _compute_phone(self):
         # buscar el teléfono principal
         for rec in self:
-            phoneAux = False
+            phone_aux = False
             if rec.phones_ids:
                 for tel in rec.phones_ids:
                     if tel.is_main == True:
-                        phoneAux = tel.id
+                        phone_aux = tel.id
                         break
-            rec.phone = phoneAux
+            rec.phone = phone_aux
 
     @api.depends('user_name','user_name','email','addres','phones_ids')
     def _compute_count_services(self):
-        countAux = 0
+        count_aux = 0
         model = "vazz.services"
         services = self.env[model].search([('customer_ids','=',self.id)])
         if services:
-            countAux = len(services)
-        self.count_services = countAux
+            count_aux = len(services)
+        self.count_services = count_aux
     
     folio = fields.Char(string="Folio", default=lambda self: _('Nuevo'))
     name = fields.Char(string="Nombre completo")
@@ -35,7 +35,6 @@ class Customers(models.Model):
     second_surname = fields.Char(string="Segundo apellido", tracking=True)
     email =  fields.Char(string="Correo")
     addres =  fields.Text(string="Dirreción", tracking=True)
-    # phone =  fields.Char(string="Teléfono principal",compute="_compute_phone", store = False)
     phone =  fields.Many2one(comodel_name='vazz.customers.phone', string="Teléfono principal",compute="_compute_phone", store = False)
     phones_ids = fields.One2many(comodel_name='vazz.customers.phone',inverse_name= 'customer_ids', 
         string="Teléfono", ondelete = "cascade")
@@ -68,9 +67,8 @@ class Customers(models.Model):
         if 'surname' in vals:
             apellidop = vals['surname']
         
-        if 'second_surname' in vals:
-            if vals['second_surname']: 
-                apellidom = vals['second_surname']
+        if 'second_surname' in vals and vals['second_surname']: 
+            apellidom = vals['second_surname']
         vals['name'] = f"{nombre} {apellidop} {apellidom}"
 
         # Buscar que no se repita el nombre
