@@ -84,3 +84,7 @@ vazz_product_Rol001,Producto Rol001,model_vazz_product,vazz.Rol001,1,1,1,0
 vazz_check_general,Check status express general,model_vazz_check_status,vazz.general_user,1,0,0,0
 vazz_check_admin,Check status express Admin,model_vazz_check_status,vazz.vazz_admin,1,1,1,1
 vazz_check_Rol001,Check status express Rol001,model_vazz_check_status,vazz.Rol001,1,1,1,0
+
+vazz_express_service_general,Solicitud de Servicio general,model_vazz_express_service,vazz.general_user,1,0,0,0
+vazz_express_service_admin,Solicitud de Servicio Admin,model_vazz_express_service,vazz.vazz_admin,1,1,1,1
+vazz_express_service_rol001,Solicitud de Servicio Rol001,model_vazz_express_service,vazz.Rol001,1,1,1,0

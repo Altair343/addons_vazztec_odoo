@@ -25,12 +25,19 @@
                     parent="vazz.action_servicios_vazz_menu_action"
                     sequence="10"
                     action="vazz.action_servicios_vazz"/>
-                
+
+                <menuitem
+                    id="action_express_service_menu_action"
+                    name="Servicio expréss"
+                    parent="vazz.action_servicios_vazz_menu_action"
+                    sequence="20"
+                    action="vazz.action_express_service_vazz"/>
+
                 <menuitem
                     id="action_action_servicios_archive_vazz"
                     name="Archivados"
                     parent="vazz.action_servicios_vazz_menu_action"
-                    sequence="10"
+                    sequence="30"
                     action="vazz.action_servicios_archive_vazz"/>
             
             <menuitem

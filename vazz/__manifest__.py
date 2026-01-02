@@ -50,6 +50,7 @@
         "views/product.xml",
         "views/quotation.xml",
         "views/check_status.xml",
+        "views/express_service.xml",
         # Views inherit other module
         "views/res_users.xml",
         # Report views

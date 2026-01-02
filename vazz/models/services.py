@@ -51,39 +51,31 @@ class Services(models.Model):
     @api.depends('orders_ids')
     def _compute_total_pay_order(self):
         # total a pagar de pedidos
-        totalAux = 0
+        total_aux = 0
         for order in self.orders_ids:
             if order.state != 'cancel':
-                totalAux = totalAux + order.total
-        self.total_pay_order = totalAux
-    
-    # @api.depends('orders_ids')
-    # def _compute_total_assets_order(self):
-    #     for rec in self:
-    #         totalAux = 0
-    #         for order in rec.orders_ids:
-    #             totalAux = totalAux + order.total_assets
-    #         rec.total_assets_order = totalAux
-    
+                total_aux = total_aux + order.total
+        self.total_pay_order = total_aux
+
     @api.depends('orders_ids')
     def _compute_total_assets_order(self):
         for rec in self:
-            totalAux = 0
+            total_aux = 0
             for order in rec.orders_ids:
                 # if order.state != 'cancel':
                 for ass in order.assets_ids:
-                    totalAux = totalAux + ass.name
-            rec.total_assets_order = totalAux
+                    total_aux = total_aux + ass.name
+            rec.total_assets_order = total_aux
 
 
     @api.depends('assets_ids')
     def _compute_total_assets_ser(self):
         # Calculando el total de los anticipos
-        totalAux = 0
+        total_aux = 0
         if self.assets_ids:
             for ass in self.assets_ids:
-                totalAux = totalAux + ass.name
-        self.total_assets_ser = totalAux
+                total_aux = total_aux + ass.name
+        self.total_assets_ser = total_aux
     
     @api.depends('assets_ids','total_assets_ser','total_assets_order')
     def _compute_total_assets(self):
@@ -125,10 +117,10 @@ class Services(models.Model):
     
     @api.depends('concepts_ids')
     def _compute_total_concepts(self):
-        totalAux = 0
+        total_aux = 0
         for con in self.concepts_ids:
-            totalAux = totalAux + con.public_price
-        self.total_concepts = totalAux
+            total_aux = total_aux + con.public_price
+        self.total_concepts = total_aux
 
 
     # Estado de la solicitud
