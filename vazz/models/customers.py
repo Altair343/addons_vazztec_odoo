@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from odoo import models, fields,api, _
+from odoo.addons.vazz_utils.tools import utils
 
 class Customers(models.Model):
     _name = 'vazz.customers'
@@ -40,6 +41,19 @@ class Customers(models.Model):
         string="Teléfono", ondelete = "cascade")
     count_services = fields.Integer(string="Total de Servicios", compute="_compute_count_services", store = False) 
     
+    # Roles
+    is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
+        compute="_compute_is_group_rol002")
+    
+    # compute
+    @api.depends('is_group_rol002')
+    def _compute_is_group_rol002(self):
+        self.is_group_rol002 = utils.has_group(self,'vazz.Rol002')
+
+    # Defaults
+    @api.model
+    def _default_is_group_rol002(self):
+        return utils.has_group(self,'vazz.Rol002')
     
     @api.model
     def create(self, vals):

@@ -30,9 +30,11 @@
                                 <field name="surname" readonly="0" required ="1"/>
                                 <field name="second_surname" readonly="0"/>
                                 <field name="count_services" readonly="1"/>
+                                <field name="is_group_rol002" invisible="1"/>
                             </group>
                             <group>
-                                <field name="phone" readonly="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
+                                <field name="phone" readonly="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
+                                    attrs="{'invisible' : [('is_group_rol002', '=', True)]}"/>
                                 <br/>
                                 <field name="email" readonly="0"/>
                             </group>
@@ -40,8 +42,9 @@
                         <group>
                             <field name="addres" readonly="0"/>
                         </group>
-                        <label for="phones_ids" string="Teléfonos"/>
+                        <label for="phones_ids" string="Teléfonos" attrs="{'invisible' : [('is_group_rol002', '=', True)]}"/>
                         <field name="phones_ids" readonly="0"
+                            attrs="{'invisible' : [('is_group_rol002', '=', True)]}"
                             context="{'request_id': id }">
                             <tree string="Number">
                                 <field name="name" required ="1"/>

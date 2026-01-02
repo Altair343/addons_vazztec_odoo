@@ -196,6 +196,14 @@ class Services(models.Model):
     unlocks_ids = fields.One2many(comodel_name='vazz.unlocks',inverse_name= 'service_id', 
         string="Desbloqueos", ondelete='cascade')
 
+    # Check status express
+    question_check_status = fields.Selection(REQUEST,string="Check status ingreso equipo?")
+    question_question_check =  fields.Text(string="Motivo")
+    check_status_ids = fields.One2many(comodel_name='vazz.check.status',inverse_name= 'service',
+        string="Check status express", ondelete='cascade')
+    check_status_id = fields.Many2one(comodel_name='vazz.check.status', string="Check status express",
+        compute='_compute_last_check_status_id' )
+
     # Pestaña de Equipo
     brand = fields.Char(string="Marca")
     model_e = fields.Char(string="Modelo" )
@@ -215,6 +223,30 @@ class Services(models.Model):
     concepts_ids = fields.One2many(comodel_name='vazz.concepts',inverse_name= 'service_id', 
         string="Conceptos")
 
+    # Roles
+    is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
+        compute="_compute_is_group_rol002")
+    
+    # compute
+    @api.depends('is_group_rol002')
+    def _compute_is_group_rol002(self):
+        self.is_group_rol002 = utils.has_group(self,'vazz.Rol002')
+
+    @api.depends('check_status_ids')
+    def _compute_last_check_status_id(self):
+        for record in self:
+            request =  False
+            for obj in reversed(record.check_status_ids):
+                request  = obj.id
+                break
+            record.check_status_id = request
+
+    # Defaults
+    @api.model
+    def _default_is_group_rol002(self):
+        return utils.has_group(self,'vazz.Rol002')
+
+    
     @api.model
     def default_get(self, fields):
         res = super(Services, self).default_get(fields)
@@ -272,6 +304,20 @@ class Services(models.Model):
             'state': vals['state'],
             'service_id': self.id})
         vals['state_history_ids'] =  [(4, service_id.id)]
+
+        if 'question_check_status' in vals and vals['question_check_status'] == 'yes':
+            # Validando que tenga un desbloqueo
+            is_check_status = False
+            if len(self.check_status_ids) <= 0:
+                if 'check_status_ids' in vals:
+                    if vals['check_status_ids']:
+                        is_check_status = True
+                    else:
+                        is_check_status = False
+                else:
+                    is_check_status = False
+                if is_check_status == False:
+                    raise UserError("Agregue por lo menos un Check status express")
 
         result = super(Services, self).create(vals)
         return result
@@ -519,11 +565,25 @@ class Services(models.Model):
         """
         Archivar registros
         """
+        # services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
+        
         model = "vazz.services"
-        current_date = fields.date.today()
-        services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
+        # Día actual
+        current_date = fields.date.today() 
+        
+        # Obtenemos los registros que no esten entregados y archivados
+        services_ids = self.env[model].search([('is_delivery','=','not'),('is_archive','=','not')])
         for ser in services_ids:
             if ser.date_archive:
                 amountAux = abs(current_date - ser.date_archive).days + 1
-                if amountAux >= 40:
-                    ser.is_archive = 'yes'
+                if ser.state in ('repaired','diagnosed','not_solution'):
+                    if amountAux >= 30:
+                        ser.is_archive = 'yes'
+                else:
+                    if amountAux >= 90:
+                        ser.is_archive = 'yes'
+
+    def reset_date_archive(self):
+        services_ids = self.env["vazz.services"].search([('state','=','pending')])
+        for data in services_ids:
+            data.date_archive = data.date_reception

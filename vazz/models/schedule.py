@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # odoo
 from odoo import models, fields,api, _
+from odoo.addons.vazz_utils.tools import utils
 
 STATES = [
     ('draft', 'Borrador'),
@@ -35,6 +36,20 @@ class Schedule(models.Model):
     # Pestaña cancelación
     cancel_request = fields.One2many(comodel_name='vazz.cancel.schedule',
         inverse_name="cancel_request", string="Cancelaciones", ondelete = "cascade")
+
+    # Roles
+    is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
+        compute="_compute_is_group_rol002")
+    
+    # compute
+    @api.depends('is_group_rol002')
+    def _compute_is_group_rol002(self):
+        self.is_group_rol002 = utils.has_group(self,'vazz.Rol002')
+
+    # Defaults
+    @api.model
+    def _default_is_group_rol002(self):
+        return utils.has_group(self,'vazz.Rol002')
 
     @api.model
     def create(self, vals):

@@ -75,6 +75,12 @@ class CheckStatus(models.Model):
     scrapes_bumps = fields.Boolean(string="Raspones / Golpes", tracking=True)
     dubbings = fields.Boolean(string="Dobladuras", tracking=True)
 
+    # Contacto físico de los botones 
+    normal = fields.Boolean(string="Normal", tracking=True)
+    with_details = fields.Boolean(string="Con detalles", tracking=True)
+    without_button = fields.Boolean(string="Sin algún botón", tracking=True)
+
+
     # == Constrains
 
     # == Onchange
@@ -452,6 +458,34 @@ class CheckStatus(models.Model):
                     rec.sensor_not = False
                 if rec.sensor_details == True:
                     rec.sensor_details = False
+
+    # ====  Contacto físico de los botones ====
+    @api.onchange('normal')
+    def onchange_normal(self):
+        for rec in self:
+            if rec.normal == True:
+                if rec.with_details == True:
+                    rec.with_details = False
+                if rec.without_button == True:
+                    rec.without_button = False
+
+    @api.onchange('with_details')
+    def onchange_with_details(self):
+        for rec in self:
+            if rec.with_details == True:
+                if rec.normal == True:
+                    rec.normal = False
+                if rec.without_button == True:
+                    rec.without_button = False
+
+    @api.onchange('without_button')
+    def onchange_without_button(self):
+        for rec in self:
+            if rec.without_button == True:
+                if rec.normal == True:
+                    rec.normal = False
+                if rec.with_details == True:
+                    rec.with_details = False
 
     # == Compute
 

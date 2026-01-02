@@ -39,10 +39,12 @@
                             <group>
                                 <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
                                 <field name="customer_ids" readonly="1"  />
-                                <field name="telephone_cus" readonly="1"  options="{'no_open':True}" 
+                                <field name="telephone_cus" readonly="1"  options="{'no_open':True}"
+                                    attrs="{'invisible' : [('is_group_rol002', '=', True)]}"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="date_reception" readonly="1"  />
                                 <field name="type_service" readonly="1" />
+                                <field name="is_group_rol002" invisible="1"/>
                                 <field name="type_notification_id" readonly="1"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
                             </group>
                             <group string="Ingreso">
@@ -135,6 +137,11 @@
                                 </group>
                                 <label for="notifications_ids" string="Notificaciones"/>
                                 <field name="notifications_ids" readonly="1" />
+                            </page>
+                            <page name="check_status_data" string="Check status express" >
+                                <label for="check_status_ids" string="Check status express"/>
+                                <field name="check_status_ids" readonly="1"
+                                    context="{'type_register': 'service'}"/>
                             </page>
                             <page name="cancel" string="Cancelación">
                                 <group>

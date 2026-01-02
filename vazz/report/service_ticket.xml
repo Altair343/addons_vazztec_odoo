@@ -50,7 +50,12 @@
                                         <td>
                                             <span t-esc="doc.name" />
                                         </td>
-                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>FECHA Y HORA DE RECEPCIÓN</span> <br/>
+                                            <span t-esc="context_timestamp(doc.date_reception).strftime('%d/%m/%Y %H:%M')"/> 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -85,7 +90,23 @@
                                     <tr>
                                         <td>
                                             Marca: <span t-esc="doc.brand"/> <br/>
-                                            Modelo: <span t-esc="doc.model_e"/>
+                                            Modelo: <span t-esc="doc.model_e"/> <br/>
+                                            Accesorios: 
+                                            <t t-if="doc.question_acce=='yes'"><span t-esc="doc.accessories"/></t>
+                                            <t t-if="doc.question_acce=='not'"> No </t>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Check express status ingreso equipo?</span>
+                                            <t t-if="doc.question_check_status=='yes'">
+                                                <span>Si</span><br/>
+                                            </t>
+                                            <t t-if="doc.question_check_status=='not'">
+                                                <span>No</span><br/>
+                                                <span>Motivo: </span> <span t-esc="doc.question_question_check"/>
+                                            </t>
                                         </td>
                                     </tr>
                                     <tr>

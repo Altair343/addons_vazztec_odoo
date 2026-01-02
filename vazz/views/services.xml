@@ -68,8 +68,9 @@
                                     attrs="{'readonly' : [('is_delivery', '=', 'yes')]}"/>
                                 <field name="telephone_cus" options="{'no_open':True}" 
                                     attrs="{
+                                        'invisible' : [('is_group_rol002', '=', True)],
                                         'readonly' : [('state', 'not in', ('draft','pending'))],
-                                        'required' : [('code_type_notification', '=','A')]}"
+                                        'required' : ['&amp;',('code_type_notification', '=','A'),('is_group_rol002', '=', False)]}"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="date_reception" required="1" 
                                     attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
@@ -78,6 +79,7 @@
                                 <field name="type_notification_id" required="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
                                 <field name="code_type_notification" readonly="1" invisible="1"/>
+                                <field name="is_group_rol002" invisible="1"/>
                                 
                             </group>
                             <group string="Ingreso">
@@ -85,6 +87,13 @@
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
                                 <field name="addres_entry" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))], 'invisible' : [('type_entry', '!=','harvest')],'required' : [('type_entry', '=','harvest')]}" />
                                 <field name="state_aux" readonly="1"/>
+
+                                <field name="question_check_status" attrs="{
+                                    'required' : [('state', 'in', ('draft','pending'))],
+                                    'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                <field name="question_question_check" attrs="{
+                                    'readonly' : [('state', 'not in', ('draft','pending'))],
+                                    'invisible' : [('question_check_status', '!=','not')],'required' : [('question_check_status', '=','not')]}" />
                             </group>
                         </group>
                         <group>
@@ -194,6 +203,14 @@
                                 <label for="notifications_ids" string="Notificaciones"/>
                                 <field name="notifications_ids" 
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"/>
+                            </page>
+                            <page name="check_status_data" string="Check status express" >
+                                <label for="check_status_ids" string="Check status express"/>
+                                <field name="check_status_ids"
+                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
+                                    context="{
+                                        'type_register': 'service',
+                                        'form_view_ref':'vazz.check_status_view_form_alt',}"/>
                             </page>
                             <page name="cancel" string="Cancelación">
                                 <group>

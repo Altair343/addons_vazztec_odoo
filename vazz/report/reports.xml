@@ -17,8 +17,15 @@
         name="vazz.service_ticket_temple" 
         file="vazz.service_ticket"
         report_type="qweb-html"
-        print_report_name="object.name"/>
+    print_report_name="object.name"/>
 
+    <report id="check_status_v1"
+        model="vazz.check.status"
+        string="Ticket"
+        name="vazz.check_status_ticket_temple"
+        file="vazz.check_status_ticket"
+        report_type="qweb-html"
+        print_report_name="object.name"/>
 
     <record id = "paperformat_report" model="report.paperformat">
         <field name="name">Reporte Vazztec</field>
@@ -30,7 +37,6 @@
         <field name="margin_left">18</field>
         <field name="margin_right">18</field>
     </record>
-
     <record id = "paperformat_ticket" model="report.paperformat">
         <field name="name">Ticket Vazztec</field>
         <field name="default" eval="True" />
@@ -44,11 +50,27 @@
         <field name="margin_right">5</field>
     </record>
 
+    <record id = "paperformat_check" model="report.paperformat">
+        <field name="name">Check Vazztec</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">210</field>
+        <field name="page_width">52</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+    </record>
+
     <record id ="report_quotation" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_report"/>
     </record>
-
     <record id ="service_ticket" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_ticket"/>
+    </record>
+
+    <record id ="check_status_v1" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_check"/>
     </record>
 </odoo>

@@ -18,5 +18,10 @@
             <field name="comment" >Rol001</field>
         </record>
 
+        <record model="res.groups" id="Rol002">
+            <field name="name">VAZZ/Ocultar campos VAZZ</field>
+            <field name="comment" >Rol002</field>
+        </record>
+
     </data>
 </odoo>

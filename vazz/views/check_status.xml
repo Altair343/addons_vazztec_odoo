@@ -6,7 +6,8 @@
             <field name="name">vazz.check.status.view.tree</field>
             <field name="model">vazz.check.status</field>
             <field name="arch" type="xml">
-                <tree string="">
+                <tree string=""  default_order='id desc'>
+                    <field name="id" invisible="1"/>
                     <field name="service"/>
                     <field name="create_date" string="Registrado el"/>
                 </tree>
@@ -100,6 +101,128 @@
                                 <field name="scrapes_bumps" readonly="0"/>
                                 <field name="dubbings" readonly="0"/>
                             </group>
+                        </group>
+                        <group>
+                            <group string ="Contacto físico de los botones">
+                                <field name="normal" readonly="0"/>
+                                <field name="with_details" readonly="0"/>
+                                <field name="without_button" readonly="0"/>
+                            </group>
+                            <group></group>
+                        </group>
+                        <group>
+                            <h6 decoration-muted = "True" style = "color: #666666;">Este ticket solo es un check del estado de ingreso previo al soporte
+                                por lo que no tiene un valor comprobatorio de ingreso.Recuerde que los equipos electrónicos con detalles físicos como
+                                golpes, humedad, pantallas rotas, doblados, fallas electrónicas, que no enciendan o que fueron llevados a otro taller de
+                                reparación podrian presentar otras fallas diferentes al ingreso debido a las condiciones mismas y que en caso de suceder
+                                no aplica ningún tipo de garantía. Póliticas, términos y condiciones de nuestros servicios en: www.vazztec.com En pantallas
+                                la garantía es unicamente al momento de entregar el equipo haga la verificación correspondiente.</h6>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="check_status_view_form_alt" model="ir.ui.view">
+            <field name="name">vazz.check.status.view.form.alt</field>
+            <field name="model">vazz.check.status</field>
+            <field name="arch" type="xml">
+                <form string="" duplicate="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="service" readonly="0" invisible="1" options="{'no_create': True}"/>
+                            </group>
+                            <group></group>
+                        </group>
+
+                        <group string ="Detalles">
+                            <group>
+                                <h6 decoration-muted = "True" style = "color: #666666;">Valor referencia normal 1.0A - 3.0A</h6>
+                                <field name="amperage" readonly="0"/>
+                                <field name="permanent" readonly="0"/>
+                                <field name="variable" readonly="0"/>
+                                <field name="doesnt_charge" readonly="0"/>
+                            </group>
+                            <group string ="Micrófono">
+                                <field name="microphone_yes" readonly="0"/>
+                                <field name="microphone_not" readonly="0"/>
+                                <field name="microphone_details" readonly="0"/>
+                                <field name="microphone_not_verifiable" readonly="0"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string ="¿Enciende?">
+                                <field name="turn_on_yes" readonly="0"/>
+                                <field name="turn_on_not" readonly="0"/>
+                                <field name="turn_on_details" readonly="0"/>
+                                <field name="turn_on_not_verifiable" readonly="0"/>
+                            </group>
+                            <group string ="Bocina de llamadas">
+                                <field name="call_horn_yes" readonly="0"/>
+                                <field name="call_horn_not" readonly="0"/>
+                                <field name="call_horn_details" readonly="0"/>
+                                <field name="call_horn_not_verifiable" readonly="0"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string ="¿Da imagen?">
+                                <field name="gives_image_yes" readonly="0"/>
+                                <field name="gives_image_not" readonly="0"/>
+                                <field name="damaged" readonly="0"/>
+                            </group>
+                            <group string ="Cámaras">
+                                <field name="cameras_yes" readonly="0"/>
+                                <field name="cameras_not" readonly="0"/>
+                                <field name="cameras_details" readonly="0"/>
+                                <field name="cameras_not_verifiable" readonly="0"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string ="¿Da señal?">
+                                <field name="signal_yes" readonly="0"/>
+                                <field name="signal_not" readonly="0"/>
+                                <field name="signal_not_verifiable" readonly="0"/>
+                            </group>
+                            <group string ="Sensor huella">
+                                <field name="does_not_apply" readonly="0"/>
+                                <field name="sensor_yes" readonly="0"/>
+                                <field name="sensor_not" readonly="0"/>
+                                <field name="sensor_details" readonly="0"/>
+                                <field name="sensor_not_verifiable" readonly="0"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string ="Altavoz">
+                                <field name="speaker_yes" readonly="0"/>
+                                <field name="speaker_not" readonly="0"/>
+                                <field name="speaker_details" readonly="0"/>
+                                <field name="speaker_not_verifiable" readonly="0"/>
+                            </group>
+                            <group string ="Signos visibles">
+                                <field name="dust_dirt" readonly="0"/>
+                                <field name="moisture_sulfate" readonly="0"/>
+                                <field name="scrapes_bumps" readonly="0"/>
+                                <field name="dubbings" readonly="0"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string ="Contacto físico de los botones">
+                                <field name="normal" readonly="0"/>
+                                <field name="with_details" readonly="0"/>
+                                <field name="without_button" readonly="0"/>
+                            </group>
+                            <group></group>
                         </group>
 
                         <group>

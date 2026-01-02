@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="check_status_ticket_temple">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .oe_initial{
+                            color: #249e6b;
+                        }
+
+                        .oe_pie{
+                            font-size: .8rem;
+                        }
+                    </style>
+                    <div class="header">
+                        <div class="container mw-100 mb-2 text-center">
+                            <div class="row"></div>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <table class="container mw-100 mb-2 text-center" style="width:100%">
+                            <thead>
+                                <tr style="width:100%;">
+                                    <th name="th_logo" colspan="2">
+                                        <img src="/vazz/static/src/img/Logo_Web.png" width="220px" height = "auto"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <span>TEL: 982-127-2503</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="container mw-100 mb-2 text-center">
+                            <table class="table-bordered;" style="border:1px solid black !important; width:100%" border="1px">
+                                <thead>
+                                    <tr>
+                                        <th name="th_folio">FOLIO SERVICIO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span t-esc="doc.service.name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Valor de referencia de carga normal 1.0A - 3.0A "Fijo"</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <strong>
+                                            <span>Estatus y condiciones de ingreso del equipo:</span>
+                                        </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Amperaje de carga (A):</span> <span t-esc="doc.amperage"/> 
+                                            <t t-if="doc.permanent==True">
+                                                <span>Fijo</span> <br/>
+                                            </t>
+                                            <t t-if="doc.variable==True">
+                                                <span>Variable</span> <br/>
+                                            </t>
+                                            <t t-if="doc.doesnt_charge==True">
+                                                <span>No carga</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>¿Enciende?:</span>
+                                            <t t-if="doc.turn_on_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.turn_on_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.turn_on_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.turn_on_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>¿Da imagen?:</span>
+                                            <t t-if="doc.gives_image_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.gives_image_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.damaged==True">
+                                                <span>Dañada</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <span>¿Da señal?:</span>
+                                            <t t-if="doc.signal_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.signal_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.signal_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Altavoz:</span>
+                                            <t t-if="doc.speaker_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.speaker_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.speaker_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.speaker_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Micrófono:</span>
+                                            <t t-if="doc.microphone_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.microphone_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.microphone_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.microphone_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Bocina de llamadas:</span>
+                                            <t t-if="doc.call_horn_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.call_horn_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.call_horn_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.call_horn_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Cámaras:</span>
+                                            <t t-if="doc.cameras_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.cameras_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.cameras_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.cameras_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Sensor huella:</span>
+                                            <t t-if="doc.does_not_apply==True">
+                                                <span>No aplica</span> <br/>
+                                            </t>
+                                            <t t-if="doc.sensor_yes==True">
+                                                <span>Si</span> <br/>
+                                            </t>
+                                            <t t-if="doc.sensor_not==True">
+                                                <span>No</span> <br/>
+                                            </t>
+                                            <t t-if="doc.sensor_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.sensor_not_verifiable==True">
+                                                <span>No comprobable</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Signos visibles:</span> <br/>
+                                            <t t-if="doc.dust_dirt==True">
+                                                <span>Polvo / suciedad</span> <br/>
+                                            </t>
+                                            <t t-if="doc.moisture_sulfate==True">
+                                                <span>Humedad / sulfato</span> <br/>
+                                            </t>
+                                            <t t-if="doc.scrapes_bumps==True">
+                                                <span>Raspones / Golpes</span> <br/>
+                                            </t>
+                                            <t t-if="doc.dubbings==True">
+                                                <span>Dobladuras</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Contacto físico de los botones:</span> <br/>
+                                            <t t-if="doc.normal==True">
+                                                <span>Normal</span> <br/>
+                                            </t>
+                                            <t t-if="doc.with_details==True">
+                                                <span>Con detalles</span> <br/>
+                                            </t>
+                                            <t t-if="doc.without_button==True">
+                                                <span>Sin algún botón</span> <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="container mw-100 mb-2 text-center" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th name="th_pie"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="line-height: 1 !important;">
+                                            <span style="font-size: .7rem; line-height: 0 !important;">Este ticket solo es un check del estado de ingreso previo al soporte por lo que no tiene un valor comprobatorio de ingreso.Recuerde que los equipos electrónicos con detalles físicos como golpes, humedad, pantallas rotas, doblados, fallas electrónicas, que no enciendan o que fueron llevados a otro taller de reparación podrian presentar otras fallas diferentes al ingreso debido a las condiciones mismas y que en caso de suceder no aplica ningún tipo de garantía. Póliticas, términos y condiciones de nuestros servicios en: www.vazztec.com En pantallas la garantía es unicamente al momento de entregar el equipo haga la verificación correspondiente.</span> <br/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

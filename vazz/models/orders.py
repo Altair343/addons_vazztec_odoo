@@ -2,6 +2,7 @@
 # odoo
 from odoo import models, fields,api, _
 from odoo.exceptions import UserError
+from odoo.addons.vazz_utils.tools import utils
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -107,6 +108,20 @@ class Order(models.Model):
     # Pestaña de historial de estados
     state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'order_id', 
         string="historial de estados")
+
+    # Roles
+    is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
+        compute="_compute_is_group_rol002")
+    
+    # compute
+    @api.depends('is_group_rol002')
+    def _compute_is_group_rol002(self):
+        self.is_group_rol002 = utils.has_group(self,'vazz.Rol002')
+
+    # Defaults
+    @api.model
+    def _default_is_group_rol002(self):
+        return utils.has_group(self,'vazz.Rol002')
 
     @api.model
     def default_get(self, fields):

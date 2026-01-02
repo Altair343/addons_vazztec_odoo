@@ -46,7 +46,7 @@
                 parent="vazz.request_menu_services"
                 sequence="40"
                 action="vazz.action_warranty_vazz"/>
-            
+
             <menuitem
                 id="action_unlocks_vazz_menu_action"
                 name="Desbloqueos"
@@ -60,7 +60,7 @@
                 parent="vazz.request_menu_services"
                 sequence="60"
                 action="vazz.action_check_status_vazz"/>
-        
+
         <menuitem
             id="request_menu_others"
             name="Otros"
