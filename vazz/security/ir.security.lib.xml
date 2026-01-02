@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+        <record model="ir.module.category" id="module_category_vazztec">
+            <field name="name">Vazztec</field>
+            <field name="description">Roles Vazztec</field>
+            <field name="sequence">1000</field>
+        </record>
+
         <!-- Módulo VAZZ -->
         <record model="res.groups" id="vazz.general_user">
             <field name="name">VAZZ/Usuario de modulo Vazztec</field>
             <field name="comment">vazz.general_user</field>
+            <field name="category_id" ref="vazz.module_category_vazztec" />
         </record>
 
         <!-- Administrador VAZZ -->
         <record model="res.groups" id="vazz_admin">
             <field name="name">VAZZ/Administrador Vazztec</field>
             <field name="comment" >vazz_admin</field>
+            <field name="category_id" ref="vazz.module_category_vazztec" />
         </record>
 
         <record model="res.groups" id="Rol001">
             <field name="name">VAZZ/Crear registros VAZZ</field>
             <field name="comment" >Rol001</field>
+            <field name="category_id" ref="vazz.module_category_vazztec" />
         </record>
 
         <record model="res.groups" id="Rol002">
             <field name="name">VAZZ/Ocultar campos VAZZ</field>
             <field name="comment" >Rol002</field>
+            <field name="category_id" ref="vazz.module_category_vazztec" />
         </record>
 
     </data>
