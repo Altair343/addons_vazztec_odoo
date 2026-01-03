@@ -73,7 +73,7 @@
     </record>
 
     <record id = "paperformat_ticket_express" model="report.paperformat">
-        <field name="name">Ticket Vazztec</field>
+        <field name="name">Ticket Express Vazztec</field>
         <field name="default" eval="True" />
         <field name="format">custom</field>
         <field name="page_height">150</field>
