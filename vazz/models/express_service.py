@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # odoo
 from odoo import models, fields,api
+from odoo.addons.vazz_utils.tools import utils
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -16,10 +17,31 @@ class ExpressService(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Folio")
-    customer_name = fields.Char(string="Nombre completo", tracking=True)
-    phone = fields.Char(string="Teléfono", tracking=True)
+    customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
+    telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="Teléfono",
+    domain = "[('customer_ids','=',customer_ids)]")
+
     description =  fields.Text(string="Descripción de la falla")
     state = fields.Selection(STATES, default=STATES[0][0], string='Estado del registro')
+    cost = fields.Float(string="Precio",tracking=True )
+    currency_id = fields.Many2one( 'res.currency', string='Currency')
+
+    # Roles
+    is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
+        compute="_compute_is_group_rol002")
+
+    # compute
+    @api.depends('is_group_rol002')
+    def _compute_is_group_rol002(self):
+        self.is_group_rol002 = utils.has_group(self,'vazz.Rol002')
+
+    @api.model
+    def default_get(self, fields):
+        res = super(ExpressService, self).default_get(fields)
+        currency = self.env['res.currency'].search([('name','=','MXN')])
+        if currency:
+            res['currency_id'] = currency.id
+        return res
 
     @api.model
     def create(self, vals):
@@ -30,3 +52,8 @@ class ExpressService(models.Model):
         vals['state'] = 'registered'
         result = super(ExpressService, self).create(vals)
         return result
+
+    # Onchange
+    @api.onchange('customer_ids')
+    def _onchange_customer_ids(self):
+        self.telephone_cus = self.customer_ids.phone.id if self.customer_ids else False

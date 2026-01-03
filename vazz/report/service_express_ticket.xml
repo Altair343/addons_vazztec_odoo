@@ -58,7 +58,13 @@
                                     <tr>
                                         <td>
                                             <span>CLIENTE</span> <br/>
-                                            <span t-esc="doc.customer_name"/>
+                                            <span t-esc="doc.customer_ids.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>NOTIFICACIÓN</span> <br/>
+                                            <span t-esc="doc.telephone_cus.name"/>
                                         </td>
                                     </tr>
                                     <tr>

@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <tree string="">
                     <field name="name"/>
-                    <field name="customer_name"/>
-                    <field name="phone"/>
+                    <field name="customer_ids"/>
+                    <field name="telephone_cus"/>
                     <field name="description"/>
                 </tree>
             </field>
@@ -27,11 +27,19 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" force_save="1"/>
-                                <field name="customer_name" required="1" readonly="0"/>
-                                <field name="phone" required="1" readonly="0"/>
+                                <field name="customer_ids" required="1" readonly="0"/>
+                                <field name="telephone_cus" options="{'no_open':True}"
+                                    attrs="{
+                                        'invisible' : [('is_group_rol002', '=', True)],
+                                        'required' : [('is_group_rol002', '=', False)]}"
+                                    context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="description" required="1" readonly="0"/>
+                                <field name="is_group_rol002" invisible="1"/>
                             </group>
-                            <group></group>
+                            <group>
+                                <field name="cost" required="1" readonly="0" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="currency_id" invisible="1" readonly="1" force_save="1" />
+                            </group>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
