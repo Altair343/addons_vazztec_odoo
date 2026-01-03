@@ -19,6 +19,15 @@
         report_type="qweb-html"
     print_report_name="object.name"/>
 
+    <report id="service_express_ticket"
+        model="vazz.express.service"
+        string="Ticket"
+        name="vazz.service_express_ticket_temple"
+        file="vazz.service_express_ticket"
+        report_type="qweb-html"
+        print_report_name="object.name"
+    />
+
     <report id="check_status_v1"
         model="vazz.check.status"
         string="Ticket"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="service_ticket_temple">
+    <template id="service_express_ticket_temple">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
@@ -18,8 +18,7 @@
                             <div class="row"></div>
                         </div>
                     </div>
-                    <!-- <hr/> -->
-                    
+
                     <div class="page">
                         <table class="container mw-100 mb-2 text-center" style="width:100%">
                             <thead>
@@ -34,7 +33,6 @@
                                     <td colspan="2">
                                         <span>TEL: 982-127-2503</span>
                                     </td>
-                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -54,63 +52,18 @@
                                     <tr>
                                         <td>
                                             <span>FECHA Y HORA DE RECEPCIÓN</span> <br/>
-                                            <span t-esc="context_timestamp(doc.date_reception).strftime('%d/%m/%Y %H:%M')"/> 
+                                            <span t-esc="context_timestamp(doc.create_date).strftime('%d/%m/%Y %H:%M')"/> 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <span>CLIENTE</span> <br/>
-                                            <span t-esc="doc.customer_ids.name"/>
+                                            <span t-esc="doc.customer_name"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span>TIPO DE INGRESO</span> <br/>
-                                            <t t-if="doc.type_entry=='local'">
-                                                <span>Local</span>
-                                            </t>
-                                            <t t-if="doc.type_entry=='harvest'">
-                                                <span>Recolección</span>
-                                            </t>
-                                            <t t-if="doc.type_entry=='home_service'">
-                                                <span>Servicio a domicilio</span>
-                                            </t>
-                                            <t t-if="doc.type_entry=='remote'">
-                                                <span>Remoto (a distancia)</span>
-                                            </t>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>NOTIFICACIÓN</span> <br/>
-                                            <span t-esc="doc.type_notification_id.name"/> <br/>
-                                            <span t-esc="doc.telephone_cus.name"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Marca: <span t-esc="doc.brand"/> <br/>
-                                            Modelo: <span t-esc="doc.model_e"/> <br/>
-                                            Accesorios: 
-                                            <t t-if="doc.question_acce=='yes'"><span t-esc="doc.accessories"/></t>
-                                            <t t-if="doc.question_acce=='not'"> No </t>
-                                            
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Check express status ingreso equipo?</span>
-                                            <t t-if="doc.question_check_status=='yes'">
-                                                <span>Si</span><br/>
-                                            </t>
-                                            <t t-if="doc.question_check_status=='not'">
-                                                <span>No</span><br/>
-                                                <span>Motivo: </span> <span t-esc="doc.question_question_check"/>
-                                            </t>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
+                                            <span>DESCRIPCIÓN</span> <br/>
                                             <span t-esc="doc.description"/>
                                         </td>
                                     </tr>
