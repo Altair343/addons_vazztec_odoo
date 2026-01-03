@@ -30,6 +30,11 @@ class ExpressService(models.Model):
     is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
         compute="_compute_is_group_rol002")
 
+    # Defaults
+    @api.model
+    def _default_is_group_rol002(self):
+        return utils.has_group(self,'vazz.Rol002')
+
     # compute
     @api.depends('is_group_rol002')
     def _compute_is_group_rol002(self):
