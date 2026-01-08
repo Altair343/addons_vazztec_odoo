@@ -209,7 +209,7 @@ class Services(models.Model):
     # Pestaña de historial de estados
     state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'service_id', 
         string="historial de estados")
-    
+
     # Conceptos
     total_concepts = fields.Float(string="Total de los conceptos",compute="_compute_total_concepts", store = False)
     concepts_ids = fields.One2many(comodel_name='vazz.concepts',inverse_name= 'service_id', 
@@ -218,7 +218,10 @@ class Services(models.Model):
     # Roles
     is_group_rol002 = fields.Boolean(default=lambda self: self._default_is_group_rol002(),
         compute="_compute_is_group_rol002")
-    
+
+    # Migración
+    old_id = fields.Integer(string='old_id')
+
     # compute
     @api.depends('is_group_rol002')
     def _compute_is_group_rol002(self):
@@ -238,99 +241,75 @@ class Services(models.Model):
     def _default_is_group_rol002(self):
         return utils.has_group(self,'vazz.Rol002')
 
-    
     @api.model
     def default_get(self, fields):
         res = super(Services, self).default_get(fields)
         currency = self.env['res.currency'].search([('name','=','MXN')])
         if currency:
             res['currency_id'] = currency.id
-        
-        # type_register = self._context.get('type_register')
-        # if type_register and type_register == 'order_service':
-        #     res['customer_ids'] = type_register
+
         return res
 
     @api.model
     def create(self, vals):
-        if vals['type_service'] == 'unlock':
-            # Validando que tenga un desbloqueo
-            is_unlocks = False
-            if len(self.unlocks_ids) <= 0:
-                if 'unlocks_ids' in vals and vals['unlocks_ids']:
-                    is_unlocks = True
-                if is_unlocks == False:
-                    raise UserError("Agregue por lo menos un desbloqueo")
+        migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
+        if not migration_creation:
+            if 'type_service' in vals and vals['type_service'] == 'unlock':
+                # Validando que tenga un desbloqueo
+                is_unlocks = False
+                if len(self.unlocks_ids) <= 0:
+                    if 'unlocks_ids' in vals and vals['unlocks_ids']:
+                        is_unlocks = True
+                    if is_unlocks == False:
+                        raise UserError("Agregue por lo menos un desbloqueo")
 
-        # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
-        if name_seq != False:
-            vals['name'] = f"S/{name_seq}"
+            # Generar nombre
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
+            if name_seq != False:
+                vals['name'] = f"S/{name_seq}"
 
-        if 'imei' in vals and vals['imei']:
-            aux =''
-            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-            if data:
-                for ser in data:
-                    aux = aux + f"{ser.name},"
-                # no se crea el mensaje
-                mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
-                # _logger.info(mensaje)
-                if 'observations' in vals and vals['observations']:
-                    vals['observations'] = f"{vals['observations']}, {mensaje}"
-                else:
-                    vals['observations'] = f"{mensaje}"
-                self._notify_chatter(mensaje)
-
-        vals['state'] = 'pending'
-        service_id = self.env['vazz.state.history'].create({
-            'state': vals['state'],
-            'service_id': self.id})
-        vals['state_history_ids'] =  [(4, service_id.id)]
-
-        if 'question_check_status' in vals and vals['question_check_status'] == 'yes':
-            # Validando que tenga un desbloqueo
-            is_check_status = False
-            if len(self.check_status_ids) <= 0:
-                if 'check_status_ids' in vals:
-                    if vals['check_status_ids']:
-                        is_check_status = True
+            if 'imei' in vals and vals['imei']:
+                aux =''
+                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                if data:
+                    for ser in data:
+                        aux = aux + f"{ser.name},"
+                    mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
+                    if 'observations' in vals and vals['observations']:
+                        vals['observations'] = f"{vals['observations']}, {mensaje}"
                     else:
-                        is_check_status = False
-                else:
-                    is_check_status = False
-                if is_check_status == False:
-                    raise UserError("Agregue por lo menos un Check status express")
+                        vals['observations'] = f"{mensaje}"
+                    self._notify_chatter(mensaje)
+
+            vals['state'] = 'pending'
+            service_id = self.env['vazz.state.history'].create({
+                'state': vals['state'],
+                'service_id': self.id})
+            vals['state_history_ids'] =  [(4, service_id.id)]
+
+            if 'question_check_status' in vals and vals['question_check_status'] == 'yes':
+                # Validando que tenga un desbloqueo
+                is_check_status = False
+                if len(self.check_status_ids) <= 0:
+                    if 'check_status_ids' in vals and vals['check_status_ids']:
+                        is_check_status = True
+                    if is_check_status == False:
+                        raise UserError("Agregue por lo menos un Check status express")
 
         result = super(Services, self).create(vals)
         return result
 
     def write(self,vals):
+        migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
+        if not migration_creation:
+            if 'imei' in vals and vals['imei']:
+                aux =''
+                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                if data:
+                    for ser in data:
+                        aux = aux + f"{ser.name},"
+                    self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
 
-        # ==> if 'question_warranty' in vals:
-        #     if vals['question_warranty'] == 'yes':
-        #         is_warranty = False
-        #         if len(self.warranty_ids) <= 0:
-        #             if 'warranty_ids' in vals:
-        #                 if vals['warranty_ids']:
-        #                     is_warranty = True
-        #                 else:
-        #                     is_warranty = False
-        #             else:
-        #                 is_warranty = False
-        #         else:
-        #             is_warranty = True
-
-        #         if is_warranty == False:
-        #             raise UserError("Agregue por lo menos una Garantía")
-
-        if 'imei' in vals and vals['imei']:
-            aux =''
-            data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
-            if data:
-                for ser in data:
-                    aux = aux + f"{ser.name},"
-                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
         res = super(Services,self).write(vals)
         return res
 
@@ -540,18 +519,18 @@ class Services(models.Model):
                 },
             }
         }
-    
+
     # Crons
     def _archive_data(self):
         """
         Archivar registros
         """
         # => services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
-        
+
         model = "vazz.services"
         # Día actual
-        current_date = fields.date.today() 
-        
+        current_date = fields.date.today()
+
         # Obtenemos los registros que no esten entregados y archivados
         services_ids = self.env[model].search([('is_delivery','=','not'),('is_archive','=','not')])
         for ser in services_ids:
@@ -564,7 +543,3 @@ class Services(models.Model):
                     if amount_aux >= 90:
                         ser.is_archive = 'yes'
 
-    def reset_date_archive(self):
-        services_ids = self.env["vazz.services"].search([('state','=','pending')])
-        for data in services_ids:
-            data.date_archive = data.date_reception
