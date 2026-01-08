@@ -40,7 +40,7 @@
                             <table class="table-bordered;" style="border:1px solid black !important; width:100%" border="1px">
                                 <thead>
                                     <tr>
-                                        <th name="th_folio">FOLIO SERVICIO</th>
+                                        <th name="th_folio">FOLIO SERVICIO (EXPRESS)</th>
                                     </tr>
                                 </thead>
                                 <tbody>

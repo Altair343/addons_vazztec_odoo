@@ -16,7 +16,7 @@ class ExpressService(models.Model):
     _description = 'Servicio expréss'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string="Folio")
+    name = fields.Char(string="Folio de servicio (Express)")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
     telephone_cus = fields.Many2one(comodel_name="vazz.customers.phone", string="Teléfono",
     domain = "[('customer_ids','=',customer_ids)]")
