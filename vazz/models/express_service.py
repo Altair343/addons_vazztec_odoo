@@ -51,9 +51,10 @@ class ExpressService(models.Model):
     @api.model
     def create(self, vals):
         # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.services.express.sequence')
+        # name_seq = self.env['ir.sequence'].next_by_code('vazz.services.express.sequence')
+        name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
         if name_seq != False:
-            vals['name'] = name_seq
+            vals['name'] = f"S/{name_seq}"
         vals['state'] = 'registered'
         result = super(ExpressService, self).create(vals)
         return result
