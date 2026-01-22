@@ -59,6 +59,7 @@
         'report/service_ticket.xml',
         'report/check_status_ticket.xml',
         'report/service_express_ticket.xml',
+        'report/service_etiquette.xml',
         # Main Menu file
         "views/menu_views.xml",
     ],

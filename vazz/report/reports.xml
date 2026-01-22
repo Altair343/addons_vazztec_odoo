@@ -3,21 +3,24 @@
     <!-- report_type="qweb-html"
         report_type="qweb-pdf" -->
 
-    <report id="report_quotation" 
-        model="vazz.quotation" 
-        string="Cotización" 
-        name="vazz.report_quotation_temple" 
+    <!-- Action report -->
+    <report id="report_quotation"
+        model="vazz.quotation"
+        string="Cotización"
+        name="vazz.report_quotation_temple"
         file="vazz.report_quotation"
         report_type="qweb-html"
-        print_report_name="object.name"/>
-    
-    <report id="service_ticket" 
-        model="vazz.services" 
-        string="Ticket" 
-        name="vazz.service_ticket_temple" 
+        print_report_name="object.name"
+    />
+
+    <report id="service_ticket"
+        model="vazz.services"
+        string="Ticket"
+        name="vazz.service_ticket_temple"
         file="vazz.service_ticket"
         report_type="qweb-html"
-    print_report_name="object.name"/>
+        print_report_name="object.name"
+    />
 
     <report id="service_express_ticket"
         model="vazz.express.service"
@@ -34,8 +37,19 @@
         name="vazz.check_status_ticket_temple"
         file="vazz.check_status_ticket"
         report_type="qweb-html"
-        print_report_name="object.name"/>
+        print_report_name="object.name"
+    />
 
+    <report id="service_etiquette"
+        model="vazz.services"
+        string="Etiqueta"
+        name="vazz.service_etiquette_temple"
+        file="vazz.service_etiquette"
+        report_type="qweb-html"
+        print_report_name="object.name"
+    />
+
+    <!-- Paper formats -->
     <record id = "paperformat_report" model="report.paperformat">
         <field name="name">Reporte Vazztec</field>
         <field name="default" eval="True" />
@@ -46,8 +60,22 @@
         <field name="margin_left">18</field>
         <field name="margin_right">18</field>
     </record>
+
     <record id = "paperformat_ticket" model="report.paperformat">
         <field name="name">Ticket Vazztec</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">150</field>
+        <field name="page_width">52</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+    </record>
+
+    <record id = "paperformat_ticket_express" model="report.paperformat">
+        <field name="name">Ticket Express Vazztec</field>
         <field name="default" eval="True" />
         <field name="format">custom</field>
         <field name="page_height">150</field>
@@ -72,19 +100,20 @@
         <field name="margin_right">5</field>
     </record>
 
-    <record id = "paperformat_ticket_express" model="report.paperformat">
-        <field name="name">Ticket Express Vazztec</field>
+    <record id = "paperformat_etiquette" model="report.paperformat">
+        <field name="name">Etiquette Vazztec</field>
         <field name="default" eval="True" />
         <field name="format">custom</field>
-        <field name="page_height">150</field>
-        <field name="page_width">52</field>
+        <field name="page_height">25</field>
+        <field name="page_width">50</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">5</field>
-        <field name="margin_bottom">15</field>
-        <field name="margin_left">5</field>
-        <field name="margin_right">5</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
     </record>
 
+    <!-- Paper Format Assignment -->
     <record id ="report_quotation" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_report"/>
     </record>
@@ -98,5 +127,9 @@
 
     <record id ="check_status_v1" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_check"/>
+    </record>
+
+    <record id ="service_etiquette" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_etiquette"/>
     </record>
 </odoo>
