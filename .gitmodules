@@ -1,4 +1,4 @@
-[submodule "/"]
-	path = /
+[submodule "skip_required_fields"]
+	path = skip_required_fields
     url = https://github.com/Altair343/skip_required_fields.git
     branch = 13
