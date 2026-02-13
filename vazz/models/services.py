@@ -42,6 +42,7 @@ DELIVERY = [
     ('not', 'No entregado'),
     ('yes', 'Entregado')]
 
+MODEL_VAZZ_SERVICES = "vazz.services"
 class Services(models.Model):
     _name = 'vazz.services'
     _description = 'Servicios'
@@ -270,7 +271,7 @@ class Services(models.Model):
 
             if 'imei' in vals and vals['imei']:
                 aux =''
-                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
                 if data:
                     for ser in data:
                         aux = aux + f"{ser.name},"
@@ -304,7 +305,7 @@ class Services(models.Model):
         if not migration_creation:
             if 'imei' in vals and vals['imei']:
                 aux =''
-                data = self.env['vazz.services'].search([('imei','=',vals['imei'])])
+                data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
                 if data:
                     for ser in data:
                         aux = aux + f"{ser.name},"
@@ -330,7 +331,7 @@ class Services(models.Model):
         # En proceso
         if self.imei:
             aux =''
-            data = self.env['vazz.services'].search([('imei','=',self.imei)])
+            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',self.imei)])
             if data:
                 for ser in data:
                     if ser.id != self.id:
@@ -465,11 +466,11 @@ class Services(models.Model):
     # Notify
     def _notify_chatter(self, body):
         if self.id:
-            utils.create_chatter(self,self.id,body,'vazz.services')
+            utils.create_chatter(self,self.id,body,MODEL_VAZZ_SERVICES)
 
     # Wizards
     def cancel_wizard(self):
-        product_ids = self.env['vazz.services'].browse(self._context.get('active_ids'))
+        product_ids = self.env[MODEL_VAZZ_SERVICES].browse(self._context.get('active_ids'))
         return {
             'name' : 'Solicitud de Cancelación',
             'type' : 'ir.actions.act_window',
@@ -484,13 +485,13 @@ class Services(models.Model):
                 'default_id' : product_ids,
                 'params' : {
                     'id' : self.id,
-                    'model' : 'vazz.services',
+                    'model' : MODEL_VAZZ_SERVICES,
                 },
             }
         }
     
     def delivery_wizard(self):
-        product_ids = self.env['vazz.services'].browse(self._context.get('active_ids'))
+        product_ids = self.env[MODEL_VAZZ_SERVICES].browse(self._context.get('active_ids'))
 
         if self.total_assets >= self.total:
             is_total = True
@@ -515,7 +516,7 @@ class Services(models.Model):
                 'default_id' : product_ids,
                 'params' : {
                     'id' : self.id,
-                    'model' : 'vazz.services',
+                    'model' : MODEL_VAZZ_SERVICES,
                 },
             }
         }
@@ -525,14 +526,11 @@ class Services(models.Model):
         """
         Archivar registros
         """
-        # => services_ids = self.env[model].search([('state','in',('diagnosed','repaired','not_solution','cancel')),('is_delivery','in',('not')),('is_archive','in',('not'))])
-
-        model = "vazz.services"
         # Día actual
         current_date = fields.date.today()
 
         # Obtenemos los registros que no esten entregados y archivados
-        services_ids = self.env[model].search([('is_delivery','=','not'),('is_archive','=','not')])
+        services_ids = self.env[MODEL_VAZZ_SERVICES].search([('is_delivery','=','not'),('is_archive','=','not')])
         for ser in services_ids:
             if ser.date_archive:
                 amount_aux = abs(current_date - ser.date_archive).days + 1
