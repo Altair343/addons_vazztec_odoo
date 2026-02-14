@@ -4,13 +4,13 @@ from odoo import models, fields,api, _
 
 class Concepts(models.Model):
     _name = 'vazz.concepts'
-    _description = 'Conceptos'
+    _description = 'Concepts'
 
-    name = fields.Char(string="Concepto")
-    description = fields.Text(string="Descripción (opcional)")
+    name = fields.Char(string="Concept")
+    description = fields.Text(string="Description (optional)")
     currency_id = fields.Many2one( 'res.currency', string='Currency')
-    public_price = fields.Float(string="Precio")
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio", tracking=True)
+    public_price = fields.Float(string="Price")
+    service_id = fields.Many2one(comodel_name="vazz.services", string="Service", tracking=True)
 
     @api.model
     def default_get(self, fields):

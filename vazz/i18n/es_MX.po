@@ -1,0 +1,34 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* vazz
+#
+
+#. module: vazz
+#: model:ir.model.fields,field_description:vazz.field_vazz_concepts__name
+msgid "Concept"
+msgstr "Concepto"
+
+#. module: vazz
+#: model:ir.model.fields,field_description:vazz.field_vazz_concepts__description
+msgid "Description (optional)"
+msgstr "Descripción (opcional)"
+
+#. module: vazz
+#: model:ir.model.fields,field_description:vazz.field_vazz_concepts__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: vazz
+#: model:ir.model.fields,field_description:vazz.field_vazz_concepts__public_price
+msgid "Price"
+msgstr "Precio"
+
+#. module: vazz
+#: model:ir.model.fields,field_description:vazz.field_vazz_concepts__service_id
+msgid "Service"
+msgstr "Servicio"
+
+#. module: vazz
+#: model:ir.model,name:vazz.model_vazz_concepts
+msgid "Concepts"
+msgstr "Conceptos"
