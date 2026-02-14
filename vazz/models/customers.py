@@ -83,35 +83,15 @@ class Customers(models.Model):
         return result
 
     def write(self,vals):
-        
-        nombre = ""
-        apellidop = ""
-        apellidom = False
         if 'user_name' in vals or 'surname' in vals or 'second_surname' in vals:
-            if 'user_name' in vals:
-                nombre = vals['user_name']
-            else:
-                if self.user_name:
-                    nombre = self.user_name
-            
-            if 'surname' in vals:
-                apellidop = vals['surname']
-            else:
-                if self.surname:
-                    apellidop = self.surname
-            
-            if 'second_surname' in vals:
-                if vals['second_surname']: 
-                    apellidom = vals['second_surname']
-            else:
-                if self.second_surname:
-                    apellidom = self.second_surname
-            
+            nombre = vals.get('user_name', self.user_name) or ""
+            apellidop = vals.get('surname', self.surname) or ""
+            apellidom = vals.get('second_surname', self.second_surname) or False
             if apellidom == False:
                 vals['name'] = f"{nombre} {apellidop}"
             else:
                 vals['name'] = f"{nombre} {apellidop} {apellidom}"
-        
+
         res = super(Customers,self).write(vals)
         return res
 
