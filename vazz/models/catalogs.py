@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# odoo
+# 2 : imports of odoo
 from odoo import models, fields,api, _
 
 STATES = [

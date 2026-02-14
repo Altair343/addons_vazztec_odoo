@@ -32,3 +32,45 @@ msgstr "Servicio"
 #: model:ir.model,name:vazz.model_vazz_concepts
 msgid "Concepts"
 msgstr "Conceptos"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "Add at least one Diagnosis."
+msgstr "Agregue por lo menos un Diagnóstico"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "The technician must be defined."
+msgstr "Agregue por lo menos un Diagnóstico"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "Add at least one unlock."
+msgstr "Agregue por lo menos un desbloqueo"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "Add at least one Express Check Status."
+msgstr "Agregue por lo menos un Check status express"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "Please answer the question “Does the service have a warranty?” in the Warranties tab."
+msgstr "Responda la pregunta ¿El servicio cuenta con garantía? en la pestaña de garantías"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "Add at least one warranty."
+msgstr "Agregue por lo menos una Garantía"
+
+#. module: vazz
+#: code:addons/vazz/models/services.py:0
+#, python-format
+msgid "- Add at least one concept."
+msgstr "- Agregué un concepto"

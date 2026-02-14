@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
-# odoo
+# 2 : imports of odoo
 from odoo import models, fields,api, _
 from odoo.exceptions import ValidationError,UserError
-
+# 3 : imports from odoo addons
 from odoo.addons.vazz_utils.tools import utils
 
 import logging
@@ -44,6 +44,9 @@ DELIVERY = [
 
 MODEL_VAZZ_SERVICES = "vazz.services"
 MODEL_VAZZ_STATE_HISTORY = "vazz.state.history"
+TEXT_ADD_AT_LEAST_DIA = "Add at least one Diagnosis."
+TEXT_TECHNICIAN = "The technician must be defined."
+
 class Services(models.Model):
     _name = 'vazz.services'
     _description = 'Servicios'
@@ -263,7 +266,7 @@ class Services(models.Model):
                     if 'unlocks_ids' in vals and vals['unlocks_ids']:
                         is_unlocks = True
                     if is_unlocks == False:
-                        raise UserError("Agregue por lo menos un desbloqueo")
+                        raise UserError(_("Add at least one unlock."))
 
             # Generar nombre
             name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
@@ -296,7 +299,7 @@ class Services(models.Model):
                     if 'check_status_ids' in vals and vals['check_status_ids']:
                         is_check_status = True
                     if is_check_status == False:
-                        raise UserError("Agregue por lo menos un Check status express")
+                        raise UserError(_("Add at least one Express Check Status."))
 
         result = super(Services, self).create(vals)
         return result
@@ -343,10 +346,10 @@ class Services(models.Model):
         # Diagnosticado
         count = len(self.diagnostic_ids)
         if count <= 0:
-            raise UserError("Agregue por lo menos un Diagnóstico")
+            raise UserError(_(TEXT_ADD_AT_LEAST_DIA))
         
         if not self.technical_id:
-            raise UserError("Falta definir el técnico")
+            raise UserError(_(TEXT_TECHNICIAN))
             
         self.date_archive = fields.date.today()
         self._update_state('diagnosed')
@@ -354,19 +357,19 @@ class Services(models.Model):
     def action_repaired(self):
 
         if not self.question_warranty:
-            raise UserError("Responda la pregunta ¿El servicio cuenta con garantía? en la pestaña de garantías")
+            raise UserError(_("Please answer the question “Does the service have a warranty?” in the Warranties tab."))
 
         if self.question_warranty and self.question_warranty =='yes':
             if len(self.warranty_ids) <= 0:
-                raise UserError("Agregue por lo menos una Garantía")
+                raise UserError(_("Add at least one warranty."))
 
         # Reparado
         count = len(self.diagnostic_ids)
         if count <= 0:
-            raise UserError("Agregue por lo menos un Diagnóstico")
+            raise UserError(_(TEXT_ADD_AT_LEAST_DIA))
         
         if not self.technical_id:
-            raise UserError("Falta definir el técnico")
+            raise UserError(_(TEXT_TECHNICIAN))
 
         self.date_archive = fields.date.today()
         self._update_state('repaired')
@@ -375,10 +378,10 @@ class Services(models.Model):
         # Sin Solución
         count = len(self.diagnostic_ids)
         if count <= 0:
-            raise UserError("Agregue por lo menos un Diagnóstico")
+            raise UserError(_(TEXT_ADD_AT_LEAST_DIA))
         
         if not self.technical_id:
-            raise UserError("Falta definir el técnico")
+            raise UserError(_(TEXT_TECHNICIAN))
 
         self.date_archive = fields.date.today()
         self._update_state('not_solution')
@@ -395,12 +398,7 @@ class Services(models.Model):
         
         if self.state != 'cancel' and len(self.concepts_ids) <= 0:
             is_required = True
-            text_required = text_required + "- Agregué un concepto \n"
-        
-        # ==> if not self.question_warranty:
-        #     is_required = True
-        #     text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
-        
+            text_required = text_required + "- Add at least one concept."
         if is_required == True:
             raise ValidationError(f"{text_required}")
 
