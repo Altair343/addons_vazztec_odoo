@@ -259,63 +259,75 @@ class Services(models.Model):
     def create(self, vals):
         migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
         if not migration_creation:
-            if 'type_service' in vals and vals['type_service'] == 'unlock':
-                # Validando que tenga un desbloqueo
-                is_unlocks = False
-                if len(self.unlocks_ids) <= 0:
-                    if 'unlocks_ids' in vals and vals['unlocks_ids']:
-                        is_unlocks = True
-                    if is_unlocks == False:
-                        raise UserError(_("Add at least one unlock."))
-
-            # Generar nombre
-            name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
-            if name_seq != False:
-                vals['name'] = f"S/{name_seq}"
-
-            if 'imei' in vals and vals['imei']:
-                aux =''
-                data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
-                if data:
-                    for ser in data:
-                        aux = aux + f"{ser.name},"
-                    mensaje = f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}"
-                    if 'observations' in vals and vals['observations']:
-                        vals['observations'] = f"{vals['observations']}, {mensaje}"
-                    else:
-                        vals['observations'] = f"{mensaje}"
-                    self._notify_chatter(mensaje)
+            self.validate_unlocks(vals)
+            self.validate_question_check_status(vals)
 
             vals['state'] = 'pending'
             service_id = self.env[MODEL_VAZZ_STATE_HISTORY].create({
                 'state': vals['state'],
                 'service_id': self.id})
             vals['state_history_ids'] =  [(4, service_id.id)]
-
-            if 'question_check_status' in vals and vals['question_check_status'] == 'yes':
-                # Validando que tenga un desbloqueo
-                is_check_status = False
-                if len(self.check_status_ids) <= 0:
-                    if 'check_status_ids' in vals and vals['check_status_ids']:
-                        is_check_status = True
-                    if is_check_status == False:
-                        raise UserError(_("Add at least one Express Check Status."))
-
         result = super(Services, self).create(vals)
+
+        result.set_name()
+        result.ntf_imei()
         return result
 
     def write(self,vals):
         migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
-        if not migration_creation and ('imei' in vals and vals['imei']):
-            aux =''
-            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
-            if data:
-                for ser in data:
-                    aux = aux + f"{ser.name},"
-                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+        if not migration_creation:
+            self.validate_unlocks(vals)
+            self.validate_question_check_status(vals)
+
+            if vals.get('imei'):
+                aux =''
+                data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei']),('id','!=',self.id)])
+                if data:
+                    for ser in data:
+                        aux = aux + f"{ser.name},"
+                    self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
 
         res = super(Services,self).write(vals)
         return res
+
+    # Validation create
+    def set_name(self):
+        """Generate name"""
+        name_seq = self.env['ir.sequence'].next_by_code('vazz.services.sequence')
+        if name_seq != False:
+            self.name = f"S/{name_seq}"
+
+    def ntf_imei(self):
+        if self.imei:
+            aux =''
+            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',self.imei),('id','!=',self.id)])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                mensaje = f"El No. de serie/IMEI: {self.imei} existe en los siguientes servicios: {aux}"
+                if self.observations:
+                    self.observations = f"{self.observations}, {mensaje}"
+                else:
+                    self.observations = f"{mensaje}"
+                self._notify_chatter(mensaje)
+
+    def validate_question_check_status(self,vals):
+        """Validating check status express"""
+        if vals.get('question_check_status') == 'yes':
+            is_check_status = False
+            if len(self.check_status_ids) <= 0:
+                if 'check_status_ids' in vals and vals['check_status_ids']:
+                    is_check_status = True
+                if is_check_status == False:
+                    raise UserError(_("Add at least one Express Check Status."))
+
+    def validate_unlocks(self,vals):
+        """Validating that it has at least one unlock."""
+        if vals.get('type_service') == 'unlock':
+            has_existing_unlocks = len(self.unlocks_ids) > 0
+            has_new_unlocks = bool(vals.get('unlocks_ids'))
+            if not (has_existing_unlocks or has_new_unlocks):
+                raise UserError(_("Add at least one unlock."))
 
     # States
     def _update_state(self, new_state):
@@ -334,7 +346,7 @@ class Services(models.Model):
         # En proceso
         if self.imei:
             aux =''
-            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',self.imei)])
+            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',self.imei),('id','!=',self.id)])
             if data:
                 for ser in data:
                     if ser.id != self.id:
