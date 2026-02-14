@@ -11,6 +11,8 @@ STATES = [
     ('aux', ''),
 ]
 
+MODEL_VAZZ_SCHEDULE = "vazz.schedule"
+
 class Schedule(models.Model):
     _name = 'vazz.schedule'
     _description = 'Agenda'
@@ -82,7 +84,7 @@ class Schedule(models.Model):
     
     # Wizards
     def cancel_wizard(self):
-        product_ids = self.env['vazz.schedule'].browse(self._context.get('active_ids'))
+        product_ids = self.env[MODEL_VAZZ_SCHEDULE].browse(self._context.get('active_ids'))
         return {
             'name' : 'Solicitud de Cancelación',
             'type' : 'ir.actions.act_window',
@@ -97,7 +99,7 @@ class Schedule(models.Model):
                 'default_id' : product_ids,
                 'params' : {
                     'id' : self.id,
-                    'model' : 'vazz.schedule',
+                    'model' : MODEL_VAZZ_SCHEDULE,
                 },
             }
         }

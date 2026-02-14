@@ -43,6 +43,7 @@ DELIVERY = [
     ('yes', 'Entregado')]
 
 MODEL_VAZZ_SERVICES = "vazz.services"
+MODEL_VAZZ_STATE_HISTORY = "vazz.state.history"
 class Services(models.Model):
     _name = 'vazz.services'
     _description = 'Servicios'
@@ -208,7 +209,7 @@ class Services(models.Model):
     accessories =  fields.Text(string="Accesorios")
 
     # Pestaña de historial de estados
-    state_history_ids = fields.One2many(comodel_name='vazz.state.history',inverse_name= 'service_id', 
+    state_history_ids = fields.One2many(comodel_name=MODEL_VAZZ_STATE_HISTORY,inverse_name= 'service_id', 
         string="historial de estados")
 
     # Conceptos
@@ -283,7 +284,7 @@ class Services(models.Model):
                     self._notify_chatter(mensaje)
 
             vals['state'] = 'pending'
-            service_id = self.env['vazz.state.history'].create({
+            service_id = self.env[MODEL_VAZZ_STATE_HISTORY].create({
                 'state': vals['state'],
                 'service_id': self.id})
             vals['state_history_ids'] =  [(4, service_id.id)]
@@ -302,14 +303,13 @@ class Services(models.Model):
 
     def write(self,vals):
         migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
-        if not migration_creation:
-            if 'imei' in vals and vals['imei']:
-                aux =''
-                data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
-                if data:
-                    for ser in data:
-                        aux = aux + f"{ser.name},"
-                    self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
+        if not migration_creation and ('imei' in vals and vals['imei']):
+            aux =''
+            data = self.env[MODEL_VAZZ_SERVICES].search([('imei','=',vals['imei'])])
+            if data:
+                for ser in data:
+                    aux = aux + f"{ser.name},"
+                self._notify_chatter(f"El No. de serie/IMEI: {vals['imei']} existe en los siguientes servicios: {aux}")
 
         res = super(Services,self).write(vals)
         return res
@@ -319,7 +319,7 @@ class Services(models.Model):
         for rec in self:
             rec.previous_state = rec.state
             rec.state = new_state
-            self.env['vazz.state.history'].create({
+            self.env[MODEL_VAZZ_STATE_HISTORY].create({
                 'state': new_state,
                 'service_id': rec.id})
     
@@ -393,12 +393,11 @@ class Services(models.Model):
         is_required = False
         text_required = ""
         
-        if self.state != 'cancel':
-            if len(self.concepts_ids) <= 0:
-                is_required = True
-                text_required = text_required + "- Agregué un concepto \n"
+        if self.state != 'cancel' and len(self.concepts_ids) <= 0:
+            is_required = True
+            text_required = text_required + "- Agregué un concepto \n"
         
-        # if not self.question_warranty:
+        # ==> if not self.question_warranty:
         #     is_required = True
         #     text_required = text_required + "- Llene el campo ¿El servicio cuenta con garantía? \n"
         
@@ -432,10 +431,9 @@ class Services(models.Model):
     @api.onchange('customer_ids')
     def _onchange_customer_ids(self):
         if self.customer_ids:
-            self.telephone_cus = self.customer_ids.phone.id 
-            if self.type_entry == 'harvest':
-                if not self.addres_entry:
-                    self.addres_entry = self.customer_ids.addres
+            self.telephone_cus = self.customer_ids.phone.id
+            if self.type_entry == 'harvest' and not self.addres_entry:
+                self.addres_entry = self.customer_ids.addres
         else:
             self.telephone_cus = False
 

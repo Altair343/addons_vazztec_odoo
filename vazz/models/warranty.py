@@ -18,6 +18,8 @@ VALIDITY = [
     ('lost','Perdido'),
 ]
 
+MODEL_VAZZ_WARRANTY = "vazz.warranty"
+
 class Customers(models.Model):
     _name = 'vazz.warranty'
     _description = 'Garantías'
@@ -112,9 +114,8 @@ class Customers(models.Model):
         Caducar garantías  activas que ya pasó su fecha de cobertura
         """
         # _logger.info("Cron Caducar garantías  activas que ya pasó su fecha de cobertura")
-        model = "vazz.warranty"
         current_date = fields.date.today()
-        warranties = self.env[model].search([('state','=','active')])
+        warranties = self.env[MODEL_VAZZ_WARRANTY].search([('state','=','active')])
 
         for war in warranties:
             if war.date_end < current_date:
@@ -123,7 +124,7 @@ class Customers(models.Model):
 
     # Wizards
     def cancel_lost(self):
-        product_ids = self.env['vazz.warranty'].browse(self._context.get('active_ids'))
+        product_ids = self.env[MODEL_VAZZ_WARRANTY].browse(self._context.get('active_ids'))
         return {
             'name' : 'Solicitud de perdida',
             'type' : 'ir.actions.act_window',
@@ -138,7 +139,7 @@ class Customers(models.Model):
                 'default_id' : product_ids,
                 'params' : {
                     'id' : self.id,
-                    'model' : 'vazz.warranty',
+                    'model' : MODEL_VAZZ_WARRANTY,
                 },
             }
         }
