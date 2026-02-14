@@ -27,14 +27,10 @@
             <field name="arch" type="xml">
                 <form string="Loan Registration" duplicate="false">
                     <header>
-                        <!-- <button string="Pendiente" name="action_pending" 
-                            class="oe_highlight" type="object"/> -->
-                        
                         <button string="Desarchivar" name="action_archive" class="oe_highlight" type="object"/>
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
                     <sheet>
-                        <!-- <h3>No olvides dar la microSD y el Chip del equipo</h3> -->
                         <group>
                             <group>
                                 <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
@@ -59,7 +55,6 @@
                         </group>
                         <group>
                             <group string="Equipo">
-                                <!-- <h3 class="o_horizontal_separator">Equipo</h3> -->
                                 <field name="brand" readonly="1" />
                                 <field name="model_e" readonly="1" />
                                 <field name="imei" readonly="1"/>

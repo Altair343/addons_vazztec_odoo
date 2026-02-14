@@ -18,7 +18,6 @@
                             <div class="row"></div>
                         </div>
                     </div>
-                    <!-- <hr/> -->
                     <table  style="width:100%">
                         <thead>
                             <tr style="width:100%;">
@@ -31,11 +30,8 @@
                             </tr>
                         </thead>
                     </table>
-                    
+
                     <div class="page">
-                        <!-- <div class="container mw-100 mb-2 text-center">
-                            <p style="text-align:center;" class="oe_title"><strong>Cotización</strong></p>
-                        </div> -->
                         <br/>
                         <p style="font-size:0.8rem;" class="oe_title" ><strong>Cotización *</strong></p>
                         <br />
@@ -136,8 +132,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <div style="display: flex; flex-direction: column; align-items: center;">
-                        </div> -->
                     </div>
                 </t>
             </t>

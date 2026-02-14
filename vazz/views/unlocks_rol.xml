@@ -22,7 +22,6 @@
             <field name="arch" type="xml">
                 <form string="Loan Registration">
                     <header>
-                        <!-- <field name="state" widget="statusbar" readonly="1" statusbar_visible="active"/> -->
                     </header>
                     <sheet>
                         <group>
