@@ -2,7 +2,6 @@
 from odoo.exceptions import UserError
 from odoo import api, fields, models
 
-from datetime import date
 import logging
 _logger = logging.getLogger(__name__)
 
