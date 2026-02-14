@@ -27,8 +27,8 @@
         </record>
 
     <!-- view form -->
-        <record id="servicios_vazz_form" model="ir.ui.view">
-            <field name="name">vazz.services.vazz.form</field>
+        <record id="service_vazz_view_form" model="ir.ui.view">
+            <field name="name">vazz.service.vazz.view.form</field>
             <field name="model">vazz.services</field> 
             <field name="arch" type="xml">
                 <form string="Loan Registration" duplicate="false">
@@ -249,7 +249,7 @@
             <field name="view_mode">tree,form,activity</field>
             <field name="context">{
                 'tree_view_ref':'vazz.servicios_vazz_tree',
-                'form_view_ref':'vazz.servicios_vazz_form',
+                'form_view_ref':'vazz.service_vazz_view_form',
                 }</field>
             <field name="domain">[('is_archive', '=', 'not')]</field>
             <field name="help" type="html">
@@ -264,7 +264,7 @@
             <field name="view_mode">tree,form,activity</field>
             <field name="context">{
                 'tree_view_ref':'vazz.servicios_archive_vazz_tree',
-                'form_view_ref':'vazz.servicios_archive_vazz_form',
+                'form_view_ref':'vazz.service_archive_vazz_view_form',
                 }</field>
             <field name="domain">[('is_archive', '=', 'yes')]</field>
             <field name="help" type="html">

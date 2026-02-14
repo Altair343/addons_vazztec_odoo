@@ -75,7 +75,7 @@
                                 options="{'no_create': True}" 
                                 context="{
                                     'tree_view_ref':'vazz.servicios_vazz_tree',
-                                    'form_view_ref':'vazz.servicios_vazz_form',
+                                    'form_view_ref':'vazz.service_vazz_view_form',
                                 }"/>
                         </page>
                             <page name="cancel" string="Cancelación">

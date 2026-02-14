@@ -4,194 +4,25 @@
     <!-- view tree -->
         <record id="servicios_archive_vazz_tree" model="ir.ui.view">
             <field name="name">vazz.services.vazz.tree</field>
-            <field name="model">vazz.services</field>        
+            <field name="model">vazz.services</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="vazz.servicios_vazz_tree"/>
             <field name="arch" type="xml">
-                <tree string="Servicios">
-                    <field name="name"/>
-                    <field name="customer_ids"/>
-                    <field name="brand"/>
-                    <field name="model_e"/>
-
-                    <field name="date_reception"/>
-                    <field name="state"/>
-                    <field name="is_delivery"/>
-                    <field name="warning_notify"/>
+                <tree position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                    <attribute name="delete">false</attribute>
+                    <attribute name="duplicate">false</attribute>
                 </tree>
             </field>
         </record>
 
     <!-- view form -->
-        <record id="servicios_archive_vazz_form" model="ir.ui.view">
-            <field name="name">vazz.services.vazz.form</field>
-            <field name="model">vazz.services</field> 
-            <field name="arch" type="xml">
-                <form string="Loan Registration" duplicate="false">
-                    <header>
-                        <button string="Desarchivar" name="action_archive" class="oe_highlight" type="object"/>
-                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
-                    </header>
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
-                                <field name="customer_ids" readonly="1"  />
-                                <field name="telephone_cus" readonly="1"  options="{'no_open':True}"
-                                    attrs="{'invisible' : [('is_group_rol002', '=', True)]}"
-                                    context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
-                                <field name="date_reception" readonly="1"  />
-                                <field name="type_service" readonly="1" />
-                                <field name="is_group_rol002" invisible="1"/>
-                                <field name="type_notification_id" readonly="1"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
-                            </group>
-                            <group string="Ingreso">
-                                <field name="type_entry" readonly="1" />
-                                <field name="addres_entry" readonly="1" attrs="{'invisible' : [('type_entry', '!=','harvest')],'required' : [('type_entry', '=','harvest')]}" />
-                                <field name="state_aux" readonly="1"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="description" readonly="1" />
-                            <field name="observations" readonly="1"/>
-                        </group>
-                        <group>
-                            <group string="Equipo">
-                                <field name="brand" readonly="1" />
-                                <field name="model_e" readonly="1" />
-                                <field name="imei" readonly="1"/>
-                                <field name="type_equipment" readonly="1"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
-                                <field name="password" readonly="1"/>
-                                <field name="question_acce" readonly="1"/>
-                                <field name="accessories" readonly="1" attrs="{ 'invisible' : [('question_acce', '!=','yes')]}"/>
-
-                            </group>
-                            <group string="Entrega">
-                                <field name="date_approximate_delivery" readonly="1"   />
-                                <field name="type_delivery" readonly="1" />
-                                <field name="addres" readonly="1" attrs="{'invisible' : [('type_delivery', '!=','home')],'required' : [('type_delivery', '=','home')]}" />
-                                <br/>
-                                <field name="technical_id" readonly="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
-                                <field name="date_delibery"  readonly="1"/>
-                                <field name="is_delivery" readonly="1" force_save="1" />
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="estimated_cost" readonly="1"   widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                <field name="total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                <field name="total_assets" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                            </group>
-                            <group >
-                                <field name="assets_ids" readonly="1"/>
-                                <field name="total_assets_ser" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                            </group>
-                        </group>
-                        <label for="diagnostic_ids" string="Diagnósticos"/>
-                        <field name="diagnostic_ids" readonly="1"
-                            context="{ 'type_register': 'service', 'default_state':state,}"/>
-                        
-                        <br/>
-                        <label for="concepts_ids" string="Conceptos"/>
-                        <field name="concepts_ids" readonly="1"
-                            context="{'type_register': 'service','default_state':state,}"/>
-
-                        <notebook>
-                            <page name="pedidos" string="Pedidos" >
-                                <group>
-                                    <group>
-                                        <field name="total_pay_order" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1" />
-                                        <field name="total_assets_order" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1" />
-                                        <field name="currency_id" invisible="1" readonly="1" force_save="1" />
-                                    </group>
-                                </group>
-                                <label for="orders_ids" string="Pedidos" readonly="1"/>
-                                <field name="orders_ids" readonly="1" context="{  'type_register': 'service' }"/>
-                            </page>
-                            <page name="desbloqueos" string="Desbloqueos" >
-                                <label for="unlocks_ids" string="Desbloqueos"/>
-                                <field name="unlocks_ids" readonly="1" 
-                                context="{ 
-                                    'type_register': 'service',
-                                    'tree_view_ref':'vazz.services_vazz_tree_rol',
-                                    'form_view_ref':'vazz.services_vazz_form_rol',
-                                }"/>
-                            </page>
-                            <page name="garantias" string="Garantías" >
-                                <group>
-                                    <group>
-                                        <field name="question_warranty" readonly="1"/>
-                                        <field name="question_whats" readonly="1"
-                                            attrs="{'invisible' : [('question_warranty', '!=','not')],'required' : [('question_warranty', '=','not')]}"/>
-                                    </group>
-                                </group>
-                                <label for="warranty_ids" string="Garantías"/>
-                                <field name="warranty_ids" readonly="1" 
-                                    context="{  'type_register': 'service' }" />
-                            </page>
-                            <page name="notifications" string="Notificaciones">
-                                <group>
-                                </group>
-                                <label for="notifications_ids" string="Notificaciones"/>
-                                <field name="notifications_ids" readonly="1" />
-                            </page>
-                            <page name="check_status_data" string="Check status express" >
-                                <label for="check_status_ids" string="Check status express"/>
-                                <field name="check_status_ids" readonly="1"
-                                    context="{'type_register': 'service'}"/>
-                            </page>
-                            <page name="cancel" string="Cancelación">
-                                <group>
-                                    <field name="cancel_request" nolabel="1" readonly="1">
-                                        <tree string="Cancelaciones" >
-                                            <field name="cancel_date"/>
-                                            <field name="comment" string="Comentario"/>
-                                            <field name="write_uid" string ="Útima modificación por"/>
-                                        </tree>
-                                    </field>
-                                </group>
-                            </page>
-                            <page name="history" string="Historial de Estados">
-                                <field name="state_history_ids" readonly="1" 
-                                    context="{  
-                                        'type_register': 'service', 
-                                        'tree_view_ref':'vazz.service_state_history_vazz_tree',
-                                        }" />
-                            </page>
-                        </notebook>
-                        <div invisible="1">
-                            <script type="text/javascript">
-                                var input_upload = document.querySelectorAll(".o_form_binary_progress");
-                                for (var index = 0; index &lt; input_upload.length; index++){ input_upload[index].classList.remove('o_hidden'); }
-                            </script>
-                        </div>
-                    </sheet>
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" />
-                        <field name="activity_ids" widget="mail_activity" />
-                        <field name="message_ids" widget="mail_thread" />
-                    </div>
-                </form> 
-            </field>
-        </record>
-    
-    <!-- Permisos -->
-        <record id="servicios_archive_vazz_tree_inherit_general" model="ir.ui.view">
-            <field name="name">vazz.services.tree.inherit.general</field>
+        <record id="service_archive_vazz_view_form" model="ir.ui.view">
+            <field name="name">vazz.service.archive.vazz.view.form</field>
             <field name="model">vazz.services</field>
-            <field name="inherit_id" ref="vazz.servicios_archive_vazz_tree" />
-            <field name="arch" type="xml">
-                <xpath expr="/tree" position="attributes">
-                    <attribute name="create">false</attribute>
-                    <attribute name="edit">false</attribute>
-                    <attribute name="delete">false</attribute>
-                    <attribute name="duplicate">false</attribute>
-                </xpath>
-            </field>
-        </record>
-
-        <record id="servicios_archive_vazz_form_inherit_general" model="ir.ui.view">
-            <field name="name">vazz.services.form.inherit.general</field>
-            <field name="model">vazz.services</field>
-            <field name="inherit_id" ref="vazz.servicios_archive_vazz_form" />
+            <field name="inherit_id" ref="vazz.service_vazz_view_form"/>
+            <field name="mode">primary</field>
             <field name="arch" type="xml">
                 <xpath expr="/form" position="attributes">
                     <attribute name="create">false</attribute>
@@ -199,7 +30,15 @@
                     <attribute name="delete">false</attribute>
                     <attribute name="duplicate">false</attribute>
                 </xpath>
+
+                <header position="replace">
+                    <header>
+                        <button string="Desarchivar" name="action_archive" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
+                    </header>
+                </header>
+
             </field>
-        </record> 
+        </record>
     </data>
 </odoo>
