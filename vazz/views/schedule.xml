@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="schedule_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.schedule.vazz.tree</field>
+    <!-- view list -->
+        <record id="schedule_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.schedule.vazz.list</field>
             <field name="model">vazz.schedule</field>        
             <field name="arch" type="xml">
-                <tree string="Clientes" default_order='id desc'>
+                <list string="Clientes" default_order='id desc'>
                     <field name="id" invisible="1"/>
                     <field name="name"/>
                     <field name="service_ids"/>
                     <field name="customer_id"/>
                     <field name="type_schedule_id"/>
                     <field name="description"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -74,18 +74,18 @@
                                 attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"
                                 options="{'no_create': True}" 
                                 context="{
-                                    'tree_view_ref':'vazz.servicios_vazz_tree',
+                                    'list_view_ref':'vazz.servicios_vazz_list',
                                     'form_view_ref':'vazz.service_vazz_view_form',
                                 }"/>
                         </page>
                             <page name="cancel" string="Cancelación">
                                 <group>
                                     <field name="cancel_request" nolabel="1" readonly="1">
-                                        <tree string="Cancelaciones" >
+                                        <list string="Cancelaciones" >
                                             <field name="cancel_date"/>
                                             <field name="comment" string="Comentario"/>
                                             <field name="write_uid" string ="Útima modificación por"/>
-                                        </tree>
+                                        </list>
                                     </field>
                                 </group>
                             </page>
@@ -105,9 +105,9 @@
             <field name="name">Agenda</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.schedule</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.schedule_vazz_tree',
+                'list_view_ref':'vazz.schedule_vazz_list',
                 'form_view_ref':'vazz.schedule_vazz_form',
                 }</field>
             <field name="help" type="html">

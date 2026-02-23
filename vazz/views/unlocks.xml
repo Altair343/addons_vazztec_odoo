@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="unlocks_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.unlocks.vazz.tree</field>
+    <!-- view list -->
+        <record id="unlocks_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.unlocks.vazz.list</field>
             <field name="model">vazz.unlocks</field>        
             <field name="arch" type="xml">
-                <tree string="Desbloqueos">
+                <list string="Desbloqueos">
                     <field name="name"/>
                     <field name="service_id"/>
                     <field name="customer_id"/>
                     <field name="type_id"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -48,10 +48,10 @@
             <field name="name">Desbloqueos</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.unlocks</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="context">{
                 'search_default_state':1,
-                'tree_view_ref':'vazz.unlocks_vazz_tree',
+                'list_view_ref':'vazz.unlocks_vazz_list',
                 'form_view_ref':'vazz.unlocks_vazz_form',
                 }</field>
             <field name="help" type="html">
@@ -60,12 +60,12 @@
         </record>
 
     <!-- Permisos -->
-        <record id="unlocks_vazz_tree_inherit_general" model="ir.ui.view">
-            <field name="name">vazz.unlocks.tree.inherit.general</field>
+        <record id="unlocks_vazz_list_inherit_general" model="ir.ui.view">
+            <field name="name">vazz.unlocks.list.inherit.general</field>
             <field name="model">vazz.unlocks</field>
-            <field name="inherit_id" ref="vazz.unlocks_vazz_tree" />
+            <field name="inherit_id" ref="vazz.unlocks_vazz_list" />
             <field name="arch" type="xml">
-                <xpath expr="/tree" position="attributes">
+                <xpath expr="/list" position="attributes">
                     <attribute name="create">false</attribute>
                     <attribute name="edit">false</attribute>
                     <attribute name="delete">false</attribute>

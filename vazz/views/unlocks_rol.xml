@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="unlocks_vazz_tree_rol" model="ir.ui.view">
-            <field name="name">vazz.unlocks.vazz.tree.rol</field>
+    <!-- view list -->
+        <record id="unlocks_vazz_list_rol" model="ir.ui.view">
+            <field name="name">vazz.unlocks.vazz.list.rol</field>
             <field name="model">vazz.unlocks</field>        
             <field name="arch" type="xml">
-                <tree string="Desbloqueos">
+                <list string="Desbloqueos">
                     <field name="name"/>
                     <field name="service_id"/>
                     <field name="customer_id"/>
                     <field name="type_id"/>
-                </tree>
+                </list>
             </field>
         </record>
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="product_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.product.vazz.tree</field>
+    <!-- view list -->
+        <record id="product_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.product.vazz.list</field>
             <field name="model">vazz.product</field>        
             <field name="arch" type="xml">
-                <tree string="Producto">
+                <list string="Producto">
                     <field name="quantity"/>
                     <field name="description"/>
                     <field name="unit_price"/>
                     <field name="amount"/>
-                </tree>
+                </list>
             </field>
         </record>
     

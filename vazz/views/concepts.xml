@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="concepts_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.concepts.vazz.tree</field>
+    <!-- view list -->
+        <record id="concepts_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.concepts.vazz.list</field>
             <field name="model">vazz.concepts</field>        
             <field name="arch" type="xml">
-                <tree string="">
+                <list string="">
                     <field name="name"/>
                     <field name="description"/>
                     <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="currency_id" invisible="1"/>
-                </tree>
+                </list>
             </field>
         </record>
 

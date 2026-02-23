@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="check_status_view_tree" model="ir.ui.view">
-            <field name="name">vazz.check.status.view.tree</field>
+    <!-- view list -->
+        <record id="check_status_view_list" model="ir.ui.view">
+            <field name="name">vazz.check.status.view.list</field>
             <field name="model">vazz.check.status</field>
             <field name="arch" type="xml">
-                <tree string=""  default_order='id desc'>
+                <list string=""  default_order='id desc'>
                     <field name="id" invisible="1"/>
                     <field name="service"/>
                     <field name="create_date" string="Registrado el"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -250,9 +250,9 @@
             <field name="name">Check status express</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.check.status</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.check_status_view_tree',
+                'list_view_ref':'vazz.check_status_view_list',
                 'form_view_ref':'vazz.check_status_view_form',
                 }</field>
             <field name="help" type="html">

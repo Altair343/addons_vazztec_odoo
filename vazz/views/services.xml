@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="servicios_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.services.vazz.tree</field>
+    <!-- view list -->
+        <record id="servicios_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.services.vazz.list</field>
             <field name="model">vazz.services</field>        
             <field name="arch" type="xml">
-                <tree string="Servicios" 
+                <list string="Servicios" 
                     decoration-success="is_delivery == 'yes' and state == 'repaired'" 
                     decoration-warning="is_delivery == 'not' and state == 'repaired'"
                     decoration-danger="state == 'pending'" 
@@ -22,7 +22,7 @@
                     <field name="state" widget="statusbar" statusbar_visible="0" />
                     <field name="is_delivery"/>
                     <field name="warning_notify"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -173,7 +173,7 @@
                                     attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
                                     context="{ 
                                         'type_register': 'service',
-                                        'tree_view_ref':'vazz.unlocks_vazz_tree_rol',
+                                        'list_view_ref':'vazz.unlocks_vazz_list_rol',
                                         'form_view_ref':'vazz.unlocks_vazz_form_rol',
                                     }"/>
                             </page>
@@ -209,11 +209,11 @@
                             <page name="cancel" string="Cancelación">
                                 <group>
                                     <field name="cancel_request" nolabel="1" readonly="1">
-                                        <tree string="Cancelaciones" >
+                                        <list string="Cancelaciones" >
                                             <field name="cancel_date"/>
                                             <field name="comment" string="Comentario"/>
                                             <field name="write_uid" string ="Útima modificación por"/>
-                                        </tree>
+                                        </list>
                                     </field>
                                 </group>
                             </page>
@@ -221,7 +221,7 @@
                                 <field name="state_history_ids" readonly="1" 
                                     context="{  
                                         'type_register': 'service', 
-                                        'tree_view_ref':'vazz.service_state_history_vazz_tree',
+                                        'list_view_ref':'vazz.service_state_history_vazz_list',
                                         }" />
                             </page>
                         </notebook>
@@ -246,9 +246,9 @@
             <field name="name">Servicios</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.services</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.servicios_vazz_tree',
+                'list_view_ref':'vazz.servicios_vazz_list',
                 'form_view_ref':'vazz.service_vazz_view_form',
                 }</field>
             <field name="domain">[('is_archive', '=', 'not')]</field>
@@ -261,9 +261,9 @@
             <field name="name">Archivados</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.services</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.servicios_archive_vazz_tree',
+                'list_view_ref':'vazz.servicios_archive_vazz_list',
                 'form_view_ref':'vazz.service_archive_vazz_view_form',
                 }</field>
             <field name="domain">[('is_archive', '=', 'yes')]</field>

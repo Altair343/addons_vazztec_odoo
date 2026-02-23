@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="customers_phone_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.customers.phone.vazz.tree</field>
+    <!-- view list -->
+        <record id="customers_phone_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.customers.phone.vazz.list</field>
             <field name="model">vazz.customers.phone</field>        
             <field name="arch" type="xml">
-                <tree string="Teléfono">
+                <list string="Teléfono">
                     <field name="name"/>
                     <field name="is_main"/>
-                </tree>
+                </list>
             </field>
         </record>
 

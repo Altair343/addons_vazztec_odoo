@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="notifications_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.notifications.vazz.tree</field>
+    <!-- view list -->
+        <record id="notifications_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.notifications.vazz.list</field>
             <field name="model">vazz.notifications</field>        
             <field name="arch" type="xml">
-                <tree string="Notificaciones">
+                <list string="Notificaciones">
                     <field name="type_id"/>
                     <field name="date_notification"/>
                     <field name="note"/>
-                </tree>
+                </list>
             </field>
         </record>
 

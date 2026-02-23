@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="diagnostic_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.diagnostic.vazz.tree</field>
+    <!-- view list -->
+        <record id="diagnostic_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.diagnostic.vazz.list</field>
             <field name="model">vazz.diagnostic</field>        
             <field name="arch" type="xml">
-                <tree string="">
+                <list string="">
                     <field name="name"/>
                     <field name="technical_id"/>
                     <field name="create_date" string = "Fecha de Registro"/>
-                </tree>
+                </list>
             </field>
         </record>
 

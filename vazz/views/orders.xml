@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="orders_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.orders.vazz.tree</field>
+    <!-- view list -->
+        <record id="orders_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.orders.vazz.list</field>
             <field name="model">vazz.orders</field>        
             <field name="arch" type="xml">
-                <tree string="Pedidos"
+                <list string="Pedidos"
                     decoration-success="state == 'delivered'" 
                     decoration-danger="state == 'pending'" 
                     decoration-muted="state == 'cancel'">
@@ -17,7 +17,7 @@
                     <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="state"  widget="statusbar" statusbar_visible="0"/>
                     <field name="currency_id" invisible="1"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -100,11 +100,11 @@
                             <page name="cancel" string="Cancelación">
                                 <group>
                                     <field name="cancel_request" nolabel="1" readonly="1">
-                                        <tree string="Cancelaciones" >
+                                        <list string="Cancelaciones" >
                                             <field name="cancel_date"/>
                                             <field name="comment" string="Comentario"/>
                                             <field name="write_uid" string ="Útima modificación por"/>
-                                        </tree>
+                                        </list>
                                     </field>
                                 </group>
                             </page>
@@ -112,7 +112,7 @@
                                 <field name="state_history_ids" readonly="1" 
                                     context="{  
                                         'type_register': 'service', 
-                                        'tree_view_ref':'vazz.order_state_history_vazz_tree',
+                                        'list_view_ref':'vazz.order_state_history_vazz_list',
                                         }" />
                             </page>
                         </notebook>
@@ -131,9 +131,9 @@
             <field name="name">Pedidos</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.orders</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.orders_vazz_tree',
+                'list_view_ref':'vazz.orders_vazz_list',
                 'form_view_ref':'vazz.orders_vazz_form',
                 }</field>
             <field name="help" type="html">

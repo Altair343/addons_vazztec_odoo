@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="orders_assets_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.orders.assets.vazz.tree</field>
+    <!-- view list -->
+        <record id="orders_assets_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.orders.assets.vazz.list</field>
             <field name="model">vazz.orders.assets</field>        
             <field name="arch" type="xml">
-                <tree string="Anticipo">
+                <list string="Anticipo">
                     <field name="name" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="date_delivery"/>
                     <field name="currency_id" invisible="1"/>
-                </tree>
+                </list>
             </field>
         </record>
 

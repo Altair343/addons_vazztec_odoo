@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="servicios_archive_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.services.vazz.tree</field>
+    <!-- view list -->
+        <record id="servicios_archive_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.services.vazz.list</field>
             <field name="model">vazz.services</field>
             <field name="mode">primary</field>
-            <field name="inherit_id" ref="vazz.servicios_vazz_tree"/>
+            <field name="inherit_id" ref="vazz.servicios_vazz_list"/>
             <field name="arch" type="xml">
-                <tree position="attributes">
+                <list position="attributes">
                     <attribute name="create">false</attribute>
                     <attribute name="edit">false</attribute>
                     <attribute name="delete">false</attribute>
                     <attribute name="duplicate">false</attribute>
-                </tree>
+                </list>
             </field>
         </record>
 

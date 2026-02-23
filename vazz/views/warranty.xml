@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="warranty_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.warranty.vazz.tree</field>
+    <!-- view list -->
+        <record id="warranty_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.warranty.vazz.list</field>
             <field name="model">vazz.warranty</field>        
             <field name="arch" type="xml">
-                <tree string="Garantías">
+                <list string="Garantías">
                     <field name="name"/>
                     <field name="description"/>
                     <field name="date_start"/>
@@ -15,7 +15,7 @@
                     <field name="customer_id"/>
                     <field name="state"  widget="statusbar" statusbar_visible="0"/>
                     <field name="validity"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -56,11 +56,11 @@
                             <page name="cancel" string="Cancelación">
                                 <group>
                                     <field name="cancel_request" nolabel="1" readonly="1">
-                                        <tree string="Cancelaciones" >
+                                        <list string="Cancelaciones" >
                                             <field name="cancel_date"/>
                                             <field name="comment" string="Comentario"/>
                                             <field name="write_uid" string ="Útima modificación por"/>
-                                        </tree>
+                                        </list>
                                     </field>
                                 </group>
                             </page>
@@ -71,7 +71,7 @@
                         <field name="activity_ids" widget="mail_activity" />
                         <field name="message_ids" widget="mail_thread" />
                     </div>
-                </form> 
+                </form>
             </field>
         </record>
 
@@ -80,9 +80,9 @@
             <field name="name">Garantías</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.warranty</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.warranty_vazz_tree',
+                'list_view_ref':'vazz.warranty_vazz_list',
                 'form_view_ref':'vazz.warranty_vazz_form',
                 }</field>
             <field name="help" type="html">

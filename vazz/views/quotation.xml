@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-    <!-- view tree -->
-        <record id="quotation_vazz_tree" model="ir.ui.view">
-            <field name="name">vazz.quotation.vazz.tree</field>
+    <!-- view list -->
+        <record id="quotation_vazz_list" model="ir.ui.view">
+            <field name="name">vazz.quotation.vazz.list</field>
             <field name="model">vazz.quotation</field>        
             <field name="arch" type="xml">
-                <tree string="Cotización">
+                <list string="Cotización">
                     <field name="name"/>
                     <field name="customer_id"/>
                     <field name="date"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -29,8 +29,8 @@
                             </group>
                             <group></group>
                         </group>
-                        <field name="product_ids" widget="section_and_note_one2many" mode="tree" readonly="0" context="{'request_id': id}">
-                            <tree string="Number" editable="bottom">
+                        <field name="product_ids" widget="section_and_note_one2many" mode="list" readonly="0" context="{'request_id': id}">
+                            <list string="Number" editable="bottom">
                                 <control>
                                     <create name="add_number" string="Agregar producto"/>
                                 </control>
@@ -38,7 +38,7 @@
                                 <field name="description" required ="1"/>
                                 <field name="unit_price" required ="1"/>
                                 <field name="amount"/>
-                            </tree>
+                            </list>
                         </field>
                         <group>
                             <group></group>
@@ -62,9 +62,9 @@
             <field name="name">Cotización</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">vazz.quotation</field>
-            <field name="view_mode">tree,form,activity</field>
+            <field name="view_mode">list,form,activity</field>
             <field name="context">{
-                'tree_view_ref':'vazz.quotation_vazz_tree',
+                'list_view_ref':'vazz.quotation_vazz_list',
                 'form_view_ref':'vazz.quotation_vazz_form',
                 }</field>
             <field name="help" type="html">
