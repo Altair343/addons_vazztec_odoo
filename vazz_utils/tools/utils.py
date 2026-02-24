@@ -30,6 +30,6 @@ def has_group(self, group_ref):
     user = self.env.user
     group = self.env.ref(group_ref)
     if group:
-        return group.id in user.groups_id.ids
+        return group.id in user.group_ids.ids
     else:
         return False
