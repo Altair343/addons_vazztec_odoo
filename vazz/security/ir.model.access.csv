@@ -21,6 +21,8 @@ vazz_cancel_orders_general,Cancelar pedido general,model_vazz_cancel_orders,vazz
 vazz_cancel_orders_admin,Cancelar pedido de Servicio Admin,model_vazz_cancel_orders,vazz.vazz_admin,1,1,1,1
 vazz_cancel_orders_Rol001,Cancelar pedido de Servicio Rol001,model_vazz_cancel_orders,vazz.Rol001,1,1,1,0
 
+access_vazz_cancel_wizard,Wizard de Cancelar,model_vazz_cancel_wizard,,1,1,1,1
+access_vazz_delivery_wizard,Wizard de Cancelar Pedido,model_vazz_delivery_wizard,,1,1,1,1
 
 vazz_cancel_warranty_general,Cancelar servicio general,model_vazz_cancel_warranty,vazz.general_user,1,0,0,0
 vazz_cancel_warranty_admin,Cancelar servici Admin,model_vazz_cancel_warranty,vazz.vazz_admin,1,1,1,1
