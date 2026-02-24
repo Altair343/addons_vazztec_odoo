@@ -2,7 +2,7 @@
 {
     "name": "Sistema Vazztec",
     "summary": """System Vazztec""",
-    "version": '13.0.0.1.0',
+    'version': '19.0.1.0.0',
     "description": """
     Sistema para el control del local
     ====================""",
