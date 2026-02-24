@@ -34,7 +34,7 @@
                             </group>
                             <group>
                                 <field name="phone" readonly="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
-                                    attrs="{'invisible' : [('is_group_rol002', '=', True)]}"/>
+                                invisible = "is_group_rol002"/>
                                 <br/>
                                 <field name="email" readonly="0"/>
                             </group>
@@ -42,9 +42,9 @@
                         <group>
                             <field name="addres" readonly="0"/>
                         </group>
-                        <label for="phones_ids" string="Teléfonos" attrs="{'invisible' : [('is_group_rol002', '=', True)]}"/>
+                        <label for="phones_ids" string="Teléfonos" invisible = "is_group_rol002"/>
                         <field name="phones_ids" readonly="0"
-                            attrs="{'invisible' : [('is_group_rol002', '=', True)]}"
+                            invisible = "is_group_rol002"
                             context="{'request_id': id }">
                             <list string="Number">
                                 <field name="name" required ="1"/>

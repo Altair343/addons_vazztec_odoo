@@ -24,7 +24,7 @@
                         <group>
                             <field name="name" readonly="0" required ="1"/>
                             <field name="technical_id" readonly="0" required ="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"/>
-                            <field name="state" force_save="1" attrs="{'readonly' : ['|',('state', 'in', ('draft','pending','in_process')),('is_edit', '=',False)]}"/>
+                            <field name="state" force_save="1" readonly = "state in ('draft','pending','in_process') or is_edit"/>
                             <field name="service_id" readonly="1" invisible="1" force_save="1"/>
                             <field name="is_main" readonly="1" invisible="1" force_save="1"/>
                             <field name="is_edit" readonly="1" invisible="1" force_save="1"/>

@@ -28,10 +28,7 @@
                             <group>
                                 <field name="name" readonly="1" force_save="1"/>
                                 <field name="customer_ids" required="1" readonly="0"/>
-                                <field name="telephone_cus" options="{'no_open':True}"
-                                    attrs="{
-                                        'invisible' : [('is_group_rol002', '=', True)],
-                                        'required' : [('is_group_rol002', '=', False)]}"
+                                <field name="telephone_cus" options="{'no_open':True}" invisible = "is_group_rol002" required = "not is_group_rol002"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="description" required="1" readonly="0"/>
                                 <field name="is_group_rol002" invisible="1"/>

@@ -25,13 +25,13 @@
                 <form string="Loan Registration" duplicate="false">
                 <header>
                     <button string="Listo" name="action_ok" class="oe_highlight" type="object"
-                        attrs="{'invisible' : [('state', 'not in', ('pending'))]}"/>
+                        invisible = "state not in ('pending')"/>
 
                     <button string="Regresar a Pendiente" groups="vazz.vazz_admin" name="action_pending" class="oe_highlight" type="object"
-                        attrs="{'invisible' : [('state', 'not in', ('ok','cancel'))]}"/>
+                        invisible = "state not in ('ok','cancel')"/>
 
                     <button string="Cancelar" name="cancel_wizard" class="oe_highlight" type="object"
-                        attrs="{'invisible' : [('state', 'not in', ('pending'))]}"/>
+                        invisible = "state not in ('pending')"/>
                     
                     <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                 </header>
@@ -39,30 +39,33 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" force_save="1"/>
-                                <field name="customer_id" required="1" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="telephone_cus" required="1" options="{'no_open':True}" 
-                                    attrs="{'invisible' : [('is_group_rol002', '=', True)],'readonly' : [('state', 'not in', ('draft','pending'))]}"
+                                <field name="customer_id" required="1" readonly = "state not in ('draft','pending')"/>
+                                <field name="telephone_cus" required="1" options="{'no_open':True}"
+                                    readonly = "state not in ('draft','pending')"
+                                    invisible = "is_group_rol002"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_id }"/>
                                 <field name="type_schedule_id" required ="1"
                                     options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="code_schedule" invisible="1"/>
                                 <field name="is_group_rol002" invisible="1"/>
                             </group>
                             <group>
                                 <field name="state_aux"  readonly="1"/>
                                 <field name="date_scheduled" required ="1"
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                readonly = "state not in ('draft','pending')"/>
                                 <field name="hour_scheduled" 
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                readonly = "state not in ('draft','pending')"/>
 
                             </group>
                         </group>
                         <group>
                             <field name="addres"
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))],'invisible' : [('code_schedule', '!=','A')],'required' : [('code_schedule', '=','A')]}"/>
+                                readonly = "state not in ('draft','pending')"
+                                invisible = "code_schedule != 'A'"
+                                required = "code_schedule == 'A'"/>
                             <field name="description" 
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                readonly = "state not in ('draft','pending')"/>
                         </group>
                         
                         
@@ -71,7 +74,7 @@
                         <page name="services" string="Servicios">
                             <label for="service_ids" string="Servicios"/>
                             <field name="service_ids" 
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"
+                                readonly = "state not in ('draft','pending')"
                                 options="{'no_create': True}" 
                                 context="{
                                     'list_view_ref':'vazz.servicios_vazz_list',

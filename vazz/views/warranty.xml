@@ -27,10 +27,10 @@
                 <form string="Loan Registration">
                     <header>
                         <button string="Cancelar" name="cancel_lost" class="oe_highlight" type="object"
-                            attrs="{'invisible' : ['|',('validity', 'in', ('lost')),('state', 'in', ('draft','expired'))]}"/>
+                            invisible = "validity == 'lost' or state in ('draft','expired')"/>
                         
                         <button string="Activar" name="action_valid" class="oe_highlight" type="object"
-                            attrs="{'invisible' : ['|',('validity', 'in', ('valid')),('state', 'in', ('draft','expired'))]}"/>
+                            invisible = "validity == 'valid' or state in ('draft','expired')"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="active"/>
                     </header>
@@ -38,19 +38,19 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" required ="1"/>
-                                <field name="service_id" attrs="{'readonly' : [('state', 'in', ('expired'))], 'invisible' : [('type_register', '=','service')]}" force_save="1"/>
-                                <field name="customer_id" required="1" attrs="{'readonly' : [('state', 'in', ('expired'))]}"/>
+                                <field name="service_id" readonly = "state in ('expired')" invisible = "type_register == 'service'" force_save="1"/>
+                                <field name="customer_id" required="1" readonly = "state in ('expired')"/>
                                 <field name="validity" readonly="1" force_save="1" />
                                 <field name="type_register" invisible="1"/>
                             </group>
                             <group>
-                                <field name="date_start" required="1" attrs="{'readonly' : [('state', 'in', ('expired'))]}"/>
-                                <field name="date_end" required="1" attrs="{'readonly' : [('state', 'in', ('expired'))]}"/>
+                                <field name="date_start" required="1" readonly = "state in ('expired')"/>
+                                <field name="date_end" required="1" readonly = "state in ('expired')"/>
                                 <field name="amount_days" readonly="1" force_save="1"/>
                             </group>
                         </group>
                         <group>
-                            <field name="description" required="1" attrs="{'readonly' : [('state', 'in', ('expired'))]}"/>
+                            <field name="description" required="1" readonly = "state in ('expired')"/>
                         </group>
                         <notebook>
                             <page name="cancel" string="Cancelación">

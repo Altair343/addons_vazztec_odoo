@@ -30,19 +30,19 @@
                     <header>
 
                         <button string="Pedido realizado" name="action_done" 
-                            states="pending" class="oe_highlight" type="object"/>
+                            invisible="state != 'pending'" class="oe_highlight" type="object"/>
                         
                         <button string="Pedido en bodega" name="action_warehouse" 
-                            states="done" class="oe_highlight" type="object"/>
+                            invisible="state != 'done'" class="oe_highlight" type="object"/>
                         
                         <button string="Pedido en local" name="action_local" 
-                            states="warehouse" class="oe_highlight" type="object"/>
+                            invisible="state != 'warehouse'" class="oe_highlight" type="object"/>
                         
                         <button string="Entregar pedido" name="action_delivered" 
-                            states="in_local" class="oe_highlight" type="object"/>
+                            invisible="state != 'in_local'" class="oe_highlight" type="object"/>
                         
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight btn-danger" type="object"
-                            attrs="{'invisible' : [('state', 'in', ('draft','delivered','cancel'))]}" />
+                            invisible = "state in ('draft','delivered','cancel')"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
@@ -50,32 +50,30 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" required ="1"/>
-                                <field name="service_id"  attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_local'))], 'invisible' : [('type_register', '=','service')]}" 
+                                <field name="service_id" readonly = "state not in ('draft','pending','in_local')" invisible = "type_register == 'service'"
                                     context="{
                                         'type_register': 'order_service',
                                         'default_customer_ids': customer_id,
                                         'default_date_approximate_delivery': date_approximate_delivery
                                         }"/>
-                                <field name="customer_id"  readonly="0" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}" />
-                                <field name="telephone_cus" options="{'no_open':True}" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))],
-                                    'invisible' : [('is_group_rol002', '=', True)],
-                                    'required' : ['&amp;',('state', 'in', ('draft','pending')),('is_group_rol002', '=', False)]}"
+                                <field name="customer_id" required ="1" readonly = "state not in ('draft','pending')"/>
+                                <field name="telephone_cus" options="{'no_open':True}" readonly = "state not in ('draft','pending')" invisible = "is_group_rol002"
+                                    required = "is_group_rol002 and state in ('draft','pending')"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_id }"/>
                                 <field name="create_date" string = "Fecha de Registro" readonly="1"/>
                                 <br/>
-                                <field name="description" required ="1" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
+                                <field name="description" required ="1" readonly = "state in ('delivered','cancel')"/>
                                 <field name="type_register" invisible="1"/>
                                 <field name="is_group_rol002" invisible="1"/>
                                 
                             </group>
                             <group>
-                                <field name="amount" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','in_local'))]}"/>
-                                <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}" required ="1" attrs="{'readonly' : [('state', 'not in', ('draft','in_local'))]}"/>
-                                <field name="assets_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}"/>
+                                <field name="amount" required ="1" readonly = "state not in ('draft','in_local')"/>
+                                <field name="public_price" widget="monetary" options="{'currency_field': 'currency_id'}" required ="1" readonly = "state not in ('draft','in_local')"/>
+                                <field name="assets_ids" readonly = "state in ('delivered','cancel')"/>
                                 <field name="total_assets" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
                                 <field name="total_assets_ser" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"
-                                    attrs="{'invisible' : [('service_id', '=',False)]}" />
+                                    invisible = "not service_id"/>
 
                                 <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
                                 <field name="total_pending" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
@@ -84,18 +82,18 @@
                         </group>
                         <group>
                             <group string="Entrega">
-                                <field name="date_approximate_delivery" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="date_approx_del_end" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="date_delivery" attrs="{'readonly' : [('state', 'not in', ('in_local'))]}" />
+                                <field name="date_approximate_delivery" readonly = "state not in ('draft','pending')"/>
+                                <field name="date_approx_del_end" readonly = "state not in ('draft','pending')"/>
+                                <field name="date_delivery" readonly = "state not in ('in_local')" />
                             </group>
                             <group string="Paquete">
-                                <field name="tracking_number" attrs="{'readonly' : [('state', 'not in', ('pending'))]}"/>
-                                <field name="date_arrival" attrs="{'readonly' : [('state', 'not in', ('done'))]}"/>
+                                <field name="tracking_number" readonly = "state not in ('pending')"/>
+                                <field name="date_arrival" readonly = "state not in ('done')"/>
                             </group>
                         </group>
                         <notebook>
                             <page name="notifications" string="Notificaciones">
-                                <field name="notifications_ids" attrs="{'readonly' : [('state', 'in', ('delivered','cancel'))]}" />
+                                <field name="notifications_ids" readonly = "state in ('delivered','cancel')"/>
                             </page>
                             <page name="cancel" string="Cancelación">
                                 <group>

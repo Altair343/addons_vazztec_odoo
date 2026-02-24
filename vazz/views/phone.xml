@@ -21,7 +21,7 @@
                 <form string="Loan Registration" duplicate="false">
                     <header>
                         <button string="Principal" name="button_is_main"  class="oe_highlight" type="object"
-                            attrs="{'invisible' : [('is_main', '=', True)]}"/>
+                            invisible = "is_main"/>
                     </header>
                     <sheet>
                         <group>

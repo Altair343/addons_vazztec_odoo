@@ -27,7 +27,7 @@
                         <group>
                             <group>
                                 <field name="name" readonly="1" required ="1"/>
-                                <field name="service_id" readonly="0" attrs="{'invisible' : [('type_register', '=','service')]}" />
+                                <field name="service_id" readonly="0" invisible = "type_register == 'service'" />
                                 <field name="customer_id" required="1" readonly="0"/>
                             </group>
                             <group>

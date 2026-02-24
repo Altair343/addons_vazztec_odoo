@@ -34,25 +34,25 @@
                 <form string="Loan Registration" duplicate="false">
                     <header>
                         <button string="Procesar equipo" name="action_process" 
-                            states="pending" class="oe_highlight" type="object"/>
+                            invisible = "state not in ('pending')" class="oe_highlight" type="object"/>
                         
                         <button string="Equipo diagnostico" name="action_diagnosed" 
-                            states="in_process" class="oe_highlight" type="object"
+                            invisible = "state not in ('in_process')" class="oe_highlight" type="object"
                             confirm="El servicio solo será diagnosticado, ¿desea continuar?"/>
                         
                         <button string="Confirmar Reparación" name="action_repaired" 
-                            states="in_process" class="oe_highlight" type="object"
+                            invisible = "state not in ('in_process')" class="oe_highlight" type="object"
                             confirm="El servicio fue reparado, ¿desea continuar?"/>
                         
                         <button string="Equipo sin Solución" name="action_not_solution" 
-                            states="in_process" class="oe_highlight" type="object"
+                            invisible = "state not in ('in_process')" class="oe_highlight" type="object"
                             confirm="El servicio no fue reparado, ¿desea continuar?"/>
                         
                         <button string="Entregar equipo" name="action_delivery_yes" class="oe_highlight" type="object"
-                            attrs="{'invisible' : ['|',('state', 'not in', ('diagnosed','repaired','not_solution','cancel')),('is_delivery', 'not in', ('not'))]}"/>
+                            invisible = "state in ('draft','diagnosed','repaired','not_solution','cancel' or is_delivery not in ('not'))"/>
 
                         <button string="Cancelar" name="cancel_wizard" class="oe_highlight btn-danger" type="object"
-                            attrs="{'invisible' : [('state', 'in', ('draft','diagnosed','repaired','not_solution','cancel'))]}"/>
+                            invisible = "state in ('draft','diagnosed','repaired','not_solution','cancel')"/>
 
                         <field name="state" widget="statusbar" readonly="1" statusbar_visible="aux"/>
                     </header>
@@ -61,71 +61,68 @@
                             <group>
                                 <field name="name" placeholder="No. Servicio" readonly="1" force_save="1"/>
                                 <field name="customer_ids" required="1" 
-                                    attrs="{'readonly' : [('is_delivery', '=', 'yes')]}"/>
+                                    readonly = "is_delivery == 'yes'"/>
                                 <field name="telephone_cus" options="{'no_open':True}" 
-                                    attrs="{
-                                        'invisible' : [('is_group_rol002', '=', True)],
-                                        'readonly' : [('state', 'not in', ('draft','pending'))],
-                                        'required' : ['&amp;',('code_type_notification', '=','A'),('is_group_rol002', '=', False)]}"
+                                    readonly = "state not in ('draft','pending')"
+                                    invisible = "is_group_rol002"
+                                    required = "not is_group_rol002 and code_type_notification == 'A'"
                                     context="{'type_register': 'service', 'default_customer_ids':customer_ids }"/>
                                 <field name="date_reception" required="1" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                                    readonly = "state not in ('draft')"/>
                                 <field name="type_service" required="1"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="type_notification_id" required="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="code_type_notification" readonly="1" invisible="1"/>
                                 <field name="is_group_rol002" invisible="1"/>
                                 
                             </group>
                             <group string="Ingreso">
                                 <field name="type_entry" required="1"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="addres_entry" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))], 'invisible' : [('type_entry', '!=','harvest')],'required' : [('type_entry', '=','harvest')]}" />
+                                    readonly = "state not in ('draft','pending')"/>
+                                <field name="addres_entry" readonly = "state not in ('draft','pending')"
+                                    invisible = "type_entry != 'harvest'" required = "type_entry == 'harvest'"/>
                                 <field name="state_aux" readonly="1"/>
 
-                                <field name="question_check_status" attrs="{
-                                    'required' : [('state', 'in', ('draft','pending'))],
-                                    'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="question_question_check" attrs="{
-                                    'readonly' : [('state', 'not in', ('draft','pending'))],
-                                    'invisible' : [('question_check_status', '!=','not')],'required' : [('question_check_status', '=','not')]}" />
+                                <field name="question_check_status" readonly = "state not in ('draft','pending')"
+                                    required = "state in ('draft','pending')"/>
+                                <field name="question_question_check" readonly = "state not in ('draft','pending')"
+                                    invisible = "question_check_status != 'not'" required = "question_check_status == 'not'"/>
                             </group>
                         </group>
                         <group>
                             <field name="description" required="1"
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                            <field name="observations" readonly="0"
-                                attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process'))]}"/>
+                                readonly = "state not in ('draft','pending')"/>
+                            <field name="observations" readonly = "state not in ('draft','pending','in_process')"/>
                         </group>
                         <group>
                             <group string="Equipo">
                                 <field name="brand" required="1"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="model_e" required="1"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="imei"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="type_equipment" required="1" options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="password"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="question_acce"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}" required="1"/>
+                                    readonly = "state not in ('draft','pending')" required="1"/>
                                 
-                                <field name="accessories"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))],
-                                        'invisible' : [('question_acce', '!=','yes')],'required' : [('question_acce', '=','yes')]}"/>
+                                <field name="accessories" readonly = "state not in ('draft','pending')"
+                                    invisible = "question_acce != 'yes'" required = "question_acce == 'yes'"/>
                             </group>
                             <group string="Entrega">
                                 <field name="date_approximate_delivery" required="1" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
+                                    readonly = "state not in ('draft','pending')"/>
                                 <field name="type_delivery" required="1"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending'))]}"/>
-                                <field name="addres" attrs="{'readonly' : [('state', 'not in', ('draft','pending'))], 'invisible' : [('type_delivery', '!=','home')],'required' : [('type_delivery', '=','home')]}" />
+                                    readonly = "state not in ('draft','pending')"/>
+                                <field name="addres" readonly = "state not in ('draft','pending')"
+                                    invisible = "type_delivery != 'home'" required = "type_delivery == 'home'"/>
                                 <br/>
                                 <field name="technical_id"  options="{'no_create': True, 'no_create_edit':True,'no_open':True}"
-                                    attrs="{'readonly' : [('state', 'not in', ('in_process'))]}"/>
+                                    readonly = "state not in ('in_process')"/>
                                 <field name="date_delibery" readonly="1" force_save="1" />
                                     <!-- ('is_delivery', 'not in', ('not')) -->
                                 <field name="is_delivery" readonly="1" force_save="1" />
@@ -134,25 +131,25 @@
                         <group>
                             <group>
                                 <field name="estimated_cost" required="1"  widget="monetary" options="{'currency_field': 'currency_id'}"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process'))]}"/>
+                                    readonly = "state not in ('draft','pending','in_process')"/>
                                 <field name="total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <field name="total_assets" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <field name="total_pending" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             </group>
                             <group >
                                 <field name="assets_ids"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"/>
+                                    readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"/>
                                 <field name="total_assets_ser" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             </group>
                         </group>
                         <label for="diagnostic_ids" string="Diagnósticos"/>
                         <field name="diagnostic_ids" 
-                            attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
+                            readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"
                             context="{'type_register': 'service','default_state':state}"/>
                         <br/>
                         <label for="concepts_ids" string="Conceptos"/>
                         <field name="concepts_ids"
-                            attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
+                            readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"
                             context="{'type_register': 'service','default_state':state}"/>
                         <notebook>
                             <page name="pedidos" string="Pedidos" >
@@ -165,12 +162,12 @@
                                 </group>
                                 <label for="orders_ids" string="Pedidos"/>
                                 <field name="orders_ids" context="{  'type_register': 'service' }"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"/>
+                                    readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"/>
                             </page>
                             <page name="desbloqueos" string="Desbloqueos" >
                                 <label for="unlocks_ids" string="Desbloqueos"/>
                                 <field name="unlocks_ids" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
+                                    readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"
                                     context="{ 
                                         'type_register': 'service',
                                         'list_view_ref':'vazz.unlocks_vazz_list_rol',
@@ -181,14 +178,14 @@
                                 <group>
                                     <group>
                                         <field name="question_warranty" 
-                                            attrs="{'readonly' : [('state', 'not in', ('in_process'))]}"/>
-                                        <field name="question_whats"
-                                            attrs="{'readonly' : [('state', 'not in', ('in_process'))],'invisible' : [('question_warranty', '!=','not')],'required' : [('question_warranty', '=','not')]}"/>
+                                            readonly = "state not in ('in_process')"/>
+                                        <field name="question_whats" readonly = "state not in ('in_process')"
+                                            invisible = "question_warranty != 'not'" required = "question_warranty == 'not'"/>
                                     </group>
                                 </group>
                                 <label for="warranty_ids" string="Garantías"/>
                                 <field name="warranty_ids" 
-                                    attrs="{'readonly' : [('state', 'not in', ('in_process','diagnosed','repaired','not_solution'))]}"
+                                    readonly = "state not in ('in_process','diagnosed','repaired','not_solution')"
                                     context="{  'type_register': 'service' }" />
                             </page>
                             <page name="notifications" string="Notificaciones">
@@ -196,12 +193,12 @@
                                 </group>
                                 <label for="notifications_ids" string="Notificaciones"/>
                                 <field name="notifications_ids" 
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"/>
+                                    readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"/>
                             </page>
                             <page name="check_status_data" string="Check status express" >
                                 <label for="check_status_ids" string="Check status express"/>
                                 <field name="check_status_ids"
-                                    attrs="{'readonly' : [('state', 'not in', ('draft','pending','in_process','diagnosed','repaired','not_solution'))]}"
+                                    readonly = "state not in ('draft','pending','in_process','diagnosed','repaired','not_solution')"
                                     context="{
                                         'type_register': 'service',
                                         'form_view_ref':'vazz.check_status_view_form_alt',}"/>
