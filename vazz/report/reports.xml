@@ -4,9 +4,9 @@
         report_type="qweb-pdf" -->
 
     <!-- Paper formats -->
-    <record id = "paperformat_report" model="report.paperformat">
+    <record id="paperformat_report" model="report.paperformat">
         <field name="name">Reporte Vazztec</field>
-        <field name="default" eval="True" />
+        <field name="default" eval="True"/>
         <field name="format">Letter</field>
         <field name="orientation">Portrait</field>
         <field name="margin_top">20</field>
@@ -15,9 +15,9 @@
         <field name="margin_right">18</field>
     </record>
 
-    <record id = "paperformat_ticket" model="report.paperformat">
+    <record id="paperformat_ticket" model="report.paperformat">
         <field name="name">Ticket Vazztec</field>
-        <field name="default" eval="True" />
+        <field name="default" eval="True"/>
         <field name="format">custom</field>
         <field name="page_height">150</field>
         <field name="page_width">52</field>
@@ -28,9 +28,9 @@
         <field name="margin_right">5</field>
     </record>
 
-    <record id = "paperformat_ticket_express" model="report.paperformat">
+    <record id="paperformat_ticket_express" model="report.paperformat">
         <field name="name">Ticket Express Vazztec</field>
-        <field name="default" eval="True" />
+        <field name="default" eval="True"/>
         <field name="format">custom</field>
         <field name="page_height">150</field>
         <field name="page_width">52</field>
@@ -41,9 +41,9 @@
         <field name="margin_right">5</field>
     </record>
 
-    <record id = "paperformat_check" model="report.paperformat">
+    <record id="paperformat_check" model="report.paperformat">
         <field name="name">Check Vazztec</field>
-        <field name="default" eval="True" />
+        <field name="default" eval="True"/>
         <field name="format">custom</field>
         <field name="page_height">210</field>
         <field name="page_width">52</field>
@@ -54,9 +54,9 @@
         <field name="margin_right">5</field>
     </record>
 
-    <record id = "paperformat_etiquette" model="report.paperformat">
+    <record id="paperformat_etiquette" model="report.paperformat">
         <field name="name">Etiquette Vazztec</field>
-        <field name="default" eval="True" />
+        <field name="default" eval="True"/>
         <field name="format">custom</field>
         <field name="page_height">25</field>
         <field name="page_width">50</field>
@@ -67,54 +67,64 @@
         <field name="margin_right">1</field>
     </record>
 
-    <!-- Action report -->
-    <report id="report_quotation"
-        model="vazz.quotation"
-        string="Cotización"
-        name="vazz.report_quotation_temple"
-        file="vazz.report_quotation"
-        report_type="qweb-html"
-        print_report_name="object.name"
-        paperformat = "vazz.paperformat_report"
-    />
+    <!-- Action reports -->
+    <record id="report_quotation" model="ir.actions.report">
+        <field name="name">Cotización</field>
+        <field name="model">vazz.quotation</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">vazz.report_quotation_temple</field>
+        <field name="report_file">vazz.report_quotation</field>
+        <field name="print_report_name">object.name</field>
+        <field name="paperformat_id" ref="vazz.paperformat_report"/>
+        <field name="binding_model_id" ref="model_vazz_quotation"/>
+        <field name="binding_type">report</field>
+    </record>
 
-    <report id="service_ticket"
-        model="vazz.services"
-        string="Ticket"
-        name="vazz.service_ticket_temple"
-        file="vazz.service_ticket"
-        report_type="qweb-html"
-        print_report_name="object.name"
-        paperformat = "vazz.paperformat_ticket"
-    />
+    <record id="service_ticket" model="ir.actions.report">
+        <field name="name">Ticket</field>
+        <field name="model">vazz.services</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">vazz.service_ticket_temple</field>
+        <field name="report_file">vazz.service_ticket</field>
+        <field name="print_report_name">object.name</field>
+        <field name="paperformat_id" ref="vazz.paperformat_ticket"/>
+        <field name="binding_model_id" ref="model_vazz_services"/>
+        <field name="binding_type">report</field>
+    </record>
 
-    <report id="service_express_ticket"
-        model="vazz.express.service"
-        string="Ticket"
-        name="vazz.service_express_ticket_temple"
-        file="vazz.service_express_ticket"
-        report_type="qweb-html"
-        print_report_name="object.name"
-        paperformat = "vazz.paperformat_ticket_express"
-    />
+    <record id="service_express_ticket" model="ir.actions.report">
+        <field name="name">Ticket</field>
+        <field name="model">vazz.express.service</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">vazz.service_express_ticket_temple</field>
+        <field name="report_file">vazz.service_express_ticket</field>
+        <field name="print_report_name">object.name</field>
+        <field name="paperformat_id" ref="vazz.paperformat_ticket_express"/>
+        <field name="binding_model_id" ref="model_vazz_express_service"/>
+        <field name="binding_type">report</field>
+    </record>
 
-    <report id="check_status_v1"
-        model="vazz.check.status"
-        string="Ticket"
-        name="vazz.check_status_ticket_temple"
-        file="vazz.check_status_ticket"
-        report_type="qweb-html"
-        print_report_name="object.name"
-        paperformat = "vazz.paperformat_check"
-    />
+    <record id="check_status_v1" model="ir.actions.report">
+        <field name="name">Ticket</field>
+        <field name="model">vazz.check.status</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">vazz.check_status_ticket_temple</field>
+        <field name="report_file">vazz.check_status_ticket</field>
+        <field name="print_report_name">object.name</field>
+        <field name="paperformat_id" ref="vazz.paperformat_check"/>
+        <!-- Sin binding: no aparece en el menú de impresión -->
+    </record>
 
-    <report id="service_etiquette"
-        model="vazz.services"
-        string="Etiqueta"
-        name="vazz.service_etiquette_temple"
-        file="vazz.service_etiquette"
-        report_type="qweb-html"
-        print_report_name="object.name"
-        paperformat = "vazz.paperformat_etiquette"
-    />
+    <record id="service_etiquette" model="ir.actions.report">
+        <field name="name">Etiqueta</field>
+        <field name="model">vazz.services</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">vazz.service_etiquette_temple</field>
+        <field name="report_file">vazz.service_etiquette</field>
+        <field name="print_report_name">object.name</field>
+        <field name="paperformat_id" ref="vazz.paperformat_etiquette"/>
+        <field name="binding_model_id" ref="model_vazz_services"/>
+        <field name="binding_type">report</field>
+    </record>
+
 </odoo>
