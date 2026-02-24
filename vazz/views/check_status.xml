@@ -32,11 +32,18 @@
                             <group>
                                 <h6 decoration-muted = "True" style = "color: #666666;">Valor referencia normal 1.0A - 3.0A</h6>
                                 <field name="amperage" readonly="0"/>
+                            </group>
+                            <group string ="Micrófono">
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
                                 <field name="permanent" readonly="0"/>
                                 <field name="variable" readonly="0"/>
                                 <field name="doesnt_charge" readonly="0"/>
                             </group>
-                            <group string ="Micrófono">
+                            <group>
                                 <field name="microphone_yes" readonly="0"/>
                                 <field name="microphone_not" readonly="0"/>
                                 <field name="microphone_details" readonly="0"/>
