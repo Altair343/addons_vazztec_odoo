@@ -368,7 +368,7 @@ class Services(models.Model):
         if not self.technical_id:
             raise UserError(_(TEXT_TECHNICIAN))
             
-        self.date_archive = fields.date.today()
+        self.date_archive = fields.Date.today()
         self._update_state('diagnosed')
     
     def action_repaired(self):
@@ -388,7 +388,7 @@ class Services(models.Model):
         if not self.technical_id:
             raise UserError(_(TEXT_TECHNICIAN))
 
-        self.date_archive = fields.date.today()
+        self.date_archive = fields.Date.today()
         self._update_state('repaired')
     
     def action_not_solution(self):
@@ -400,12 +400,12 @@ class Services(models.Model):
         if not self.technical_id:
             raise UserError(_(TEXT_TECHNICIAN))
 
-        self.date_archive = fields.date.today()
+        self.date_archive = fields.Date.today()
         self._update_state('not_solution')
 
     def action_cancel(self, comment):
         # Cancelado
-        self.date_archive = fields.date.today()
+        self.date_archive = fields.Date.today()
         self._update_state('cancel')
     
     def action_delivery_yes(self):
@@ -540,7 +540,7 @@ class Services(models.Model):
         Archivar registros
         """
         # Día actual
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
 
         # Obtenemos los registros que no esten entregados y archivados
         services_ids = self.env[MODEL_VAZZ_SERVICES].search([('is_delivery','=','not'),('is_archive','=','not')])

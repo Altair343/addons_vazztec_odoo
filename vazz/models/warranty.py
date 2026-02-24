@@ -115,7 +115,7 @@ class Customers(models.Model):
         Caducar garantías  activas que ya pasó su fecha de cobertura
         """
         # _logger.info("Cron Caducar garantías  activas que ya pasó su fecha de cobertura")
-        current_date = fields.date.today()
+        current_date = fields.Date.today()
         warranties = self.env[MODEL_VAZZ_WARRANTY].search([('state','=','active')])
 
         for war in warranties:
