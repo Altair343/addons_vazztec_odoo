@@ -10,7 +10,7 @@ class Concepts(models.Model):
     description = fields.Text(string="Description (optional)")
     currency_id = fields.Many2one( 'res.currency', string='Currency')
     public_price = fields.Float(string="Price")
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Service", tracking=True)
+    service_id = fields.Many2one(comodel_name="vazz.services", string="Service")
 
     @api.model
     def default_get(self, fields):

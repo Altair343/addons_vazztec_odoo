@@ -9,7 +9,7 @@ class Unlocks(models.Model):
     name = fields.Char(string="Folio", required=True, copy=False, index=True, 
         default=lambda self: _('Nuevo'))
     
-    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio", tracking=True)
+    service_id = fields.Many2one(comodel_name="vazz.services", string="Servicio")
     customer_id = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
     type_id = fields.Many2one(comodel_name="vazz.unlocks.type", string="Tipo de desbloqueo")
     type_register = fields.Char(string="tipo de registro", store= False)

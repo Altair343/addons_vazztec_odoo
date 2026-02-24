@@ -110,14 +110,14 @@ class Product(models.Model):
 
             rec.amount = unit_price_aux * quantity_aux
 
-    quantity = fields.Integer(string="Cantidad", default=1, tracking=True)
+    quantity = fields.Integer(string="Cantidad", default=1)
     description = fields.Text(string="Descripción")
 
     unit_price = fields.Float(string="Precio unitario")
     amount = fields.Float(string="Importe",compute="_compute_amount", store = False)
 
     currency_id = fields.Many2one( MODEL_RES_CURRENCY, string='Currency')
-    quotation_id = fields.Many2one(comodel_name="vazz.quotation", string="Cotización", tracking=True)
+    quotation_id = fields.Many2one(comodel_name="vazz.quotation", string="Cotización")
 
     @api.model
     def default_get(self, fields):
