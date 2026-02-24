@@ -27,7 +27,7 @@ class Assets(models.Model):
     _description = 'Anticipos'
 
     name = fields.Float(string="Anticipo")
-    date_delivery = fields.Datetime(string= "Fecha del Anticipo", default=lambda self: fields.datetime.now())
+    date_delivery = fields.Datetime(string= "Fecha del Anticipo", default=lambda self: fields.Datetime.now())
     note =  fields.Text(string="Nota")
     order_id = fields.Many2one(comodel_name=MODEL_VAZZ_ORDERS, string="Pedido", ondelete='cascade')
     service_id = fields.Many2one(comodel_name=MODEL_VAZZ_SERVICES, string="Servicio", ondelete='cascade')

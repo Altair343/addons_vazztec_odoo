@@ -18,7 +18,7 @@ class Quotation(models.Model):
             rec.total = total_aux
 
     name = fields.Char(string="Folio", required=True, copy=False, index=True, default=lambda self: _('Nuevo'))
-    date = fields.Date(string="Fecha", default=lambda self: fields.datetime.now())
+    date = fields.Date(string="Fecha", default=lambda self: fields.Datetime.now())
     customer_id = fields.Many2one(comodel_name="vazz.customers", string="Cliente")
     total = fields.Float(string="Total",compute="_compute_total",  store = False)
     product_ids = fields.One2many(comodel_name='vazz.product',inverse_name= 'quotation_id',string="Productos")

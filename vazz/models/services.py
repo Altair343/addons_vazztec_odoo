@@ -134,7 +134,7 @@ class Services(models.Model):
     previous_state = fields.Selection(STATES,string='Estado anterior del registro' )
     name = fields.Char(string="Folio", required=True, copy=False, index=True, 
         default=lambda self: _('Nuevo'))
-    date_reception = fields.Datetime(string="Fecha de recepción", default=lambda self: fields.datetime.now())
+    date_reception = fields.Datetime(string="Fecha de recepción", default=lambda self: fields.Datetime.now())
     date_approximate_delivery = fields.Date(string="Fecha de entrega aproximada")
     date_delibery = fields.Datetime(string="Fecha de entrega")
     customer_ids = fields.Many2one(comodel_name="vazz.customers", string="Cliente")

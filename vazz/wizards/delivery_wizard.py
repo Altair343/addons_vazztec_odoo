@@ -20,7 +20,7 @@ class DeliveryWizard(models.TransientModel):
     @api.model
     def default_get(self,fields_list):
         res = super(DeliveryWizard,self).default_get(fields_list)
-        res['date_delibery'] = fields.datetime.now()
+        res['date_delibery'] = fields.Datetime.now()
 
         currency = self.env['res.currency'].search([('name','=','MXN')])
         if currency:
