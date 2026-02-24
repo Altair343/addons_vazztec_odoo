@@ -24,13 +24,14 @@ class Unlocks(models.Model):
             res['type_register'] = 'order'
         return res
         
-    @api.model
-    def create(self, vals):
-        # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.unlocks.sequence')
-        if name_seq != False:
-            vals['name'] = f"D/{name_seq}"
-        result = super(Unlocks, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            # Generar nombre
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.unlocks.sequence')
+            if name_seq != False:
+                vals['name'] = f"D/{name_seq}"
+        result = super(Unlocks, self).create(vals_list)
         return result
 
     # Onchange

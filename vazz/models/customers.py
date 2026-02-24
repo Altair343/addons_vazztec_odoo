@@ -53,31 +53,20 @@ class Customers(models.Model):
     @api.model
     def _default_is_group_rol002(self):
         return utils.has_group(self,'vazz.Rol002')
-    
-    @api.model
-    def create(self, vals):
-        
-        # Armando nombre completo
-        nombre = ""
-        apellidop = ""
-        apellidom = ""
-        if 'user_name' in vals:
-            nombre = vals['user_name']
-        
-        if 'surname' in vals:
-            apellidop = vals['surname']
-        
-        if 'second_surname' in vals and vals['second_surname']: 
-            apellidom = vals['second_surname']
-        vals['name'] = f"{nombre} {apellidop} {apellidom}"
 
-        # Buscar que no se repita el nombre
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            # Armando nombre completo
+            nombre = vals.get('user_name', '')
+            apellidop = vals.get('surname', '')
+            apellidom = vals.get('second_surname', '')
+            vals['name'] = f"{nombre} {apellidop} {apellidom}"
 
-
-        # Generar folio
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.customers.sequence')
-        if name_seq != False:
-            vals['folio'] = f"C/{name_seq}"
+            # Generar folio
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.customers.sequence')
+            if name_seq != False:
+                vals['folio'] = f"C/{name_seq}"
 
         result = super(Customers, self).create(vals)
         return result

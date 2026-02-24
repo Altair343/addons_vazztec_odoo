@@ -22,16 +22,16 @@ class Phone(models.Model):
                 res['customer_ids'] = self._context.get('default_customer_ids')
         return res
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('customer_ids'):
+                customer = self.env['vazz.customers'].search([('id','=',vals.get('customer_ids'))])
+                if customer:
+                    customer.phones_ids.is_main = False
+            vals['is_main'] = True
 
-        if 'customer_ids' in vals:
-            customer = self.env['vazz.customers'].search([('id','=',vals['customer_ids'])])
-            if customer:
-                customer.phones_ids.is_main = False
-        vals['is_main'] = True
-
-        result = super(Phone, self).create(vals)
+        result = super(Phone, self).create(vals_list)
         return result
     
     def button_is_main(self):

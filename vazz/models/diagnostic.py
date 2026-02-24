@@ -34,21 +34,22 @@ class Assets(models.Model):
             res['state'] = default_state
         return res
 
-    @api.model
-    def create(self, vals):
-        if vals['state'] == 'draft' or vals['state'] == 'aux':
-            vals['state'] = 'pending'
-        
-        if 'service_id' in vals:
-            service = self.env['vazz.services'].search([('id','=',vals['service_id'])])
-            if service:
-                service.diagnostic_ids.is_main = False
-                service._update_state(vals['state'])
-                service.is_delivery = 'not'
-        vals['is_main'] = True
-        vals['is_edit'] = False
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('state') and vals.get('state') in ('draft','aux'):
+                vals['state'] = 'pending'
 
-        result = super(Assets, self).create(vals)
+            if vals.get('service_id'):
+                service = self.env['vazz.services'].search([('id','=',vals.get('service_id'))])
+                if service:
+                    service.diagnostic_ids.is_main = False
+                    service._update_state(vals.get('state'))
+                    service.is_delivery = 'not'
+            vals['is_main'] = True
+            vals['is_edit'] = False
+
+        result = super(Assets, self).create(vals_list)
         return result
 
     def write(self,vals):

@@ -71,9 +71,9 @@ class Notifications(models.Model):
     order_id = fields.Many2one(comodel_name=MODEL_VAZZ_ORDERS, string="Pedido", ondelete='cascade')
     service_id = fields.Many2one(comodel_name=MODEL_VAZZ_SERVICES, string="Servicio",  ondelete='cascade')
 
-    @api.model
-    def create(self, vals):
-        result = super(Notifications, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        result = super(Notifications, self).create(vals_list)
         return result
 
 class StateHistory(models.Model):

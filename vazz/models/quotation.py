@@ -32,29 +32,19 @@ class Quotation(models.Model):
         if currency:
             res['currency_id'] = currency.id
         return res
-    
-    @api.model
-    def create(self, vals):
-        
-        is_product = False
-        if len(self.product_ids) <= 0:
-            if 'product_ids' in vals:
-                if vals['product_ids']:
-                    is_product = True
-                else:
-                    is_product = False
-            else:
-                is_product = False
-        else:
-            is_product = True
 
-        if is_product == False:
-            raise UserError("Agregue por lo menos un producto")
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            # Al menos un producto
+            is_product = bool(vals.get('product_ids'))
 
-        # Generar folio
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.quotation.sequence')
-        if name_seq != False:
-            vals['name'] = f"CO/{name_seq}"
-        
-        result = super(Quotation, self).create(vals)
-        return result
+            if not is_product:
+                raise UserError("Agregue por lo menos un producto")
+
+            # Generar folio
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.quotation.sequence')
+            if name_seq:
+                vals['name'] = f"CO/{name_seq}"
+
+        return super().create(vals_list)

@@ -53,16 +53,16 @@ class Schedule(models.Model):
     def _default_is_group_rol002(self):
         return utils.has_group(self,'vazz.Rol002')
 
-    @api.model
-    def create(self, vals):
-        """Método que sobrescribe el create del objeto."""
-        vals['state'] = 'pending'
-        
-        # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.schedule.sequence')
-        if name_seq != False:
-            vals['name'] = f"A/{name_seq}"
-        result = super(Schedule, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals['state'] = 'pending'
+
+            # Generar nombre
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.schedule.sequence')
+            if name_seq != False:
+                vals['name'] = f"A/{name_seq}"
+        result = super(Schedule, self).create(vals_list)
         return result
     
     # States

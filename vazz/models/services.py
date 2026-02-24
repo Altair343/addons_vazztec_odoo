@@ -255,23 +255,28 @@ class Services(models.Model):
 
         return res
 
-    @api.model
-    def create(self, vals):
-        migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False
-        if not migration_creation:
-            self.validate_unlocks(vals)
-            self.validate_question_check_status(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            migration_creation = self._context.get('migration_creation', False)
+            if not migration_creation:
+                self.validate_unlocks(vals)
+                self.validate_question_check_status(vals)
 
-            vals['state'] = 'pending'
-            service_id = self.env[MODEL_VAZZ_STATE_HISTORY].create({
-                'state': vals['state'],
-                'service_id': self.id})
-            vals['state_history_ids'] =  [(4, service_id.id)]
-        result = super(Services, self).create(vals)
+                vals['state'] = 'pending'
+                service_id = self.env[MODEL_VAZZ_STATE_HISTORY].create({
+                    'state': vals['state'],
+                    'service_id': self.id
+                })
+                vals['state_history_ids'] = [(4, service_id.id)]
 
-        result.set_name()
-        result.ntf_imei()
-        return result
+        results = super().create(vals_list)
+
+        for result in results:
+            result.set_name()
+            result.ntf_imei()
+
+        return results
 
     def write(self,vals):
         migration_creation = self._context.get('migration_creation') if 'migration_creation' in self._context else False

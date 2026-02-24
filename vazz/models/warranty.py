@@ -63,29 +63,30 @@ class Customers(models.Model):
             res['type_register'] = 'order'
         return res
 
-    @api.model
-    def create(self, vals):
-        """Método que sobrescribe el create del objeto."""
-        vals['state'] = 'active'
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            """Método que sobrescribe el create del objeto."""
+            vals['state'] = 'active'
 
-        if 'date_start' in vals:
-            date_start = vals['date_start']
-        else:
-            raise UserError("Agrege la fecha de inicio")
-        
-        if 'date_end' in vals:
-            date_end = vals['date_end']
-        else:
-            raise UserError("Agrege la fecha fin")
-        
-        if date_end < date_start:
-            raise UserError("La fecha fin debe ser mayor o igual a la fecha de inicio de la garantía")
-        
-        # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.warranty.sequence')
-        if name_seq != False:
-            vals['name'] = f"G/{name_seq}"
-        result = super(Customers, self).create(vals)
+            if 'date_start' in vals:
+                date_start = vals['date_start']
+            else:
+                raise UserError("Agrege la fecha de inicio")
+            
+            if 'date_end' in vals:
+                date_end = vals['date_end']
+            else:
+                raise UserError("Agrege la fecha fin")
+            
+            if date_end < date_start:
+                raise UserError("La fecha fin debe ser mayor o igual a la fecha de inicio de la garantía")
+            
+            # Generar nombre
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.warranty.sequence')
+            if name_seq != False:
+                vals['name'] = f"G/{name_seq}"
+        result = super(Customers, self).create(vals_list)
         return result
 
     # Onchange

@@ -140,32 +140,33 @@ class Order(models.Model):
             res['type_register'] = 'order'
         return res
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Método que sobrescribe el create del objeto."""
+        for vals in vals_list:
 
-        # ==> if 'service_id' not in vals:
-        #     # Validando que tenga un anticipo
-        #     is_assets = False
-        #     if len(self.assets_ids) <= 0:
-        #         if 'assets_ids' in vals:
-        #             if vals['assets_ids']:
-        #                 is_assets = True
-        #             else:
-        #                 is_assets = False
-        #         else:
-        #             is_assets = False
-        #         if is_assets == False:
-        #             raise UserError("Agregue por lo menos un Anticipo al pedido")
+            # ==> if 'service_id' not in vals:
+            #     # Validando que tenga un anticipo
+            #     is_assets = False
+            #     if len(self.assets_ids) <= 0:
+            #         if 'assets_ids' in vals:
+            #             if vals['assets_ids']:
+            #                 is_assets = True
+            #             else:
+            #                 is_assets = False
+            #         else:
+            #             is_assets = False
+            #         if is_assets == False:
+            #             raise UserError("Agregue por lo menos un Anticipo al pedido")
 
-        vals['state'] = 'pending'
-        vals['previous_state'] = 'draft'
+            vals['state'] = 'pending'
+            vals['previous_state'] = 'draft'
 
-        # Generar nombre
-        name_seq = self.env['ir.sequence'].next_by_code('vazz.orders.sequence')
-        if name_seq != False:
-            vals['name'] = f"P/{name_seq}"
-        result = super(Order, self).create(vals)
+            # Generar nombre
+            name_seq = self.env['ir.sequence'].next_by_code('vazz.orders.sequence')
+            if name_seq != False:
+                vals['name'] = f"P/{name_seq}"
+        result = super(Order, self).create(vals_list)
         return result
 
     # Onchange

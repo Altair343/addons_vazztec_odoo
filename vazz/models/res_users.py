@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # odoo
-from odoo import models, fields,api, _
+from odoo import models, fields
 
 TYPEUSER = [
     ('seller', 'Vendedor'),
