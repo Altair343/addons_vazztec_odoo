@@ -1,4 +1,4 @@
 [submodule "skip_required_fields"]
 	path = skip_required_fields
 	url = https://github.com/Altair343/skip_required_fields
-    branch = 13
+    branch = 19
